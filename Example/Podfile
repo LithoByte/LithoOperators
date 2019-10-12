@@ -1,0 +1,11 @@
+use_frameworks!
+
+target 'LithoOperators_Example' do
+  pod 'LithoOperators', :path => '../'
+
+  target 'LithoOperators_Tests' do
+    inherit! :search_paths
+
+    
+  end
+end
