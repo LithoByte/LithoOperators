@@ -8,8 +8,8 @@
 
 Pod::Spec.new do |s|
   s.name             = 'LithoOperators'
-  s.version          = '0.1.0'
-  s.summary          = 'A short description of LithoOperators.'
+  s.version          = '0.0.1'
+  s.summary          = 'LithoOperators contains some nice operators to make functional programming easier.'
 
 # This description is used to generate tags and improve search results.
 #   * Think: What does it do? Why did you write it? What is the focus?
@@ -18,15 +18,14 @@ Pod::Spec.new do |s|
 #   * Finally, don't worry about the indent, CocoaPods strips it!
 
   s.description      = <<-DESC
-TODO: Add long description of the pod here.
+LithoOperators contains some nice operators to make functional programming easier. Many of these come from the excellent pointfree.co videos! Check them out for more!
                        DESC
 
-  s.homepage         = 'https://github.com/Elliot/LithoOperators'
-  # s.screenshots     = 'www.example.com/screenshots_1', 'www.example.com/screenshots_2'
+  s.homepage         = 'https://github.com/ThryvInc/LithoOperators'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
-  s.author           = { 'Elliot' => 'elliot.schrock@gmail.com' }
-  s.source           = { :git => 'https://github.com/Elliot/LithoOperators.git', :tag => s.version.to_s }
-  # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
+  s.author           = { 'Elliot' => '' }
+  s.source           = { :git => 'https://github.com/ThryvInc/LithoOperators.git', :tag => s.version.to_s }
+  s.social_media_url = 'https://twitter.com/elliot_schrock'
 
   s.ios.deployment_target = '8.0'
 
@@ -38,5 +37,5 @@ TODO: Add long description of the pod here.
 
   # s.public_header_files = 'Pod/Classes/**/*.h'
   # s.frameworks = 'UIKit', 'MapKit'
-  # s.dependency 'AFNetworking', '~> 2.3'
+  s.dependency 'Prelude'
 end

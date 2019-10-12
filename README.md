@@ -22,7 +22,7 @@ pod 'LithoOperators'
 
 ## Author
 
-Elliot, elliot.schrock@gmail.com
+Elliot Schrock
 
 ## License
 
