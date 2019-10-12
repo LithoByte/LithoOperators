@@ -10,6 +10,7 @@ Pod::Spec.new do |s|
   s.name             = 'LithoOperators'
   s.version          = '0.0.1'
   s.summary          = 'LithoOperators contains some nice operators to make functional programming easier.'
+  s.swift_versions   = ['4.2', '5.0', '5.1']
 
 # This description is used to generate tags and improve search results.
 #   * Think: What does it do? Why did you write it? What is the focus?
