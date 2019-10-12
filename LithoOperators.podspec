@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'LithoOperators'
-  s.version          = '0.0.1'
+  s.version          = '0.0.2'
   s.summary          = 'LithoOperators contains some nice operators to make functional programming easier.'
   s.swift_versions   = ['4.2', '5.0', '5.1']
 
