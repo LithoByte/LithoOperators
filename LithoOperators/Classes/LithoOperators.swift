@@ -92,6 +92,10 @@ public func map<Element, Value>(array: [Element], _ kp: KeyPath<Element, Value>)
     return array.map(kp)
 }
 
+func voidCurry<T>(_ t: T, _ f: @escaping (T) -> Void) -> () -> Void {
+    return { f(t) }
+}
+
 //other useful higher order functions
 
 
