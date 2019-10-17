@@ -96,6 +96,30 @@ public func voidCurry<T>(_ t: T, _ f: @escaping (T) -> Void) -> () -> Void {
     return { f(t) }
 }
 
+func ifExecute<T>(_ t: T?, _ f: (T) -> Void) {
+    if let t = t {
+        f(t)
+    }
+}
+
+func ifExecute<T, U>(_ t: T?, _ f: (T) -> U) -> U? {
+    if let t = t {
+        return f(t)
+    }
+    return nil
+}
+
+protocol ConditionalApply {}
+extension ConditionalApply {
+    func ifApply(_ condition: Bool, _ function: (Self) -> Self) -> Self {
+        if condition {
+            return function(self)
+        } else {
+            return self
+        }
+    }
+}
+
 //other useful higher order functions
 
 public func prop<Root, Value>(_ kp: WritableKeyPath<Root, Value>)
