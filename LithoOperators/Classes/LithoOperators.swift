@@ -18,6 +18,13 @@ public func >?><A, B, C>(f: @escaping (A) -> B?, g: @escaping (B) -> C) -> (A) -
     }
 }
 
+prefix operator ~
+public prefix func ~<A, B, C>(f: @escaping (A, B) -> C) -> ((A, B)) -> C {
+    return { (tuple: (A, B)) -> C in
+        return f(tuple.0, tuple.1)
+    }
+}
+
 infix operator <>: Composition
 public func <><A>(f: @escaping (A) -> Void, g: @escaping (A) -> Void) -> (A) -> Void {
     return { a in
@@ -76,7 +83,7 @@ public prefix func ^ <Root, Value>(
     }
 }
 
-//other useful functions
+//other useful higher order functions
 
 public func map<U, V>(array: [U], f: (U) -> V) -> [V] {
     return array.map(f)
@@ -96,22 +103,22 @@ public func voidCurry<T>(_ t: T, _ f: @escaping (T) -> Void) -> () -> Void {
     return { f(t) }
 }
 
-func ifExecute<T>(_ t: T?, _ f: (T) -> Void) {
+public func ifExecute<T>(_ t: T?, _ f: (T) -> Void) {
     if let t = t {
         f(t)
     }
 }
 
-func ifExecute<T, U>(_ t: T?, _ f: (T) -> U) -> U? {
+public func ifExecute<T, U>(_ t: T?, _ f: (T) -> U) -> U? {
     if let t = t {
         return f(t)
     }
     return nil
 }
 
-protocol ConditionalApply {}
+public protocol ConditionalApply {}
 extension ConditionalApply {
-    func ifApply(_ condition: Bool, _ function: (Self) -> Self) -> Self {
+    public func ifApply(_ condition: Bool, _ function: (Self) -> Self) -> Self {
         if condition {
             return function(self)
         } else {
@@ -120,7 +127,7 @@ extension ConditionalApply {
     }
 }
 
-//other useful higher order functions
+
 
 public func prop<Root, Value>(_ kp: WritableKeyPath<Root, Value>)
   -> (@escaping (Value) -> Value)
