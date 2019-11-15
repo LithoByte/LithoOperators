@@ -83,24 +83,16 @@ public prefix func ^ <Root, Value>(
     }
 }
 
-//other useful higher order functions
-
-public func map<U, V>(array: [U], f: (U) -> V) -> [V] {
-    return array.map(f)
-}
-
-public extension Sequence {
-  func map<Value>(_ kp: KeyPath<Element, Value>) -> [Value] {
-    return self.map { $0[keyPath: kp] }
-  }
-}
-
-public func map<Element, Value>(array: [Element], _ kp: KeyPath<Element, Value>) -> [Value] {
-    return array.map(kp)
-}
+//higher order functions
 
 public func voidCurry<T>(_ t: T, _ f: @escaping (T) -> Void) -> () -> Void {
     return { f(t) }
+}
+
+public func ignoreSecondArg<T, U, V>(f: @escaping (T) -> V) -> (T, U) -> V {
+    return { t, _ in
+        return f(t)
+    }
 }
 
 public func ifExecute<T>(_ t: T?, _ f: (T) -> Void) {
@@ -127,7 +119,25 @@ extension ConditionalApply {
     }
 }
 
+//other functions
 
+public func map<U, V>(array: [U], f: (U) -> V) -> [V] {
+    return array.map(f)
+}
+
+public extension Sequence {
+  func map<Value>(_ kp: KeyPath<Element, Value>) -> [Value] {
+    return self.map { $0[keyPath: kp] }
+  }
+}
+
+public func map<Element, Value>(array: [Element], _ kp: KeyPath<Element, Value>) -> [Value] {
+    return array.map(kp)
+}
+
+public func optionalCast<T, U>(object: U) -> T? {
+    return object as? T
+}
 
 public func prop<Root, Value>(_ kp: WritableKeyPath<Root, Value>)
   -> (@escaping (Value) -> Value)
