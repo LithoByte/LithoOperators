@@ -85,6 +85,22 @@ public prefix func ^ <Root, Value>(
 
 //higher order functions
 
+public func union<T>(_ functions: ((T) -> Void)...) -> (T) -> Void {
+    return { (t: T) in
+        for f in functions {
+            f(t)
+        }
+    }
+}
+
+public func union(_ functions: (() -> Void)...) -> () -> Void {
+    return {
+        for f in functions {
+            f()
+        }
+    }
+}
+
 public func voidCurry<T>(_ t: T, _ f: @escaping (T) -> Void) -> () -> Void {
     return { f(t) }
 }
