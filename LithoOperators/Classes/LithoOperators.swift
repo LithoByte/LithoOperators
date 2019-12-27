@@ -145,6 +145,10 @@ public extension Sequence {
   func map<Value>(_ kp: KeyPath<Element, Value>) -> [Value] {
     return self.map { $0[keyPath: kp] }
   }
+  
+  func compactMap<Value>(_ kp: KeyPath<Element, Value>) -> [Value] {
+    return self.compactMap { $0[keyPath: kp] }
+  }
 }
 
 public func map<Element, Value>(array: [Element], _ kp: KeyPath<Element, Value>) -> [Value] {
