@@ -33,7 +33,7 @@ public func <><A>(f: @escaping (A) -> Void, g: @escaping (A) -> Void) -> (A) -> 
     }
 }
 
-//allows mutating A, as opposded to <>
+//allows mutating A, as opposed to <>
 infix operator <~>: Composition
 public func <~><A>(f: @escaping (inout A) -> Void, g: @escaping (inout A) -> Void) -> (inout A) -> Void {
     return { a in
@@ -58,6 +58,18 @@ public func >|><A, B, C>(a: A, f: @escaping (A, B) -> C) -> (B) -> C {
 infix operator >||>: Composition
 public func >||><A, B, C>(b: B, f: @escaping (A, B) -> C) -> (A) -> C {
     return { a in f(a, b) }
+}
+
+//...and so on...
+infix operator >|||>: Composition
+public func >|||><A, B, C, D>(c: C, f: @escaping (A, B, C) -> D) -> (A, B) -> D {
+    return { a, b in f(a, b, c) }
+}
+
+//...and so on.
+infix operator >||||>: Composition
+public func >||||><A, B, C, D, E>(d: D, f: @escaping (A, B, C, D) -> E) -> (A, B, C) -> E {
+    return { a, b, c in f(a, b, c, d) }
 }
 
 prefix operator ^
@@ -146,7 +158,7 @@ public extension Sequence {
     return self.map { $0[keyPath: kp] }
   }
   
-  func compactMap<Value>(_ kp: KeyPath<Element, Value>) -> [Value] {
+  func compactMap<Value>(_ kp: KeyPath<Element, Value?>) -> [Value] {
     return self.compactMap { $0[keyPath: kp] }
   }
 }
