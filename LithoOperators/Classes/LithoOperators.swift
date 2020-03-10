@@ -72,6 +72,18 @@ public func >||||><A, B, C, D, E>(d: D, f: @escaping (A, B, C, D) -> E) -> (A, B
     return { a, b, c in f(a, b, c, d) }
 }
 
+//...and so on...
+infix operator >|||||>: Composition
+public func >|||||><A, B, C, D, E, F>(e: E, f: @escaping (A, B, C, D, E) -> F) -> (A, B, C, D) -> F {
+    return { a, b, c, d in f(a, b, c, d, e) }
+}
+
+//...and so on.
+infix operator >||||||>: Composition
+public func >||||||><A, B, C, D, E, F, G>(eff: F, f: @escaping (A, B, C, D, E, F) -> G) -> (A, B, C, D, E) -> G {
+    return { a, b, c, d, e in f(a, b, c, d, e, eff) }
+}
+
 prefix operator ^
 public prefix func ^ <Root, Value>(kp: KeyPath<Root, Value>) -> (Root) -> Value {
   return get(kp)
