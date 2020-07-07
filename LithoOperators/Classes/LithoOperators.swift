@@ -7,6 +7,17 @@
 
 import Prelude
 
+/**
+ This operator allows you to chain functions where optionality is an issue. For instance,
+ suppose you had a function `f` which output a `String?` and another function `g` which only
+ accepts a `String`; trying to use `f >>> g` would fail to compile, since you can't pass `nil`
+ to `g`. By using `f >?> g`, however, will compile, since this operator only executes `g` if
+ `f` returns a non-`nil` value. This is really nice paired with `optionalCast` defined below,
+ which will try to cast an object for you. So for instance, suppose you had a function `f` from
+ `(UIButton) -> Void` but wanted to be able to apply it intelligently to any `UIView` passed
+ in; then you could do `optionalCast >?> f` and the compiler would return a function from
+ `UIView -> Void` which, if the UIView is a `UIButton` in particular, would apply `f` to it.
+ */
 infix operator >?>: Composition
 public func >?><A, B, C>(f: @escaping (A) -> B?, g: @escaping (B) -> C) -> (A) -> C? {
     return { a in
@@ -25,6 +36,14 @@ public func >?><A, B>(f: @escaping (A) -> B?, g: @escaping (B) -> Void) -> (A) -
     }
 }
 
+/**
+ This operator allows you to pass a tuple of a function's argument types instead of
+ manually decomposing the tuple's values. So, `f(a, b)` == `(~f)((a,b))`. This is useful when
+ a function outputs a tuple that you want to pass to a regular function. So suppose `g`
+ is a function from `(T) -> (A, B)`; then the following would not compile: `g >>> f` while the
+ following would: `g >>> ~f`. NOTE: I haven't checked this recently, Swift may have added
+ support for doing this without this operator.
+ */
 prefix operator ~
 public prefix func ~<A, B, C>(f: @escaping (A, B) -> C) -> ((A, B)) -> C {
     return { (tuple: (A, B)) -> C in
@@ -32,6 +51,9 @@ public prefix func ~<A, B, C>(f: @escaping (A, B) -> C) -> ((A, B)) -> C {
     }
 }
 
+/**
+ This is basically an operator version of `union`, see below.
+ */
 infix operator <>: Composition
 public func <><A>(f: @escaping (A) -> Void, g: @escaping (A) -> Void) -> (A) -> Void {
     return { a in
@@ -55,19 +77,30 @@ public func /><A>(a: inout A, f: @escaping (inout A) -> Void) -> Void {
     f(&a)
 }
 
-//this is basically an operator for currying
+/**
+ This is basically an operator for currying. It puts the value `a` into the first postion of a function `f`
+ from `(A, B) -> C` and returns a function that just accepts a value for `B`. In Prelude this would
+ be `a |> curry(f)`.
+ */
 infix operator >|>: Composition
 public func >|><A, B, C>(a: A, f: @escaping (A, B) -> C) -> (B) -> C {
     return { b in f(a, b) }
 }
 
-//basically an operator for currying, but the value goes into the second place
+/**
+ Similar to `>|>`, but with the second value. So consider `f: (A, B) -> C`. Then `b >||> f`
+ will put `b` into the second argument of `f` and return a function from `A -> C`. I find this more
+ ergonmic than using `curry` in this case, since I don't need to swap the arguments around or anything.
+ The use case for this is mostly with the free `map` function defined below, so for instance, if you had
+ a function `f` from `Int -> String` and wanted to use it to change an array of `Int`s to `String`s,
+ you could do so by saying: `f >||> map` which would return a function from `[Int] -> [String]`
+ */
 infix operator >||>: Composition
 public func >||><A, B, C>(b: B, f: @escaping (A, B) -> C) -> (A) -> C {
     return { a in f(a, b) }
 }
 
-//...and so on...
+//Similar to the above two, but with more arguments...
 infix operator >|||>: Composition
 public func >|||><A, B, C, D>(c: C, f: @escaping (A, B, C) -> D) -> (A, B) -> D {
     return { a, b in f(a, b, c) }
@@ -91,6 +124,11 @@ public func >||||||><A, B, C, D, E, F, G>(eff: F, f: @escaping (A, B, C, D, E, F
     return { a, b, c, d, e in f(a, b, c, d, e, eff) }
 }
 
+/**
+ An operator to create a function that, given a keypath for a type, will a function that will accept
+ an object of that type and return the object's property's value. So for instance,
+ `^\UIViewController.view` will return a function `(UIViewController) -> UIView`
+ */
 prefix operator ^
 public prefix func ^ <Root, Value>(kp: KeyPath<Root, Value>) -> (Root) -> Value {
   return get(kp)
@@ -116,6 +154,13 @@ public prefix func ^ <Root, Value>(
 
 //higher order functions
 
+/**
+ Here, `union` will take a bunch of functions and return a function that, when called, will
+ call each of those functions in the bunch. I use this mostly for UI styling, so for instance,
+ for two functions called `setClipsToBounds` and `setGrayBackground` both of
+ which are from `UIView -> Void`, then you could create a new function called, say,
+ `clipAndGrayBg = union(setClipsToBounds, setGrayBackground)`.
+ */
 public func union(_ functions: (() -> Void)...) -> () -> Void {
     return {
         for f in functions {
@@ -148,21 +193,41 @@ public func union<T, U, V>(_ functions: ((T, U, V) -> Void)...) -> (T, U, V) -> 
     }
 }
 
+/**
+ This just returns a function that can be called without arguments at a later time with the passed in value
+ prepopulated. I often use this when a reusable component shouldn't know the passed in type, but needs
+ to pass it to other code when an action occurs.
+ */
 public func voidCurry<T, U>(_ t: T, _ f: @escaping (T) -> U) -> () -> U {
     return { f(t) }
 }
 
+// Operator version of `voidCurry`
 infix operator *>: Composition
 public func *><T, U>(t: T, f: @escaping (T) -> U) -> () -> U {
     return { return f(t) }
 }
 
+/**
+ Sometimes you don't care about the second argument of a function. I use this, for instance, in
+ functional versions of `UIViewController`, where I have a function `f` from
+ `UIViewController -> Void` that I want to pass into a property called
+ `onViewDidAppear: (UIViewController, Bool) -> Void` which is a function I call in
+ `viewDidAppear`. The `Bool` is just whether the appearance was animated or not;
+ `f` doesn't care if it was animated, it only cares about the controller, so I could say:
+ `vc.onViewDidAppear = ignoreSecondArg(f)`
+ */
 public func ignoreSecondArg<T, U, V>(f: @escaping (T) -> V) -> (T, U) -> V {
     return { t, _ in
         return f(t)
     }
 }
 
+/**
+ This function executes `f` if the value passed in is non-`nil`. Convenient when you have
+ a function that accepts only non-optional values, but you have an unwrapped variable. Basically,
+ this function unwraps optionals for you.
+ */
 public func ifExecute<T>(_ t: T?, _ f: (T) -> Void) {
     if let t = t {
         f(t)
@@ -175,6 +240,7 @@ public func ifExecute<T, U>(_ t: T?, _ f: (T) -> U) -> U? {
     return nil
 }
 
+// This is just an operator version of `ifExecute`.
 infix operator ?>
 public func ?><T, U>(t: T?, f: (T) -> U) -> U? {
     if let t = t {
@@ -188,6 +254,10 @@ public func ?><T>(t: T?, f: (T) -> Void) {
     }
 }
 
+/**
+ This function passes itself to the given function if the condition is true. I don't use it much in iOS, but
+ it's pretty helpful in Vapor when creating database queries.
+ */
 public protocol ConditionalApply {}
 extension ConditionalApply {
     public func ifApply(_ condition: Bool, _ function: (Self) -> Self) -> Self {
@@ -201,10 +271,12 @@ extension ConditionalApply {
 
 //other functions
 
+// A free function version of `map`.
 public func map<U, V>(array: [U], f: (U) -> V) -> [V] {
     return array.map(f)
 }
 
+// Allows you to transform arrays using keypaths
 public extension Sequence {
   func map<Value>(_ kp: KeyPath<Element, Value>) -> [Value] {
     return self.map { $0[keyPath: kp] }
@@ -215,14 +287,23 @@ public extension Sequence {
   }
 }
 
+// free function version of `map` with keypaths.
 public func map<Element, Value>(array: [Element], _ kp: KeyPath<Element, Value>) -> [Value] {
     return array.map(kp)
 }
 
+/**
+ This is a really nice function that will cast objects for you. When paired with `>?>` the compiler will
+ be able to tell what type to cast to without you saying explicitly.
+ */
 public func optionalCast<T, U>(object: U) -> T? {
     return object as? T
 }
 
+/**
+ The following are from the excellent PointFree videos, and are used here and there above to
+ implement some of functions.
+ */
 public func prop<Root, Value>(_ kp: WritableKeyPath<Root, Value>)
   -> (@escaping (Value) -> Value)
   -> (Root) -> Root {
