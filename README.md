@@ -108,6 +108,10 @@ Same as the previous, but with `compactMap` as the foundation instead.
 ### `func map<Element, Value>(array: [Element], _ kp: KeyPath<Element, Value>) -> [Value]`
 free function version of `map` with keypaths.
 
+### `func fzip<T, U, V>(_ f: @escaping (T) -> U, _ g: @escaping (T) -> V) -> (T) -> (U, V)`
+This function zips together the outputs of some functions into a tuple. Very convenient when creating a view from a single model while
+keeping the two decoupled.
+
 This pod also includes the functional getters/setters developed in the [PointFree](https://pointfree.co) videos. 
 So `prop`, `get`, `set`, `over`, `mut`, `mver`, and so on. 
 
