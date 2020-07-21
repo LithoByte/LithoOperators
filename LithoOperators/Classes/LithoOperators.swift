@@ -274,7 +274,7 @@ public func ?><T>(t: T?, f: (T) -> Void) {
 }
 
 // function version of the nil coalescing operator `??`
-func coalesceNil<T>(with defaultValue: T) -> (T?) -> T {
+public func coalesceNil<T>(with defaultValue: T) -> (T?) -> T {
     return { t in
         return t ?? defaultValue
     }
@@ -298,7 +298,7 @@ extension ConditionalApply {
 //other functions
 
 // returns the first element of an array if it exists
-func firstElement<T>(_ array: [T]) -> T? {
+public func firstElement<T>(_ array: [T]) -> T? {
     return array.first
 }
 
