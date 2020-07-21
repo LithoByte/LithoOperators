@@ -324,6 +324,26 @@ public func map<Element, Value>(array: [Element], _ kp: KeyPath<Element, Value>)
 }
 
 /**
+ This function zips together the outputs of functions into a tuple. Very convenient when creating a view from a single model while
+ keeping the two decoupled.
+ */
+public func fzip<T, U, V>(_ f: @escaping (T) -> U, _ g: @escaping (T) -> V) -> (T) -> (U, V) {
+    return { t in
+        return (f(t), g(t))
+    }
+}
+public func fzip<T, U, V, W>(_ f: @escaping (T) -> U, _ g: @escaping (T) -> V, _ h: @escaping (T) -> W) -> (T) -> (U, V, W) {
+    return { t in
+        return (f(t), g(t), h(t))
+    }
+}
+public func fzip<T, U, V, W, S>(_ f: @escaping (T) -> U, _ g: @escaping (T) -> V, _ h: @escaping (T) -> W, _ j: @escaping (T) -> S) -> (T) -> (U, V, W, S) {
+    return { t in
+        return (f(t), g(t), h(t), j(t))
+    }
+}
+
+/**
  This is a really nice function that will cast objects for you. When paired with `>?>` the compiler will
  be able to tell what type to cast to without you saying explicitly.
  */
