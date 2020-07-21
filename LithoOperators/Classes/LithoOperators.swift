@@ -223,6 +223,16 @@ public func ignoreSecondArg<T, U, V>(f: @escaping (T) -> V) -> (T, U) -> V {
     }
 }
 
+/** 
+ See ignoreSecondArg above. Similar functionality except ignore the first argument of a function instead
+ of the second.
+*/
+public func ignoreFirstArg<T,U,V>(f: @escaping (U) -> V) -> (T,U) -> V {
+    return { _, u in
+        return f(u)
+    }
+}
+
 /**
  This function executes `f` if the value passed in is non-`nil`. Convenient when you have
  a function that accepts only non-optional values, but you have an unwrapped variable. Basically,
