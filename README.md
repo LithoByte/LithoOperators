@@ -76,6 +76,9 @@ for two functions called `setClipsToBounds` and `setGrayBackground` both of
 which are from `UIView -> Void`, then you could create a new function called, say,
 `clipAndGrayBg = union(setClipsToBounds, setGrayBackground)`.
 
+### `func coalesceNil<T>(with defaultValue: T) -> (T?) -> T`
+This just a function version of the nil coalescing operator `??`
+
 ### `func ifExecute<T>(_ t: T?, _ f: (T) -> Void)`
 This function executes `f` if the value passed in is non-`nil`. Convenient when you have
 a function that accepts only non-optional values, but you have an unwrapped variable. Basically,
@@ -88,6 +91,9 @@ This is just an operator version of `ifExecute`.
 This is an extension function for a protocol named `ConditionalApply`.  This function passes 
 itself to the given function if the condition is true. I don't use it much in iOS, but
 it's pretty helpful in Vapor when creating database queries.
+
+### `func firstElement<T>(_ array: [T]) -> T?`
+This returns the first element of an array, if that element exists
 
 ### `func map<U, V>(array: [U], f: (U) -> V) -> [V]`
 A free function version of `map`.
