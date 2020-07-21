@@ -28,6 +28,15 @@ public func >?><A, B, C>(f: @escaping (A) -> B?, g: @escaping (B) -> C) -> (A) -
         }
     }
 }
+public func >?><A, B, C>(f: @escaping (A) -> B?, g: @escaping (B) -> C?) -> (A) -> C? {
+    return { a in
+        if let b = f(a) {
+            return g(b)
+        } else {
+            return nil
+        }
+    }
+}
 public func >?><A, B>(f: @escaping (A) -> B?, g: @escaping (B) -> Void) -> (A) -> Void {
     return { a in
         if let b = f(a) {
@@ -254,6 +263,13 @@ public func ?><T>(t: T?, f: (T) -> Void) {
     }
 }
 
+// function version of the nil coalescing operator `??`
+func coalesceNil<T>(with defaultValue: T) -> (T?) -> T {
+    return { t in
+        return t ?? defaultValue
+    }
+}
+
 /**
  This function passes itself to the given function if the condition is true. I don't use it much in iOS, but
  it's pretty helpful in Vapor when creating database queries.
@@ -270,6 +286,11 @@ extension ConditionalApply {
 }
 
 //other functions
+
+// returns the first element of an array if it exists
+func firstElement<T>(_ array: [T]) -> T? {
+    return array.first
+}
 
 // A free function version of `map`.
 public func map<U, V>(array: [U], f: (U) -> V) -> [V] {
