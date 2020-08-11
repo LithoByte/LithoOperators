@@ -63,7 +63,7 @@ public prefix func ~<A, B, C>(f: @escaping (A, B) -> C) -> ((A, B)) -> C {
 /**
  This is basically an operator version of `union`, see below.
  */
-infix operator <>: Composition
+infix operator <>: AdditionPrecedence
 public func <><A>(f: @escaping (A) -> Void, g: @escaping (A) -> Void) -> (A) -> Void {
     return { a in
         f(a)
@@ -72,7 +72,7 @@ public func <><A>(f: @escaping (A) -> Void, g: @escaping (A) -> Void) -> (A) -> 
 }
 
 //allows mutating A, as opposed to <>
-infix operator <~>: Composition
+infix operator <~>: AdditionPrecedence
 public func <~><A>(f: @escaping (inout A) -> Void, g: @escaping (inout A) -> Void) -> (inout A) -> Void {
     return { a in
         f(&a)
@@ -91,7 +91,7 @@ public func /><A>(a: inout A, f: @escaping (inout A) -> Void) -> Void {
  from `(A, B) -> C` and returns a function that just accepts a value for `B`. In Prelude this would
  be `a |> curry(f)`.
  */
-infix operator >|>: Composition
+infix operator >|>: AdditionPrecedence
 public func >|><A, B, C>(a: A, f: @escaping (A, B) -> C) -> (B) -> C {
     return { b in f(a, b) }
 }
@@ -104,31 +104,31 @@ public func >|><A, B, C>(a: A, f: @escaping (A, B) -> C) -> (B) -> C {
  a function `f` from `Int -> String` and wanted to use it to change an array of `Int`s to `String`s,
  you could do so by saying: `f >||> map` which would return a function from `[Int] -> [String]`
  */
-infix operator >||>: Composition
+infix operator >||>: AdditionPrecedence
 public func >||><A, B, C>(b: B, f: @escaping (A, B) -> C) -> (A) -> C {
     return { a in f(a, b) }
 }
 
 //Similar to the above two, but with more arguments...
-infix operator >|||>: Composition
+infix operator >|||>: AdditionPrecedence
 public func >|||><A, B, C, D>(c: C, f: @escaping (A, B, C) -> D) -> (A, B) -> D {
     return { a, b in f(a, b, c) }
 }
 
 //...and so on.
-infix operator >||||>: Composition
+infix operator >||||>: AdditionPrecedence
 public func >||||><A, B, C, D, E>(d: D, f: @escaping (A, B, C, D) -> E) -> (A, B, C) -> E {
     return { a, b, c in f(a, b, c, d) }
 }
 
 //...and so on...
-infix operator >|||||>: Composition
+infix operator >|||||>: AdditionPrecedence
 public func >|||||><A, B, C, D, E, F>(e: E, f: @escaping (A, B, C, D, E) -> F) -> (A, B, C, D) -> F {
     return { a, b, c, d in f(a, b, c, d, e) }
 }
 
 //...and so on.
-infix operator >||||||>: Composition
+infix operator >||||||>: AdditionPrecedence
 public func >||||||><A, B, C, D, E, F, G>(eff: F, f: @escaping (A, B, C, D, E, F) -> G) -> (A, B, C, D, E) -> G {
     return { a, b, c, d, e in f(a, b, c, d, e, eff) }
 }
@@ -148,11 +148,9 @@ public prefix func ^<Root, Value>(kp: WritableKeyPath<Root, Value>)
 
     return prop(kp)
 }
-public prefix func ^ <Root, Value>(
-  _ kp: WritableKeyPath<Root, Value>
-  )
+public prefix func ^ <Root, Value>(_ kp: WritableKeyPath<Root, Value>)
   -> (@escaping (inout Value) -> Void)
-  -> (inout Root) -> Void {
+    -> (inout Root) -> Void {
 
     return { update in
       { root in
@@ -212,7 +210,7 @@ public func voidCurry<T, U>(_ t: T, _ f: @escaping (T) -> U) -> () -> U {
 }
 
 // Operator version of `voidCurry`
-infix operator *>: Composition
+infix operator *>: MultiplicationPrecedence
 public func *><T, U>(t: T, f: @escaping (T) -> U) -> () -> U {
     return { return f(t) }
 }
@@ -260,7 +258,7 @@ public func ifExecute<T, U>(_ t: T?, _ f: (T) -> U) -> U? {
 }
 
 // This is just an operator version of `ifExecute`.
-infix operator ?>
+infix operator ?>: MultiplicationPrecedence
 public func ?><T, U>(t: T?, f: (T) -> U) -> U? {
     if let t = t {
         return f(t)
@@ -347,8 +345,8 @@ public func fzip<T, U, V, W, S>(_ f: @escaping (T) -> U, _ g: @escaping (T) -> V
  This is a really nice function that will cast objects for you. When paired with `>?>` the compiler will
  be able to tell what type to cast to without you saying explicitly.
  */
-public func optionalCast<T, U>(object: U) -> T? {
-    return object as? T
+public func optionalCast<T, U>(object: T) -> U? {
+    return object as? U
 }
 
 /**
