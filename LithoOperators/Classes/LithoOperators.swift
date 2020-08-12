@@ -142,7 +142,7 @@ prefix operator ^
 public prefix func ^ <Root, Value>(kp: KeyPath<Root, Value>) -> (Root) -> Value {
   return get(kp)
 }
-public prefix func ^<Root, Value>(kp: WritableKeyPath<Root, Value>)
+public prefix func ^ <Root, Value>(kp: WritableKeyPath<Root, Value>)
   -> (@escaping (Value) -> Value)
   -> (Root) -> Root {
 
@@ -305,6 +305,11 @@ public func map<U, V>(array: [U], f: (U) -> V) -> [V] {
     return array.map(f)
 }
 
+// A free function version of `compactMap`.
+public func compactMap<U, V>(array: [U], f: (U) -> V?) -> [V] {
+    return array.compactMap(f)
+}
+
 // Allows you to transform arrays using keypaths
 public extension Sequence {
   func map<Value>(_ kp: KeyPath<Element, Value>) -> [Value] {
@@ -319,6 +324,11 @@ public extension Sequence {
 // free function version of `map` with keypaths.
 public func map<Element, Value>(array: [Element], _ kp: KeyPath<Element, Value>) -> [Value] {
     return array.map(kp)
+}
+
+// free function version of `compactMap` with keypaths.
+public func compactMap<Element, Value>(array: [Element], _ kp: KeyPath<Element, Value?>) -> [Value] {
+    return array.compactMap(kp)
 }
 
 /**

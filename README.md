@@ -1,6 +1,6 @@
 # LithoOperators
 
-[![CI Status](https://img.shields.io/travis/Elliot/LithoOperators.svg?style=flat)](https://travis-ci.org/Elliot/LithoOperators)
+[![CI Status](https://circleci.com/gh/ThryvInc/LithoOperators.svg?style=svg)](https://circleci.com/gh/ThryvInc/LithoOperators)
 [![Version](https://img.shields.io/cocoapods/v/LithoOperators.svg?style=flat)](https://cocoapods.org/pods/LithoOperators)
 [![License](https://img.shields.io/cocoapods/l/LithoOperators.svg?style=flat)](https://cocoapods.org/pods/LithoOperators)
 [![Platform](https://img.shields.io/cocoapods/p/LithoOperators.svg?style=flat)](https://cocoapods.org/pods/LithoOperators)
