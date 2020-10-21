@@ -240,6 +240,30 @@ public func ignoreFirstArg<T,U,V>(f: @escaping (U) -> V) -> (T,U) -> V {
     }
 }
 
+public func ignoreArg<T, U>(_ f: @escaping () -> U) -> (T) -> U {
+    return { _ in return f() }
+}
+
+public func ignoreArgs<T, U, Z>(_ f: @escaping () -> Z) -> (T, U) -> Z {
+    return { _, _ in return f() }
+}
+public func ignoreArgs<T, U, V, Z>(_ f: @escaping () -> Z) -> (T, U, V) -> Z {
+    return { _, _, _ in return f() }
+}
+public func ignoreArgs<T, U, V, W, Z>(_ f: @escaping () -> Z) -> (T, U, V, W) -> Z {
+    return { _, _, _, _ in return f() }
+}
+public func ignoreArgs<T, U, V, W, X, Z>(_ f: @escaping () -> Z) -> (T, U, V, W, X) -> Z {
+    return { _, _, _, _, _ in return f() }
+}
+public func ignoreArgs<T, U, V, W, X, Y, Z>(_ f: @escaping () -> Z) -> (T, U, V, W, X, Y) -> Z {
+    return { _, _, _, _, _, _ in return f() }
+}
+
+public func returnValue<T>(_ value: T) -> () -> T {
+    return { return value }
+}
+
 /**
  This function executes `f` if the value passed in is non-`nil`. Convenient when you have
  a function that accepts only non-optional values, but you have an unwrapped variable. Basically,
