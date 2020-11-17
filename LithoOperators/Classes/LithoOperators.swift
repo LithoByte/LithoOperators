@@ -424,12 +424,12 @@ public extension Array {
 }
 
 // Tuples!
-func first<A, B, C>(_ f: @escaping (A) -> C) -> ((A, B)) -> (C, B) {
+public func first<A, B, C>(_ f: @escaping (A) -> C) -> ((A, B)) -> (C, B) {
     return { pair in
         return (f(pair.0), pair.1)
     }
 }
-func second<A, B, C>(_ f: @escaping (B) -> C) -> ((A, B)) -> (A, C) {
+public func second<A, B, C>(_ f: @escaping (B) -> C) -> ((A, B)) -> (A, C) {
     return { pair in
         return (pair.0, f(pair.1))
     }
@@ -462,6 +462,13 @@ public func fzip<T, U, V, W, S>(_ f: @escaping (T) -> U, _ g: @escaping (T) -> V
 public func optionalCast<T, U>(object: T) -> U? {
     return object as? U
 }
+public prefix func ~<T, U, V>(f: @escaping (U) -> V) -> (T) -> V? {
+    return optionalCast >?> f
+}
+public prefix func ~<T, U>(f: @escaping (U) -> Void) -> (T) -> Void {
+    return optionalCast >?> f
+}
+
 
 /**
  The following are from the excellent PointFree videos, and are used here and there above to
