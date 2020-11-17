@@ -95,6 +95,9 @@ infix operator >|>: AdditionPrecedence
 public func >|><A, B, C>(a: A, f: @escaping (A, B) -> C) -> (B) -> C {
     return { b in f(a, b) }
 }
+public func >|><A, B, C, D>(tuple: (A, B), f: @escaping (A, B, C) -> D) -> (C) -> D {
+    return { c in f(tuple.0, tuple.1, c) }
+}
 
 /**
  Similar to `>|>`, but with the second value. So consider `f: (A, B) -> C`. Then `b >||> f`
@@ -108,11 +111,20 @@ infix operator >||>: AdditionPrecedence
 public func >||><A, B, C>(b: B, f: @escaping (A, B) -> C) -> (A) -> C {
     return { a in f(a, b) }
 }
+public func >||><A, B, C, D>(tuple: (B, C), f: @escaping (A, B, C) -> D) -> (A) -> D {
+    return { a in f(a, tuple.0, tuple.1) }
+}
+public func >||><A, B, C, D, E>(tuple: (B, C, D), f: @escaping (A, B, C, D) -> E) -> (A) -> E {
+    return { a in f(a, tuple.0, tuple.1, tuple.2) }
+}
 
 //Similar to the above two, but with more arguments...
 infix operator >|||>: AdditionPrecedence
 public func >|||><A, B, C, D>(c: C, f: @escaping (A, B, C) -> D) -> (A, B) -> D {
     return { a, b in f(a, b, c) }
+}
+public func >|||><A, B, C, D, E>(tuple: (C, D), f: @escaping (A, B, C, D) -> E) -> (A, B) -> E {
+    return { a, b in f(a, b, tuple.0, tuple.1) }
 }
 
 //...and so on.
@@ -328,31 +340,99 @@ public func firstElement<T>(_ array: [T]) -> T? {
 public func map<U, V>(array: [U], f: (U) -> V) -> [V] {
     return array.map(f)
 }
+public func map<U, V>(f: @escaping (U) -> V) -> ([U]) -> [V] {
+    return {
+        $0.map(f)
+    }
+}
+
+// A free function version of `filter`.
+public func filter<T>(array: [T], f: (T) -> Bool) -> [T] {
+    return array.filter(f)
+}
+public func filter<T>(f: @escaping (T) -> Bool) -> ([T]) -> [T] {
+    return {
+        $0.filter(f)
+    }
+}
 
 // A free function version of `compactMap`.
 public func compactMap<U, V>(array: [U], f: (U) -> V?) -> [V] {
     return array.compactMap(f)
 }
+public func compactMap<U, V>(f: @escaping (U) -> V?) -> ([U]) -> [V] {
+    return {
+        $0.compactMap(f)
+    }
+}
 
 // Allows you to transform arrays using keypaths
 public extension Sequence {
-  func map<Value>(_ kp: KeyPath<Element, Value>) -> [Value] {
-    return self.map { $0[keyPath: kp] }
-  }
-  
-  func compactMap<Value>(_ kp: KeyPath<Element, Value?>) -> [Value] {
-    return self.compactMap { $0[keyPath: kp] }
-  }
+    func map<Value>(_ kp: KeyPath<Element, Value>) -> [Value] {
+        return self.map { $0[keyPath: kp] }
+    }
+
+    func compactMap<Value>(_ kp: KeyPath<Element, Value?>) -> [Value] {
+        return self.compactMap { $0[keyPath: kp] }
+    }
+    
+    func sortedBy<T>(keyPath: KeyPath<Element, T>) -> [Element] where T: Comparable {
+        return self.sorted(by: { $0[keyPath: keyPath] < $1[keyPath: keyPath] })
+    }
+    
+    func sortedBy<T>(keyPath: KeyPath<Element, T?>, defaultValue: T) -> [Element] where T: Comparable {
+        return self.sorted(by: { $0[keyPath: keyPath] ?? defaultValue < $1[keyPath: keyPath] ?? defaultValue })
+    }
 }
 
 // free function version of `map` with keypaths.
 public func map<Element, Value>(array: [Element], _ kp: KeyPath<Element, Value>) -> [Value] {
     return array.map(kp)
 }
+public func map<Element, Value>(_ kp: KeyPath<Element, Value>) -> ([Element]) -> [Value] {
+    return {
+        $0.map(kp)
+    }
+}
 
 // free function version of `compactMap` with keypaths.
 public func compactMap<Element, Value>(array: [Element], _ kp: KeyPath<Element, Value?>) -> [Value] {
     return array.compactMap(kp)
+}
+public func compactMap<Element, Value>(_ kp: KeyPath<Element, Value?>) -> ([Element]) -> [Value] {
+    return {
+        $0.compactMap(kp)
+    }
+}
+
+public func sortedBy<Element, Property>(keyPath: KeyPath<Element, Property>) -> ([Element]) -> [Element] where Property: Comparable {
+    return { $0.sortedBy(keyPath: keyPath) }
+}
+
+public func sortedBy<Element, Property>(keyPath: KeyPath<Element, Property?>, defaultValue: Property)
+-> ([Element]) -> [Element] where Property: Comparable {
+    return { $0.sortedBy(keyPath: keyPath, defaultValue: defaultValue) }
+}
+
+public extension Array {
+    mutating func sortBy<T>(keyPath: KeyPath<Element, T>) where T: Comparable {
+        self.sort(by: { $0[keyPath: keyPath] < $1[keyPath: keyPath]})
+    }
+    mutating func sortBy<T>(keyPath: KeyPath<Element, T?>, defaultValue: T) where T: Comparable {
+        self.sort(by: { $0[keyPath: keyPath] ?? defaultValue < $1[keyPath: keyPath] ?? defaultValue })
+    }
+}
+
+// Tuples!
+func first<A, B, C>(_ f: @escaping (A) -> C) -> ((A, B)) -> (C, B) {
+    return { pair in
+        return (f(pair.0), pair.1)
+    }
+}
+func second<A, B, C>(_ f: @escaping (B) -> C) -> ((A, B)) -> (A, C) {
+    return { pair in
+        return (pair.0, f(pair.1))
+    }
 }
 
 /**
