@@ -462,10 +462,11 @@ public func fzip<T, U, V, W, S>(_ f: @escaping (T) -> U, _ g: @escaping (T) -> V
 public func optionalCast<T, U>(object: T) -> U? {
     return object as? U
 }
-public prefix func ~<T, U, V>(f: @escaping (U) -> V) -> (T) -> V? {
+prefix operator ~>
+public prefix func ~><T, U, V>(f: @escaping (U) -> V) -> (T) -> V? {
     return optionalCast >?> f
 }
-public prefix func ~<T, U>(f: @escaping (U) -> Void) -> (T) -> Void {
+public prefix func ~><T, U>(f: @escaping (U) -> Void) -> (T) -> Void {
     return optionalCast >?> f
 }
 
