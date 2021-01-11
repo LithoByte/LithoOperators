@@ -18,6 +18,8 @@ import Prelude
  in; then you could do `optionalCast >?> f` and the compiler would return a function from
  `UIView -> Void` which, if the UIView is a `UIButton` in particular, would apply `f` to it.
  */
+
+//TESTED
 infix operator >?>: Composition
 public func >?><A, B, C>(f: @escaping (A) -> B?, g: @escaping (B) -> C) -> (A) -> C? {
     return { a in
@@ -63,6 +65,7 @@ public prefix func ~<A, B, C>(f: @escaping (A, B) -> C) -> ((A, B)) -> C {
 /**
  This is basically an operator version of `union`, see below.
  */
+//TESTED
 infix operator <>: AdditionPrecedence
 public func <><A>(f: @escaping (A) -> Void, g: @escaping (A) -> Void) -> (A) -> Void {
     return { a in
@@ -91,10 +94,12 @@ public func /><A>(a: inout A, f: @escaping (inout A) -> Void) -> Void {
  from `(A, B) -> C` and returns a function that just accepts a value for `B`. In Prelude this would
  be `a |> curry(f)`.
  */
+//TESTED
 infix operator >|>: AdditionPrecedence
 public func >|><A, B, C>(a: A, f: @escaping (A, B) -> C) -> (B) -> C {
     return { b in f(a, b) }
 }
+// TESTED
 public func >|><A, B, C, D>(tuple: (A, B), f: @escaping (A, B, C) -> D) -> (C) -> D {
     return { c in f(tuple.0, tuple.1, c) }
 }
@@ -107,6 +112,7 @@ public func >|><A, B, C, D>(tuple: (A, B), f: @escaping (A, B, C) -> D) -> (C) -
  a function `f` from `Int -> String` and wanted to use it to change an array of `Int`s to `String`s,
  you could do so by saying: `f >||> map` which would return a function from `[Int] -> [String]`
  */
+//TESTED
 infix operator >||>: AdditionPrecedence
 public func >||><A, B, C>(b: B, f: @escaping (A, B) -> C) -> (A) -> C {
     return { a in f(a, b) }
@@ -119,6 +125,7 @@ public func >||><A, B, C, D, E>(tuple: (B, C, D), f: @escaping (A, B, C, D) -> E
 }
 
 //Similar to the above two, but with more arguments...
+// TESTED
 infix operator >|||>: AdditionPrecedence
 public func >|||><A, B, C, D>(c: C, f: @escaping (A, B, C) -> D) -> (A, B) -> D {
     return { a, b in f(a, b, c) }
@@ -128,18 +135,21 @@ public func >|||><A, B, C, D, E>(tuple: (C, D), f: @escaping (A, B, C, D) -> E) 
 }
 
 //...and so on.
+// TESTED
 infix operator >||||>: AdditionPrecedence
 public func >||||><A, B, C, D, E>(d: D, f: @escaping (A, B, C, D) -> E) -> (A, B, C) -> E {
     return { a, b, c in f(a, b, c, d) }
 }
 
 //...and so on...
+// TESTED
 infix operator >|||||>: AdditionPrecedence
 public func >|||||><A, B, C, D, E, F>(e: E, f: @escaping (A, B, C, D, E) -> F) -> (A, B, C, D) -> F {
     return { a, b, c, d in f(a, b, c, d, e) }
 }
 
 //...and so on.
+// TESTED
 infix operator >||||||>: AdditionPrecedence
 public func >||||||><A, B, C, D, E, F, G>(eff: F, f: @escaping (A, B, C, D, E, F) -> G) -> (A, B, C, D, E) -> G {
     return { a, b, c, d, e in f(a, b, c, d, e, eff) }
@@ -180,6 +190,8 @@ public prefix func ^ <Root, Value>(_ kp: WritableKeyPath<Root, Value>)
  which are from `UIView -> Void`, then you could create a new function called, say,
  `clipAndGrayBg = union(setClipsToBounds, setGrayBackground)`.
  */
+
+//TESTED
 public func union(_ functions: (() -> Void)...) -> () -> Void {
     return {
         for f in functions {
@@ -217,11 +229,13 @@ public func union<T, U, V>(_ functions: ((T, U, V) -> Void)...) -> (T, U, V) -> 
  prepopulated. I often use this when a reusable component shouldn't know the passed in type, but needs
  to pass it to other code when an action occurs.
  */
+//TESTED
 public func voidCurry<T, U>(_ t: T, _ f: @escaping (T) -> U) -> () -> U {
     return { f(t) }
 }
 
 // Operator version of `voidCurry`
+//TESTED
 infix operator *>: MultiplicationPrecedence
 public func *><T, U>(t: T, f: @escaping (T) -> U) -> () -> U {
     return { return f(t) }
@@ -332,11 +346,13 @@ extension ConditionalApply {
 //other functions
 
 // returns the first element of an array if it exists
+// TESTED
 public func firstElement<T>(_ array: [T]) -> T? {
     return array.first
 }
 
 // A free function version of `map`.
+// TESTED
 public func map<U, V>(array: [U], f: (U) -> V) -> [V] {
     return array.map(f)
 }
@@ -347,6 +363,7 @@ public func map<U, V>(f: @escaping (U) -> V) -> ([U]) -> [V] {
 }
 
 // A free function version of `filter`.
+// TESTED
 public func filter<T>(array: [T], f: (T) -> Bool) -> [T] {
     return array.filter(f)
 }
@@ -357,6 +374,7 @@ public func filter<T>(f: @escaping (T) -> Bool) -> ([T]) -> [T] {
 }
 
 // A free function version of `compactMap`.
+// TESTED
 public func compactMap<U, V>(array: [U], f: (U) -> V?) -> [V] {
     return array.compactMap(f)
 }
@@ -367,6 +385,7 @@ public func compactMap<U, V>(f: @escaping (U) -> V?) -> ([U]) -> [V] {
 }
 
 // Allows you to transform arrays using keypaths
+//TESTED
 public extension Sequence {
     func map<Value>(_ kp: KeyPath<Element, Value>) -> [Value] {
         return self.map { $0[keyPath: kp] }
@@ -386,6 +405,7 @@ public extension Sequence {
 }
 
 // free function version of `map` with keypaths.
+//TESTED
 public func map<Element, Value>(array: [Element], _ kp: KeyPath<Element, Value>) -> [Value] {
     return array.map(kp)
 }
@@ -396,6 +416,7 @@ public func map<Element, Value>(_ kp: KeyPath<Element, Value>) -> ([Element]) ->
 }
 
 // free function version of `compactMap` with keypaths.
+//TESTED
 public func compactMap<Element, Value>(array: [Element], _ kp: KeyPath<Element, Value?>) -> [Value] {
     return array.compactMap(kp)
 }
@@ -439,6 +460,7 @@ public func second<A, B, C>(_ f: @escaping (B) -> C) -> ((A, B)) -> (A, C) {
  This function zips together the outputs of functions into a tuple. Very convenient when creating a view from a single model while
  keeping the two decoupled.
  */
+
 public func fzip<T, U, V>(_ f: @escaping (T) -> U, _ g: @escaping (T) -> V) -> (T) -> (U, V) {
     return { t in
         return (f(t), g(t))
@@ -459,6 +481,7 @@ public func fzip<T, U, V, W, S>(_ f: @escaping (T) -> U, _ g: @escaping (T) -> V
  This is a really nice function that will cast objects for you. When paired with `>?>` the compiler will
  be able to tell what type to cast to without you saying explicitly.
  */
+
 public func optionalCast<T, U>(object: T) -> U? {
     return object as? U
 }

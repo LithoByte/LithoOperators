@@ -114,4 +114,19 @@ class OptionalsTests: XCTestCase {
             XCTFail("String was not cast to String")
         }
     }
+    
+    func testFunctionalOptionalCast() {
+        let anyArray: [Any] = [1, 2, 3]
+        let sumIntArray: ([Int]) -> Int = { $0.reduce(0, { $0 + $1 }) }
+        let sum: Int? = (~>sumIntArray)(anyArray)
+        XCTAssert(sum! == 6)
+    }
+    
+    func testFunctionalVoidOptionalCast() {
+        let anyArray: [Any] = [1, 2, 3]
+        var wasCalled: Bool = false
+        let call: ([Int]) -> Void = { _ in wasCalled = true }
+        (~>call)(anyArray)
+        XCTAssert(wasCalled)
+    }
 }

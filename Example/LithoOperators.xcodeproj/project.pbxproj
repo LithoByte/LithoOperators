@@ -19,6 +19,7 @@
 		607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 607FACD91AFB9204008FA782 /* Main.storyboard */; };
 		607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
 		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
+		980FCB7E25800FEF00C5798E /* ConditionalTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 980FCB7D25800FEF00C5798E /* ConditionalTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,7 +52,8 @@
 		607FACDF1AFB9204008FA782 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		607FACE51AFB9204008FA782 /* LithoOperators_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LithoOperators_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACEA1AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		AB7EAE1E3A677B659E95750C /* LithoOperators.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LithoOperators.podspec; path = ../LithoOperators.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		980FCB7D25800FEF00C5798E /* ConditionalTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConditionalTests.swift; sourceTree = "<group>"; };
+		AB7EAE1E3A677B659E95750C /* LithoOperators.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LithoOperators.podspec; path = ../LithoOperators.podspec; sourceTree = "<group>"; };
 		AD16122D9FD783847B990AAD /* Pods-LithoOperators_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LithoOperators_Example.debug.xcconfig"; path = "Target Support Files/Pods-LithoOperators_Example/Pods-LithoOperators_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		BAC0D81A38BD5A476B0A32AB /* Pods_LithoOperators_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LithoOperators_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EBD584A23FC2CC6C18E53327 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
@@ -139,6 +141,7 @@
 				49B5962424E43C5B00CE1E42 /* HigherOrderTests.swift */,
 				49B5962224E43C3A00CE1E42 /* LiftTests.swift */,
 				49B5962024E43BC100CE1E42 /* OptionalsTests.swift */,
+				980FCB7D25800FEF00C5798E /* ConditionalTests.swift */,
 				607FACE91AFB9204008FA782 /* Supporting Files */,
 			);
 			path = Tests;
@@ -358,6 +361,7 @@
 			files = (
 				49B5962324E43C3A00CE1E42 /* LiftTests.swift in Sources */,
 				49B5961F24E43B9000CE1E42 /* ArrayTests.swift in Sources */,
+				980FCB7E25800FEF00C5798E /* ConditionalTests.swift in Sources */,
 				49B5962124E43BC100CE1E42 /* OptionalsTests.swift in Sources */,
 				49B5962524E43C5B00CE1E42 /* HigherOrderTests.swift in Sources */,
 				49B5962724E43C7700CE1E42 /* CurryTests.swift in Sources */,

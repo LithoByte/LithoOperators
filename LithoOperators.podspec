@@ -30,7 +30,7 @@ LithoOperators contains some nice operators to make functional programming easie
 
   s.ios.deployment_target = '8.0'
 
-  s.source_files = 'LithoOperators/Classes/**/*'
+  s.source_files = 'Sources/LithoOperators/Classes/**/*'
   
   # s.resource_bundles = {
   #   'LithoOperators' => ['LithoOperators/Assets/*.png']

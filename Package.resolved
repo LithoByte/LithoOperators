@@ -1,0 +1,16 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "Prelude",
+        "repositoryURL": "https://github.com/ThryvInc/Prelude",
+        "state": {
+          "branch": null,
+          "revision": "f2950ab5fc6f099c3887efa686cbe086fc2cf687",
+          "version": null
+        }
+      }
+    ]
+  },
+  "version": 1
+}
