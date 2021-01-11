@@ -1,5 +1,5 @@
 PODS:
-  - LithoOperators (0.0.1):
+  - LithoOperators (0.0.17):
     - Prelude
   - Prelude (3.0.0)
 
@@ -7,7 +7,7 @@ DEPENDENCIES:
   - LithoOperators (from `../`)
 
 SPEC REPOS:
-  https://github.com/cocoapods/specs.git:
+  trunk:
     - Prelude
 
 EXTERNAL SOURCES:
@@ -15,9 +15,9 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  LithoOperators: f9000e05d6b180c1c56bde69917cd3a073b1a221
+  LithoOperators: 9eb7bd859b50256ebf8636d9919b30e232647a0c
   Prelude: fe4cc0fd961d34edf48fe6b04d05c863449efb0a
 
 PODFILE CHECKSUM: 978fb52e184ab91794bf7459713a561a644023bd
 
-COCOAPODS: 1.7.2
+COCOAPODS: 1.10.0
