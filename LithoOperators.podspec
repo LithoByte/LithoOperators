@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'LithoOperators'
-  s.version          = '0.0.18'
+  s.version          = '0.0.19'
   s.summary          = 'LithoOperators contains some nice operators to make functional programming easier.'
   s.swift_versions   = ['4.0', '4.2', '5.0', '5.1', '5.2', '5.3']
 
@@ -19,7 +19,7 @@ Pod::Spec.new do |s|
 #   * Finally, don't worry about the indent, CocoaPods strips it!
 
   s.description      = <<-DESC
-LithoOperators contains some nice operators to make functional programming easier. Many of these come from the excellent pointfree.co videos! Check them out for more!
+LithoOperators contains some nice operators to make functional programming easier. Many of these come from the excellent pointfree.co videos, check them out for more!
                        DESC
 
   s.homepage         = 'https://github.com/ThryvInc/LithoOperators'
