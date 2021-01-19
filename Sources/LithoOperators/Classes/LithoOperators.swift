@@ -471,9 +471,19 @@ public func fzip<T, U, V, W>(_ f: @escaping (T) -> U, _ g: @escaping (T) -> V, _
         return (f(t), g(t), h(t))
     }
 }
-public func fzip<T, U, V, W, S>(_ f: @escaping (T) -> U, _ g: @escaping (T) -> V, _ h: @escaping (T) -> W, _ j: @escaping (T) -> S) -> (T) -> (U, V, W, S) {
+public func fzip<T, U, V, W, X>(_ f: @escaping (T) -> U, _ g: @escaping (T) -> V, _ h: @escaping (T) -> W, _ j: @escaping (T) -> X) -> (T) -> (U, V, W, X) {
     return { t in
         return (f(t), g(t), h(t), j(t))
+    }
+}
+public func fzip<T, U, V, W, X, Y>(_ f: @escaping (T) -> U, _ g: @escaping (T) -> V, _ h: @escaping (T) -> W, _ j: @escaping (T) -> X, _ k: @escaping (T) -> Y) -> (T) -> (U, V, W, X, Y) {
+    return { t in
+        return (f(t), g(t), h(t), j(t), k(t))
+    }
+}
+public func fzip<T, U, V, W, X, Y, Z>(_ f: @escaping (T) -> U, _ g: @escaping (T) -> V, _ h: @escaping (T) -> W, _ j: @escaping (T) -> X, _ k: @escaping (T) -> Y, _ l: @escaping (T) -> Z) -> (T) -> (U, V, W, X, Y, Z) {
+    return { t in
+        return (f(t), g(t), h(t), j(t), k(t), l(t))
     }
 }
 
