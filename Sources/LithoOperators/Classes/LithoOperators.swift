@@ -508,6 +508,11 @@ public prefix func ~><T, U>(f: @escaping (U) -> Void) -> (T) -> Void {
  The following are from the excellent PointFree videos, and are used here and there above to
  implement some of functions.
  */
+
+public func >>> <U, V> (f: @escaping () -> U, g: @escaping (U) -> V) -> () -> V {
+    return { g(f()) }
+}
+
 public func prop<Root, Value>(_ kp: WritableKeyPath<Root, Value>)
   -> (@escaping (Value) -> Value)
   -> (Root) -> Root {

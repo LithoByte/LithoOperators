@@ -11,6 +11,13 @@ import LithoOperators
 import Prelude
 import UIKit
 class HigherOrderTests: XCTestCase {
+    func testVoidCompose() {
+        let namer: () -> String = { "Elliot" }
+        let caps: (String) -> String = { $0.uppercased() }
+        
+        XCTAssertEqual((namer >>> caps)(), "ELLIOT")
+    }
+    
     func testTupleUnwrap() {
         let addTo20: (Int, Int) -> Bool = { $0 + $1 == 20 }
         let generateTuple: (Int) -> (Int, Int) = { ($0, 10 + $0) }
