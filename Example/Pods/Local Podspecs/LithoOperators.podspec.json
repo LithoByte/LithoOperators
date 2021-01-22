@@ -1,6 +1,6 @@
 {
   "name": "LithoOperators",
-  "version": "0.0.17",
+  "version": "0.1.1",
   "summary": "LithoOperators contains some nice operators to make functional programming easier.",
   "swift_versions": [
     "4.0",
@@ -10,7 +10,7 @@
     "5.2",
     "5.3"
   ],
-  "description": "LithoOperators contains some nice operators to make functional programming easier. Many of these come from the excellent pointfree.co videos! Check them out for more!",
+  "description": "LithoOperators contains some nice operators to make functional programming easier. Many of these come from the excellent pointfree.co videos, check them out for more!",
   "homepage": "https://github.com/ThryvInc/LithoOperators",
   "license": {
     "type": "MIT",
@@ -21,7 +21,7 @@
   },
   "source": {
     "git": "https://github.com/ThryvInc/LithoOperators.git",
-    "tag": "0.0.17"
+    "tag": "0.1.1"
   },
   "social_media_url": "https://twitter.com/elliot_schrock",
   "platforms": {
