@@ -328,6 +328,54 @@ public func coalesceNil<T>(with defaultValue: T) -> (T?) -> T {
     }
 }
 
+public func ifThenCall(_ condition: Bool, _ f: @escaping () -> Void, else g: (() -> Void)? = nil) {
+    if condition {
+        f()
+    } else {
+        g?()
+    }
+}
+
+public func ifThen(_ condition: @escaping () -> Bool, _ f: @escaping () -> Void, else g: (() -> Void)? = nil) -> () -> Void {
+    return {
+        if condition() {
+            f()
+        } else {
+            g?()
+        }
+    }
+}
+
+public func ifThen<T>(_ condition: @escaping () -> Bool, _ f: @escaping (T) -> Void, else g: (() -> Void)? = nil) -> (T) -> Void {
+    return { t in
+        if condition() {
+            f(t)
+        } else {
+            g?()
+        }
+    }
+}
+
+public func ifThen(_ condition: Bool, _ f: @escaping () -> Void, else g: (() -> Void)? = nil) -> () -> Void {
+    return {
+        if condition {
+            f()
+        } else {
+            g?()
+        }
+    }
+}
+
+public func ifThen<T>(_ condition: Bool, _ f: @escaping (T) -> Void, else g: (() -> Void)? = nil) -> (T) -> Void {
+    return { t in
+        if condition {
+            f(t)
+        } else {
+            g?()
+        }
+    }
+}
+
 /**
  This function passes itself to the given function if the condition is true. I don't use it much in iOS, but
  it's pretty helpful in Vapor when creating database queries.
