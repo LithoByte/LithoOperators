@@ -551,6 +551,21 @@ public prefix func ~><T, U>(f: @escaping (U) -> Void) -> (T) -> Void {
     return optionalCast >?> f
 }
 
+// The returned function executes the argument and returns the input; great
+// for when you just want to do something when a value is published in
+// Combine
+public func id<T>(with sideEffect: @escaping () -> Void) -> (T) -> (T) {
+    return {
+        sideEffect()
+        return $0
+    }
+}
+public func id<T>(with sideEffect: @escaping (T) -> Void) -> (T) -> (T) {
+    return {
+        sideEffect($0)
+        return $0
+    }
+}
 
 /**
  The following are from the excellent PointFree videos, and are used here and there above to
