@@ -578,6 +578,13 @@ public func id<T>(with sideEffect: @escaping (T) -> Void) -> (T) -> (T) {
     }
 }
 
+public func setter<Root, Value>(_ kp: WritableKeyPath<Root, Value>) -> (Root, Value) -> Void {
+    return { root, val in
+        var copy = root
+        copy[keyPath: kp] = val
+    }
+}
+
 /**
  The following are from the excellent PointFree videos, and are used here and there above to
  implement some of functions.
