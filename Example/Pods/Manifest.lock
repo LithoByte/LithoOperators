@@ -1,5 +1,5 @@
 PODS:
-  - LithoOperators (0.1.1):
+  - LithoOperators (0.1.2):
     - Prelude
   - Prelude (3.0.0)
 
@@ -15,7 +15,7 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  LithoOperators: ca90994e1aa8e66eda3dcffe89095869ef5b4b66
+  LithoOperators: 3b7f496129bdf95867bd328fc80fa32b8df209ca
   Prelude: fe4cc0fd961d34edf48fe6b04d05c863449efb0a
 
 PODFILE CHECKSUM: 978fb52e184ab91794bf7459713a561a644023bd
