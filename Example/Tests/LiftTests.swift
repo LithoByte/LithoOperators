@@ -28,6 +28,13 @@ class LiftTests: XCTestCase {
         XCTAssert(view.backgroundColor == .black)
     }
     
+    func testSetter() {
+        let view = UIView()
+        let setBackground = setter(\UIView.backgroundColor)
+        setBackground(view, .black)
+        XCTAssertEqual(view.backgroundColor, .black)
+    }
+    
     func testWritableInoutLift() {
         struct User {
             var name: String

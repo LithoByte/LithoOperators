@@ -74,6 +74,14 @@ public func <><A>(f: @escaping (A) -> Void, g: @escaping (A) -> Void) -> (A) -> 
     }
 }
 
+/**
+ Operator version of `union`, although it tacks on the second function onto the first (similar to +=)
+ */
+infix operator <>=: AdditionPrecedence
+public func <>=<A>(f: inout ((A) -> Void), g: @escaping (A) -> Void) {
+    f = f <> g
+}
+
 //allows mutating A, as opposed to <>
 infix operator <~>: AdditionPrecedence
 public func <~><A>(f: @escaping (inout A) -> Void, g: @escaping (inout A) -> Void) -> (inout A) -> Void {
@@ -102,6 +110,9 @@ public func >|><A, B, C>(a: A, f: @escaping (A, B) -> C) -> (B) -> C {
 // TESTED
 public func >|><A, B, C, D>(tuple: (A, B), f: @escaping (A, B, C) -> D) -> (C) -> D {
     return { c in f(tuple.0, tuple.1, c) }
+}
+public func >|><A, B, C, D>(a: A, f: @escaping (A, B, C) -> D) -> (B, C) -> D {
+    return { b, c in f(a, b, c) }
 }
 
 /**
@@ -564,6 +575,13 @@ public func id<T>(with sideEffect: @escaping (T) -> Void) -> (T) -> (T) {
     return {
         sideEffect($0)
         return $0
+    }
+}
+
+public func setter<Root, Value>(_ kp: WritableKeyPath<Root, Value>) -> (Root, Value) -> Void {
+    return { root, val in
+        var copy = root
+        copy[keyPath: kp] = val
     }
 }
 
