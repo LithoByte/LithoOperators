@@ -421,6 +421,17 @@ public func map<U, V>(f: @escaping (U) -> V) -> ([U]) -> [V] {
     }
 }
 
+// A free function version of `forEach`.
+// TESTED
+public func forEach<T>(array: [T], f: (T) -> Void) -> Void {
+    return array.forEach(f)
+}
+public func forEach<T>(f: @escaping (T) -> Void) -> ([T]) -> Void {
+    return {
+        $0.forEach(f)
+    }
+}
+
 // A free function version of `filter`.
 // TESTED
 public func filter<T>(array: [T], f: (T) -> Bool) -> [T] {
