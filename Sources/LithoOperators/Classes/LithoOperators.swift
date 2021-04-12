@@ -387,6 +387,16 @@ public func ifThen<T>(_ condition: Bool, _ f: @escaping (T) -> Void, else g: (()
     }
 }
 
+public func ifThen<T>(_ condition: @escaping (T) -> Bool, _ f: @escaping () -> Void, else g: (() -> Void)? = nil) -> (T) -> Void {
+    return { t in
+        if condition(t) {
+            f()
+        } else {
+            g?()
+        }
+    }
+}
+
 /**
  This function passes itself to the given function if the condition is true. I don't use it much in iOS, but
  it's pretty helpful in Vapor when creating database queries.
