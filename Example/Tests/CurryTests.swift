@@ -95,11 +95,11 @@ class CurryTests: XCTestCase {
     func testFunctionalCurry() {
         let boolToInt: (Bool) -> Int = { $0 ? 1 : 0 }
         let addTwoNumbers: (Int, Int) -> Int = (+)
-        let addConditional: (Bool, Int) -> Int = boolToInt >|> addTwoNumbers
+        let addConditional: (Bool, Int) -> Int = boolToInt >*> addTwoNumbers
         XCTAssertEqual(addConditional(true, 10), 11)
         XCTAssertEqual(addConditional(false, 10), 10)
         
-        let addTwoConditionals: (Bool, Bool) -> Int = boolToInt >||> addConditional
+        let addTwoConditionals: (Bool, Bool) -> Int = boolToInt >**> addConditional
         XCTAssertEqual(addTwoConditionals(true, true), 2)
         XCTAssertEqual(addTwoConditionals(false, false), 0)
         XCTAssertEqual(addTwoConditionals(false, true), 1)
@@ -109,9 +109,9 @@ class CurryTests: XCTestCase {
     func testVoidFunctionalCurry() {
         let int = { 2 }
         let addTwoNumbers: (Int, Int) -> Int = (+)
-        let addTwo: (Int) -> Int = int >|> addTwoNumbers
+        let addTwo: (Int) -> Int = int >*> addTwoNumbers
         XCTAssertEqual(addTwo(1), 3)
-        let addOne = { 1 } >||> addTwoNumbers
+        let addOne = { 1 } >**> addTwoNumbers
         XCTAssertEqual(addOne(1), 2)
     }
 }

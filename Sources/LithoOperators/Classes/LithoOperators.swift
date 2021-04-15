@@ -167,30 +167,30 @@ public func >||||||><A, B, C, D, E, F, G>(eff: F, f: @escaping (A, B, C, D, E, F
 }
 
 /**
- These sets of operators have the same semantics as the previous, only they take two functions. The latter is the function to curry, and the former returns a value to be curried into the latter. This is the technical equivalent of using >>> (see below) to compose f with g >||> (>|||>) if we want the returned value to be curried into the third position. Using operators on operators seems a little unreadable, however, so we overload these functions.
- */
-public func >|><A, B, C>(f: @escaping () -> A, g: @escaping (A, B) -> C) -> (B) -> C {
-    return (f >>> (g >||> (>|>))) |> execute
-}
-public func >||><A, B, C>(f: @escaping () -> B, g: @escaping (A, B) -> C) -> (A) -> C {
-    return (f >>> (g >||> (>||>))) |> execute
-}
-public func >|||><A, B, C, D>(f: @escaping () -> C, g: @escaping (A, B, C) -> D) -> (A, B) -> D {
-    return (f >>> (g >||> (>|||>))) |> execute
-}
-
-/**
  These operators can also have a subsitition effect on functions, instead of a currying effect. This allows you to take a function, say g: (Int, Int) -> Int, and use another function f: (String) -> Int, and substitute f into g to make g': (String, Int) -> Int. Note that the one parameter case is achieved by the >>> operator.
  */
-public func >|><A, B, C, D>(f: @escaping (A) -> B, g: @escaping (B, C) -> D) -> (A, C) -> D {
-    return { a, c in
-        g(f(a), c)
-    }
+infix operator >*>: AdditionPrecedence
+public func >*><A, B, C, D>(f: @escaping (A) -> B, g: @escaping (B, C) -> D) -> (A, C) -> D {
+    return uncurry(f >>> curry(g))
 }
-public func >||><A, B, C, D>(f: @escaping (A) -> C, g: @escaping (B, C) -> D) -> (B, A) -> D {
-    return { b, a in
-        g(b, f(a))
-    }
+infix operator >**>: AdditionPrecedence
+public func >**><A, B, C, D>(f: @escaping (A) -> C, g: @escaping (B, C) -> D) -> (B, A) -> D {
+    return flip(uncurry(f >>> curry(flip(g))))
+}
+infix operator >***>: AdditionPrecedence
+
+
+/**
+ These sets of operators have the same semantics as the previous, only they take two functions. The latter is the function to curry, and the former returns a value to be curried into the latter. This is the technical equivalent of using >>> (see below) to compose f with g >||> (>|||>) if we want the returned value to be curried into the third position. Using operators on operators seems a little unreadable, however, so we overload these functions.
+ */
+public func >*><A, B, C>(f: @escaping () -> A, g: @escaping (A, B) -> C) -> (B) -> C {
+    return (f >>> (g >||> (>|>))) |> execute
+}
+public func >**><A, B, C>(f: @escaping () -> B, g: @escaping (A, B) -> C) -> (A) -> C {
+    return (f >>> (g >||> (>||>))) |> execute
+}
+public func >***><A, B, C, D>(f: @escaping () -> C, g: @escaping (A, B, C) -> D) -> (A, B) -> D {
+    return (f >>> (g >||> (>|||>))) |> execute
 }
 
 /**
