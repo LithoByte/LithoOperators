@@ -46,6 +46,20 @@ public func >?><A, B>(f: @escaping (A) -> B?, g: @escaping (B) -> Void) -> (A) -
         }
     }
 }
+public func >?><A, B, C>(f: @escaping (A, B) -> C?, g: @escaping (C) -> Void) -> (A, B) -> Void {
+    return { a, b in
+        if let c = f(a, b) {
+            g(c)
+        }
+    }
+}
+public func >?><A, B, C, D>(f: @escaping (A, B, C) -> D?, g: @escaping (D) -> Void) -> (A, B, C) -> Void {
+    return { a, b, c in
+        if let d = f(a, b, c) {
+            g(d)
+        }
+    }
+}
 
 /**
  This operator allows you to pass a tuple of a function's argument types instead of
