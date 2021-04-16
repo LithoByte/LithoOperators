@@ -46,6 +46,20 @@ public func >?><A, B>(f: @escaping (A) -> B?, g: @escaping (B) -> Void) -> (A) -
         }
     }
 }
+public func >?><A, B, C>(f: @escaping (A, B) -> C?, g: @escaping (C) -> Void) -> (A, B) -> Void {
+    return { a, b in
+        if let c = f(a, b) {
+            g(c)
+        }
+    }
+}
+public func >?><A, B, C, D>(f: @escaping (A, B, C) -> D?, g: @escaping (D) -> Void) -> (A, B, C) -> Void {
+    return { a, b, c in
+        if let d = f(a, b, c) {
+            g(d)
+        }
+    }
+}
 
 /**
  This operator allows you to pass a tuple of a function's argument types instead of
@@ -427,6 +441,16 @@ public func ifThen<T>(_ condition: Bool, _ f: @escaping (T) -> Void, else g: (()
     }
 }
 
+public func ifThen<T>(_ condition: @escaping (T) -> Bool, _ f: @escaping () -> Void, else g: (() -> Void)? = nil) -> (T) -> Void {
+    return { t in
+        if condition(t) {
+            f()
+        } else {
+            g?()
+        }
+    }
+}
+
 /**
  This function passes itself to the given function if the condition is true. I don't use it much in iOS, but
  it's pretty helpful in Vapor when creating database queries.
@@ -458,6 +482,17 @@ public func map<U, V>(array: [U], f: (U) -> V) -> [V] {
 public func map<U, V>(f: @escaping (U) -> V) -> ([U]) -> [V] {
     return {
         $0.map(f)
+    }
+}
+
+// A free function version of `forEach`.
+// TESTED
+public func forEach<T>(array: [T], f: (T) -> Void) -> Void {
+    return array.forEach(f)
+}
+public func forEach<T>(f: @escaping (T) -> Void) -> ([T]) -> Void {
+    return {
+        $0.forEach(f)
     }
 }
 

@@ -177,7 +177,7 @@ class ArrayTests: XCTestCase {
     }
     
     func testDefaultSortedBy() {
-        var array: [Company] = [Company(name: "LithoByte, Co."), Company(name: "Aardvark, Inc."), Company(name: nil)]
+        let array: [Company] = [Company(name: "LithoByte, Co."), Company(name: "Aardvark, Inc."), Company(name: nil)]
         let sorted = array.sortedBy(keyPath: \.name, defaultValue: "AAAA")
         XCTAssert(sorted[0].name == nil && sorted[1].name == "Aardvark, Inc.")
     }
@@ -196,8 +196,61 @@ class ArrayTests: XCTestCase {
         XCTAssert(sortedArray[0].int == 0 && sortedArray[1].int == 1)
     }
     
+    func testFreeFuncForEach() {
+        struct IntHolder {
+            var int: Int
+        }
+        
+        var int1 = 0
+        var int2 = 0
+        
+        let firstHolder = IntHolder(int: 1)
+        let secondHolder = IntHolder(int: 2)
+        let holders = [firstHolder, secondHolder]
+        let assign: (IntHolder) -> Void = {
+            if $0.int == 1 {
+                int1 = $0.int
+            }
+            if $0.int == 2 {
+                int2 = $0.int
+            }
+        }
+        
+        forEach(array: holders, f: assign)
+        
+        XCTAssertEqual(int1, 1)
+        XCTAssertEqual(int2, 2)
+    }
+    
+    func testFreeFuncGenForEach() {
+        struct IntHolder {
+            var int: Int
+        }
+        
+        var int1 = 0
+        var int2 = 0
+        
+        let firstHolder = IntHolder(int: 1)
+        let secondHolder = IntHolder(int: 2)
+        let holders = [firstHolder, secondHolder]
+        let assign: (IntHolder) -> Void = {
+            if $0.int == 1 {
+                int1 = $0.int
+            }
+            if $0.int == 2 {
+                int2 = $0.int
+            }
+        }
+        
+        let fe = forEach(f: assign)
+        fe(holders)
+        
+        XCTAssertEqual(int1, 1)
+        XCTAssertEqual(int2, 2)
+    }
+    
     func testFreeFuncDefaultSortedBy() {
-        var array: [Company] = [Company(name: "LithoByte, Co."), Company(name: "Aardvark, Inc."), Company(name: nil)]
+        let array: [Company] = [Company(name: "LithoByte, Co."), Company(name: "Aardvark, Inc."), Company(name: nil)]
         let sorted: ([Company]) -> [Company] = sortedBy(keyPath: \.name, defaultValue: "AAAA")
         let sortedArray = sorted(array)
         XCTAssert(sortedArray[0].name == nil && sortedArray[1].name == "Aardvark, Inc.")
