@@ -95,6 +95,9 @@ infix operator <>=: AdditionPrecedence
 public func <>=<A>(f: inout ((A) -> Void), g: @escaping (A) -> Void) {
     f = f <> g
 }
+public func <>=<A, B>(f: inout ((A, B) -> Void), g: @escaping (A, B) -> Void) {
+    f = union(f, g)
+}
 
 //allows mutating A, as opposed to <>
 infix operator <~>: AdditionPrecedence
