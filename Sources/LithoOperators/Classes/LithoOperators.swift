@@ -95,6 +95,9 @@ infix operator <>=: AdditionPrecedence
 public func <>=<A>(f: inout ((A) -> Void), g: @escaping (A) -> Void) {
     f = f <> g
 }
+public func <>=<A, B>(f: inout ((A, B) -> Void), g: @escaping (A, B) -> Void) {
+    f = union(f, g)
+}
 
 //allows mutating A, as opposed to <>
 infix operator <~>: AdditionPrecedence
@@ -178,6 +181,33 @@ public func >|||||><A, B, C, D, E, F>(e: E, f: @escaping (A, B, C, D, E) -> F) -
 infix operator >||||||>: AdditionPrecedence
 public func >||||||><A, B, C, D, E, F, G>(eff: F, f: @escaping (A, B, C, D, E, F) -> G) -> (A, B, C, D, E) -> G {
     return { a, b, c, d, e in f(a, b, c, d, e, eff) }
+}
+
+/**
+ These operators can also have a subsitition effect on functions, instead of a currying effect. This allows you to take a function, say g: (Int, Int) -> Int, and use another function f: (String) -> Int, and substitute f into g to make g': (String, Int) -> Int. Note that the one parameter case is achieved by the >>> operator.
+ */
+infix operator >*>: AdditionPrecedence
+public func >*><A, B, C, D>(f: @escaping (A) -> B, g: @escaping (B, C) -> D) -> (A, C) -> D {
+    return uncurry(f >>> curry(g))
+}
+infix operator >**>: AdditionPrecedence
+public func >**><A, B, C, D>(f: @escaping (A) -> C, g: @escaping (B, C) -> D) -> (B, A) -> D {
+    return flip(uncurry(f >>> curry(flip(g))))
+}
+infix operator >***>: AdditionPrecedence
+
+
+/**
+ These sets of operators have the same semantics as the previous, only they take two functions. The latter is the function to curry, and the former returns a value to be curried into the latter. This is the technical equivalent of using >>> (see below) to compose f with g >||> (>|||>) if we want the returned value to be curried into the third position. Using operators on operators seems a little unreadable, however, so we overload these functions.
+ */
+public func >*><A, B, C>(f: @escaping () -> A, g: @escaping (A, B) -> C) -> (B) -> C {
+    return (f >>> (g >||> (>|>))) |> execute
+}
+public func >**><A, B, C>(f: @escaping () -> B, g: @escaping (A, B) -> C) -> (A) -> C {
+    return (f >>> (g >||> (>||>))) |> execute
+}
+public func >***><A, B, C, D>(f: @escaping () -> C, g: @escaping (A, B, C) -> D) -> (A, B) -> D {
+    return (f >>> (g >||> (>|||>))) |> execute
 }
 
 /**
@@ -313,6 +343,19 @@ public func ignoreArgs<T, U, V, W, X, Y, Z>(_ f: @escaping () -> Z) -> (T, U, V,
 
 public func returnValue<T>(_ value: T) -> () -> T {
     return { return value }
+}
+
+/**
+ This function always executes f. Convenient when you have a function that returns a void function and you want to execute the function
+ */
+public func execute(_ f: @escaping () -> Void) {
+    f()
+}
+public func execute<T>(_ f: @escaping () -> T) -> T {
+    return f()
+}
+public func execute<A, B>(_ f: @escaping () -> (A) -> B) -> (A) -> B {
+    return f()
 }
 
 /**
