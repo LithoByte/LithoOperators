@@ -640,6 +640,28 @@ public prefix func ~><T, U>(f: @escaping (U) -> Void) -> (T) -> Void {
     return optionalCast >?> f
 }
 
+// Some simple functions to clean up functional comparisons
+
+public func isLessThan<T: Comparable>(_ t: T) -> (T) -> Bool {
+    return { $0 < t }
+}
+
+public func isGreaterThan<T: Comparable>(_ t: T) -> (T) -> Bool {
+    return { $0 > t }
+}
+
+public func isEqualTo<T: Comparable>(_ t: T) -> (T) -> Bool {
+    return { $0 == t }
+}
+
+public func isGreaterOrEqualThan<T: Comparable>(_ t: T) -> (T) -> Bool {
+    return { $0 >= t }
+}
+
+public func isLessOrEqualThan<T: Comparable>(_ t: T) -> (T) -> Bool {
+    return { $0 <= t }
+}
+
 // The returned function executes the argument and returns the input; great
 // for when you just want to do something when a value is published in
 // Combine
