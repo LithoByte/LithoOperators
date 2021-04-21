@@ -662,6 +662,14 @@ public func isLessOrEqualThan<T: Comparable>(_ t: T) -> (T) -> Bool {
     return { $0 <= t }
 }
 
+public func isContainedIn<T: Comparable>(_ ts: [T]) -> (T) -> Bool {
+    return { ts.contains($0) }
+}
+
+public func isNotContainedIn<T: Comparable>(_ ts: [T]) -> (T) -> Bool {
+    return { ts.contains($0) }
+}
+
 // The returned function executes the argument and returns the input; great
 // for when you just want to do something when a value is published in
 // Combine
