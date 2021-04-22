@@ -198,7 +198,7 @@ public func >**><A, B, C, D>(f: @escaping (A) -> C, g: @escaping (B, C) -> D) ->
     return flip(uncurry(f >>> curry(flip(g))))
 }
 public func >**><A, B, C, D, E>(f: @escaping (A) -> C, g: @escaping (B, C, D) -> E) -> (B, A, D) -> E {
-    return shift(shift(uncurry(f >>> curry(shift(g)))))
+    return shiftRight(uncurry(f >>> curry(shiftLeft(g))))
 }
 infix operator >***>: AdditionPrecedence
 public func >***><A, B, C, D, E>(f: @escaping (A) -> D, g: @escaping (B, C, D) -> E) -> (B, C, A) -> E {
@@ -208,8 +208,14 @@ public func >***><A, B, C, D, E>(f: @escaping (A) -> D, g: @escaping (B, C, D) -
 /**
  Mainly a helper function for these operators, but also useful if there's some currying operation you want to accomplish that isn't encompassed with the overloads we provide.
  */
-public func shift<A, B, C, D>(_ f: @escaping (A, B, C) -> D) -> (B, C, A) -> D {
+public func shiftLeft<A, B, C, D>(_ f: @escaping (A, B, C) -> D) -> (B, C, A) -> D {
     return { b, c, a in
+        f(a, b, c)
+    }
+}
+
+public func shiftRight<A, B, C, D>(_ f: @escaping (A, B, C) -> D) -> (C, A, B) -> D {
+    return { c, a, b in
         f(a, b, c)
     }
 }
