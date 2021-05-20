@@ -86,65 +86,6 @@ class ArrayTests: XCTestCase {
         XCTAssert(newArray.count == 2)
     }
     
-    func testFzip2Args() {
-        let getCount: ([String]) -> Int = { $0.count }
-        let getCountAndFirst: ([String]) -> (Int, String?) = fzip(getCount, firstElement)
-        let countAndFirst = getCountAndFirst(stringArray)
-        XCTAssertEqual(countAndFirst.0, 2)
-        XCTAssertEqual(countAndFirst.1!, "LithoByte, Co.")
-    }
-    
-    func testFzip3Args() {
-        let getCount: ([String]) -> Int = { $0.count }
-        let getWordCountOfFirst: ([String]) -> Int? = { firstElement($0)?.count }
-        let getCountAndFirst: ([String]) -> (Int, String?, Int?) = fzip(getCount, firstElement, getWordCountOfFirst)
-        let countAndFirst = getCountAndFirst(stringArray)
-        XCTAssertEqual(countAndFirst.0, 2)
-        XCTAssertEqual(countAndFirst.1!, "LithoByte, Co.")
-        XCTAssertEqual(countAndFirst.2!, 14)
-    }
-    
-    func testFzip4Args() {
-        let getCount: ([String]) -> Int = { $0.count }
-        let getWordCountOfFirst: ([String]) -> Int? = { firstElement($0)?.count }
-        let getWordCountOfSecond: ([String]) -> Int = { $0[1].count }
-        let getCountAndFirst: ([String]) -> (Int, String?, Int?, Int) = fzip(getCount, firstElement, getWordCountOfFirst, getWordCountOfSecond)
-        let countAndFirst = getCountAndFirst(stringArray)
-        XCTAssertEqual(countAndFirst.0, 2)
-        XCTAssertEqual(countAndFirst.1!, "LithoByte, Co.")
-        XCTAssertEqual(countAndFirst.2!, 14)
-        XCTAssertEqual(countAndFirst.3, 11)
-    }
-    
-    func testFzip5Args() {
-        let getCount: ([String]) -> Int = { $0.count }
-        let getWordCountOfFirst: ([String]) -> Int? = { firstElement($0)?.count }
-        let getWordCountOfSecond: ([String]) -> Int = { $0[1].count }
-        let second: ([String]) -> String = { $0[1] }
-        let getCountAndFirst: ([String]) -> (Int, String?, Int?, Int, String) = fzip(getCount, firstElement, getWordCountOfFirst, getWordCountOfSecond, second)
-        let countAndFirst = getCountAndFirst(stringArray)
-        XCTAssertEqual(countAndFirst.0, 2)
-        XCTAssertEqual(countAndFirst.1!, "LithoByte, Co.")
-        XCTAssertEqual(countAndFirst.2!, 14)
-        XCTAssertEqual(countAndFirst.3, 11)
-        XCTAssertEqual(countAndFirst.4, "Thryv, Inc.")
-    }
-    
-    func testFzip6Args() {
-        let getCount: ([String]) -> Int = { $0.count }
-        let getWordCountOfFirst: ([String]) -> Int? = { firstElement($0)?.count }
-        let getWordCountOfSecond: ([String]) -> Int = { $0[1].count }
-        let second: ([String]) -> String = { $0[1] }
-        let getCountAndFirst: ([String]) -> (Int, String?, Int?, Int, String, String?) = fzip(getCount, firstElement, getWordCountOfFirst, getWordCountOfSecond, second, firstElement)
-        let countAndFirst = getCountAndFirst(stringArray)
-        XCTAssertEqual(countAndFirst.0, 2)
-        XCTAssertEqual(countAndFirst.1!, "LithoByte, Co.")
-        XCTAssertEqual(countAndFirst.2!, 14)
-        XCTAssertEqual(countAndFirst.3, 11)
-        XCTAssertEqual(countAndFirst.4, "Thryv, Inc.")
-        XCTAssertEqual(countAndFirst.5!, "LithoByte, Co.")
-    }
-    
     func testSortBy() {
         struct IntHolder {
             var int: Int

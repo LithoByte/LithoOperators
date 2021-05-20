@@ -54,7 +54,7 @@ class LiftTests: XCTestCase {
         struct User {
             var name: String
         }
-        var user = User(name: "Calvin")
+        let user = User(name: "Calvin")
         let screemName: (WritableKeyPath<User, String>) -> (User) -> User = {
             ((^$0) { $0 + "!" })
         }
