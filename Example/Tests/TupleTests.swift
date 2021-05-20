@@ -73,7 +73,7 @@ class TupleTests: XCTestCase {
         XCTAssertEqual(countAndFirst.5!, "LithoByte, Co.")
     }
     
-    func testTupleMap() {
+    func testTupleUnCurry() {
         var firstCalled = false
         var secondCalled = false
         let firstCalledSetter: (Int) -> Void = {
@@ -87,14 +87,14 @@ class TupleTests: XCTestCase {
             }
         }
         
-        let firstSecondSetter = tupleMap(firstCalledSetter, secondCalledSetter)
+        let firstSecondSetter = tupleUncurry(firstCalledSetter, secondCalledSetter)
         firstSecondSetter(1, "lithobyte")
         
         XCTAssertTrue(firstCalled)
         XCTAssertTrue(secondCalled)
     }
     
-    func testTupleMap3Args() {
+    func testTupleUncurry3Args() {
         var firstCalled = false
         var secondCalled = false
         var thirdCalled = false
@@ -111,7 +111,7 @@ class TupleTests: XCTestCase {
         let thirdCalledSetter: (Bool) -> Void = {
             thirdCalled = $0
         }
-        let allSetter = tupleMap(firstCalledSetter, secondCalledSetter, thirdCalledSetter)
+        let allSetter = tupleUncurry(firstCalledSetter, secondCalledSetter, thirdCalledSetter)
         allSetter(1, "lithobyte", true)
         
         XCTAssertTrue(firstCalled)
@@ -119,10 +119,10 @@ class TupleTests: XCTestCase {
         XCTAssertTrue(thirdCalled)
     }
     
-    func testTupleZip() {
+    func testTupleMap() {
         let equalsOne: (Int) -> Bool = { $0 == 1 }
         let count: (String) -> Int = { $0.count }
-        let zipFn = tupleZip(equalsOne, count)
+        let zipFn = tupleMap(equalsOne, count)
         let tuple1 = zipFn(1, "hello")
         XCTAssertTrue(tuple1.0)
         XCTAssertEqual(tuple1.1, 5)
