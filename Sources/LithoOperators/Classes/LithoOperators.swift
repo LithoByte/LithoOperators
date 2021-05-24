@@ -61,6 +61,18 @@ public func >?><A, B, C, D>(f: @escaping (A, B, C) -> D?, g: @escaping (D) -> Vo
     }
 }
 
+public func pipe<A, B, C>(f: @escaping (B) -> Bool) -> (@escaping (A) -> B, @escaping (B) -> C) -> (A) -> C? {
+    return { f1, f2 in
+        return { a in
+            if f(f1(a)) {
+                return f2(f1(a))
+            } else {
+                return nil
+            }
+        }
+    }
+}
+
 /**
  This operator allows you to pass a tuple of a function's argument types instead of
  manually decomposing the tuple's values. So, `f(a, b)` == `(~f)((a,b))`. This is useful when
@@ -73,6 +85,23 @@ prefix operator ~
 public prefix func ~<A, B, C>(f: @escaping (A, B) -> C) -> ((A, B)) -> C {
     return { (tuple: (A, B)) -> C in
         return f(tuple.0, tuple.1)
+    }
+}
+public prefix func ~<A, B, C, D>(f: @escaping (A, B, C) -> D) -> ((A, B, C)) -> D {
+    return { (tuple: (A, B, C)) -> D in
+        return f(tuple.0, tuple.1, tuple.2)
+    }
+}
+
+prefix operator ^~
+public prefix func ^~<A, B, C>(f: @escaping ((A, B)) -> C) -> (A, B) -> C {
+    return { a, b in
+        f((a, b))
+    }
+}
+public prefix func ^~<A, B, C, D>(f: @escaping ((A, B, C)) -> D) -> (A, B, C) -> D {
+    return { a, b, c in
+        f((a, b, c))
     }
 }
 
@@ -680,6 +709,22 @@ public func fzip<T, U, V, W, X, Y, Z>(_ f: @escaping (T) -> U, _ g: @escaping (T
     return { t in
         return (f(t), g(t), h(t), j(t), k(t), l(t))
     }
+}
+
+/**
+ These functions take in a tuple, of all the same type, and return an array of that many elements. Useful for using the above functions that return a tuple, but you want to do some computation on that tuple (forEach, map, etc.) that takes in an array
+ */
+public func toArray<T>(_ tuple: (T, T)) -> [T] {
+    return [tuple.0, tuple.1]
+}
+public func toArray<T>(_ tuple: (T, T, T)) -> [T] {
+    return [tuple.0, tuple.1, tuple.2]
+}
+public func toArray<T>(_ tuple: (T, T, T, T)) -> [T] {
+    return [tuple.0, tuple.1, tuple.2, tuple.3]
+}
+public func toArray<T>(_ tuple: (T, T, T, T, T)) -> [T] {
+    return [tuple.0, tuple.1, tuple.2, tuple.3, tuple.4]
 }
 
 /**
