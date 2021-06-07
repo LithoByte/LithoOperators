@@ -98,14 +98,12 @@ public prefix func ~<A, B, C, D>(f: @escaping (A, B, C) -> D) -> ((A, B, C)) -> 
         return f(tuple.0, tuple.1, tuple.2)
     }
 }
-
-prefix operator ^~
-public prefix func ^~<A, B, C>(f: @escaping ((A, B)) -> C) -> (A, B) -> C {
+public prefix func ~<A, B, C>(f: @escaping ((A, B)) -> C) -> (A, B) -> C {
     return { a, b in
         f((a, b))
     }
 }
-public prefix func ^~<A, B, C, D>(f: @escaping ((A, B, C)) -> D) -> (A, B, C) -> D {
+public prefix func ~<A, B, C, D>(f: @escaping ((A, B, C)) -> D) -> (A, B, C) -> D {
     return { a, b, c in
         f((a, b, c))
     }
@@ -266,19 +264,29 @@ public func shiftRight<A, B, C, D>(_ f: @escaping (A, B, C) -> D) -> (C, A, B) -
  These sets of operators have the same semantics as the previous, only they take two functions. The latter is the function to curry, and the former returns a value to be curried into the latter. This is the technical equivalent of using >>> (see below) to compose f with g >||> (>|||>) if we want the returned value to be curried into the third position. Using operators on operators seems a little unreadable, however, so we overload these functions.
  */
 public func >*><A, B, C>(f: @escaping () -> A, g: @escaping (A, B) -> C) -> (B) -> C {
-    return (f |> execute) >|> g
+    return { b in
+        g(f(), b)
+    }
 }
 public func >*><A, B, C, D>(f: @escaping () -> A, g: @escaping (A, B, C) -> D) -> (B, C) -> D {
-    return (f |> execute) >|> g
+    return { b, c in
+        g(f(), b, c)
+    }
 }
 public func >**><A, B, C>(f: @escaping () -> B, g: @escaping (A, B) -> C) -> (A) -> C {
-    return (f |> execute) >||> g
+    return { a in
+        g(a, f())
+    }
 }
 public func >**><A, B, C, D>(f: @escaping () -> B, g: @escaping (A, B, C) -> D) -> (A, C) -> D {
-    return flip((f |> execute) >|||> shiftRight(g))
+    return { a, c in
+        g(a, f(), c)
+    }
 }
 public func >***><A, B, C, D>(f: @escaping () -> C, g: @escaping (A, B, C) -> D) -> (A, B) -> D {
-    return (f |> execute) >|||> g
+    return { a, b in
+        g(a, b, f())
+    }
 }
 
 /**
@@ -767,6 +775,20 @@ public func toArray<T>(_ tuple: (T, T, T, T, T)) -> [T] {
     return [tuple.0, tuple.1, tuple.2, tuple.3, tuple.4]
 }
 
+public extension Array {
+    init(_ tuple: (Element, Element)) {
+        self.init(arrayLiteral: tuple.0, tuple.1)
+    }
+    init(_ tuple: (Element, Element, Element)) {
+        self.init(arrayLiteral: tuple.0, tuple.1, tuple.2)
+    }
+    init(_ tuple: (Element, Element, Element, Element)) {
+        self.init(arrayLiteral: tuple.0, tuple.1, tuple.2, tuple.3)
+    }
+    init(_ tuple: (Element, Element, Element, Element, Element)) {
+        self.init(arrayLiteral: tuple.0, tuple.1, tuple.2, tuple.3, tuple.4)
+    }
+}
 /**
  This is a really nice function that will cast objects for you. When paired with `>?>` the compiler will
  be able to tell what type to cast to without you saying explicitly.

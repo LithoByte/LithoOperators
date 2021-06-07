@@ -114,4 +114,38 @@ class CurryTests: XCTestCase {
         let addOne = { 1 } >**> addTwoNumbers
         XCTAssertEqual(addOne(1), 2)
     }
+    
+    func testVoidFunctionalCurryMultParams() {
+        let two = { 2 }
+        let three = { 3 }
+        let addThreeNumbers: (Int, Int, Int) -> Int = { $0 + $1 + $2 }
+        let addTwo: (Int, Int) -> Int = two >*> addThreeNumbers
+        XCTAssertEqual(addTwo(1, 3), 6)
+        let addOne = { 1 } >**> addThreeNumbers
+        XCTAssertEqual(addOne(1, 3), 5)
+        let addThree = three >***> addThreeNumbers
+        XCTAssertEqual(addThree(1, 2), 6)
+    }
+    
+    func testFunctionalCurryTwoParams() {
+        let addTwoNumbers: (Int, Int) -> Int = (+)
+        let count: (String) -> Int = { $0.count }
+        let addCountInFirst: (String, Int) -> Int = count >*> addTwoNumbers
+        let addCountInSecond: (Int, String) -> Int = count >**> addTwoNumbers
+        
+        XCTAssertEqual(addCountInFirst("hello", 3), 8)
+        XCTAssertEqual(addCountInSecond(3, "hello"), 8)
+    }
+    
+    func testFunctionalCurryThreeParams() {
+        let addThreeNumbers: (Int, Int, Int) -> Int = { $0 + $1 + $2 }
+        let count: (String) -> Int = { $0.count }
+        let addCountInFirst: (String, Int, Int) -> Int = count >*> addThreeNumbers
+        let addCountInSecond: (Int, String, Int) -> Int = count >**> addThreeNumbers
+        let addCountInThird: (Int, Int, String) -> Int = count >***> addThreeNumbers
+        
+        XCTAssertEqual(addCountInFirst("hello", 3, 2), 10)
+        XCTAssertEqual(addCountInSecond(3, "hello", 2), 10)
+        XCTAssertEqual(addCountInThird(3, 2, "hello"), 10)
+    }
 }

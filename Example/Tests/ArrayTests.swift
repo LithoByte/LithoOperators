@@ -137,6 +137,20 @@ class ArrayTests: XCTestCase {
         XCTAssert(sortedArray[0].int == 0 && sortedArray[1].int == 1)
     }
     
+    func testFreeFuncSortedByDescending() {
+        struct IntHolder {
+            var int: Int
+        }
+        
+        let firstHolder = IntHolder(int: 0)
+        let secondHolder = IntHolder(int: 1)
+        let holders = [secondHolder, firstHolder]
+        
+        let sorted: ([IntHolder]) -> [IntHolder] = sortedByDescending(keyPath: \IntHolder.int)
+        let sortedArray = sorted(holders)
+        XCTAssert(sortedArray[0].int == 1 && sortedArray[1].int == 0)
+    }
+    
     func testFreeFuncForEach() {
         struct IntHolder {
             var int: Int
@@ -207,5 +221,20 @@ class ArrayTests: XCTestCase {
         let secondTuple = second(incrementFirst)(tuple)
         XCTAssert(secondTuple.1 == 1)
         
+    }
+    
+    func testGet() {
+        let arr = [0, 1]
+        XCTAssertNotNil(get(index: 0, array: arr))
+        XCTAssertNil(get(index: 2, array: arr))
+        XCTAssertEqual(get(index: 0, array: arr)!, 0)
+    }
+    
+    func testIndex() {
+        let arr = [0, 1]
+        let indexer = LithoOperators.index(array: arr)
+        XCTAssertNotNil(indexer(0))
+        XCTAssertNil(indexer(2))
+        XCTAssertEqual(indexer(0)!, 0)
     }
 }
