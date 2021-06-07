@@ -79,12 +79,6 @@ public func >?><A, B, C, D>(f: @escaping (A, B, C) -> D?, g: @escaping (D) -> Vo
     }
 }
 
-public func pipe<A, B, C>(f: @escaping (B) -> Bool) -> (@escaping (A) -> B, @escaping (B) -> C) -> (A) -> C? {
-    return { f1, f2 in
-        ifThen(f1 >>> f, f1 >>> f2)
-    }
-}
-
 /**
  This operator allows you to pass a tuple of a function's argument types instead of
  manually decomposing the tuple's values. So, `f(a, b)` == `(~f)((a,b))`. This is useful when
