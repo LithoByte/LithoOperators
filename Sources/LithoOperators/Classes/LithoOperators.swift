@@ -39,6 +39,24 @@ public func >?><A, B, C>(f: @escaping (A) -> B?, g: @escaping (B) -> C?) -> (A) 
         }
     }
 }
+public func >?><A, B, C, D>(f: @escaping (A, B) -> C?, g: @escaping (C) -> D) -> (A, B) -> D? {
+    return { a, b in
+        if let c = f(a, b) {
+            return g(c)
+        } else {
+            return nil
+        }
+    }
+}
+public func >?><A, B, C, D>(f: @escaping (A, B) -> C?, g: @escaping (C) -> D?) -> (A, B) -> D? {
+    return { a, b in
+        if let c = f(a, b) {
+            return g(c)
+        } else {
+            return nil
+        }
+    }
+}
 public func >?><A, B>(f: @escaping (A) -> B?, g: @escaping (B) -> Void) -> (A) -> Void {
     return { a in
         if let b = f(a) {
@@ -63,13 +81,7 @@ public func >?><A, B, C, D>(f: @escaping (A, B, C) -> D?, g: @escaping (D) -> Vo
 
 public func pipe<A, B, C>(f: @escaping (B) -> Bool) -> (@escaping (A) -> B, @escaping (B) -> C) -> (A) -> C? {
     return { f1, f2 in
-        return { a in
-            if f(f1(a)) {
-                return f2(f1(a))
-            } else {
-                return nil
-            }
-        }
+        ifThen(f1 >>> f, f1 >>> f2)
     }
 }
 
@@ -126,6 +138,12 @@ public func <>=<A>(f: inout ((A) -> Void), g: @escaping (A) -> Void) {
 }
 public func <>=<A, B>(f: inout ((A, B) -> Void), g: @escaping (A, B) -> Void) {
     f = union(f, g)
+}
+public func <>=<A>(f: inout ((A) -> Void)?, g: @escaping (A) -> Void) {
+    f = f == nil ? g : f! <> g
+}
+public func <>=<A, B>(f: inout ((A, B) -> Void)?, g: @escaping (A, B) -> Void) {
+    f = f == nil ? g : union(f!, g)
 }
 
 //allows mutating A, as opposed to <>
@@ -256,8 +274,14 @@ public func shiftRight<A, B, C, D>(_ f: @escaping (A, B, C) -> D) -> (C, A, B) -
 public func >*><A, B, C>(f: @escaping () -> A, g: @escaping (A, B) -> C) -> (B) -> C {
     return (f |> execute) >|> g
 }
+public func >*><A, B, C, D>(f: @escaping () -> A, g: @escaping (A, B, C) -> D) -> (B, C) -> D {
+    return (f |> execute) >|> g
+}
 public func >**><A, B, C>(f: @escaping () -> B, g: @escaping (A, B) -> C) -> (A) -> C {
     return (f |> execute) >||> g
+}
+public func >**><A, B, C, D>(f: @escaping () -> B, g: @escaping (A, B, C) -> D) -> (A, C) -> D {
+    return flip((f |> execute) >|||> shiftRight(g))
 }
 public func >***><A, B, C, D>(f: @escaping () -> C, g: @escaping (A, B, C) -> D) -> (A, B) -> D {
     return (f |> execute) >|||> g
@@ -507,6 +531,12 @@ public func ifThen<T>(_ condition: @escaping (T) -> Bool, _ f: @escaping () -> V
     }
 }
 
+public func ifThen<T, U>(_ condition: @escaping (T) -> Bool, _ f: @escaping (T) -> U) -> (T) -> (U?) {
+    return { t in
+        condition(t) ? f(t) : nil
+    }
+}
+
 /**
  This function passes itself to the given function if the condition is true. I don't use it much in iOS, but
  it's pretty helpful in Vapor when creating database queries.
@@ -616,13 +646,21 @@ public func compactMap<Element, Value>(_ kp: KeyPath<Element, Value?>) -> ([Elem
     }
 }
 
+public func reverse<T>(array: [T]) -> [T] {
+    return array.reversed()
+}
 public func sortedBy<Element, Property>(keyPath: KeyPath<Element, Property>) -> ([Element]) -> [Element] where Property: Comparable {
     return { $0.sortedBy(keyPath: keyPath) }
 }
-
+public func sortedByDescending<Element, Property>(keyPath: KeyPath<Element, Property>) -> ([Element]) -> [Element] where Property: Comparable {
+    return sortedBy(keyPath: keyPath) >>> reverse
+}
 public func sortedBy<Element, Property>(keyPath: KeyPath<Element, Property?>, defaultValue: Property)
 -> ([Element]) -> [Element] where Property: Comparable {
     return { $0.sortedBy(keyPath: keyPath, defaultValue: defaultValue) }
+}
+public func sortedByDescending<Element, Property>(keyPath: KeyPath<Element, Property?>, defaultValue: Property) -> ([Element]) -> [Element] where Property: Comparable {
+    return sortedBy(keyPath: keyPath, defaultValue: defaultValue) >>> reverse
 }
 
 public extension Array {
@@ -632,6 +670,14 @@ public extension Array {
     mutating func sortBy<T>(keyPath: KeyPath<Element, T?>, defaultValue: T) where T: Comparable {
         self.sort(by: { $0[keyPath: keyPath] ?? defaultValue < $1[keyPath: keyPath] ?? defaultValue })
     }
+}
+
+public func get<T>(index: Int, array: [T]) -> T? {
+    return index < array.count ? array[index] : nil
+}
+
+public func index<T>(array: [T]) -> (Int) -> T? {
+    return array >||> get
 }
 
 // Tuples!
