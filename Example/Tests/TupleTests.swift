@@ -127,4 +127,40 @@ class TupleTests: XCTestCase {
         XCTAssertTrue(tuple1.0)
         XCTAssertEqual(tuple1.1, 5)
     }
+    
+    func testInverseTuple() {
+        let addTuple: ((Int, Int)) -> Int = { $0.0 + $0.1 }
+        let addTwoNumbers = ~addTuple
+        XCTAssertEqual(addTwoNumbers(5, 2), 7)
+    }
+    
+    func testToArray() {
+        let arr2 = toArray((0, 1))
+        let arr3 = toArray((0, 1, 2))
+        let arr4 = toArray((0, 1, 2, 3))
+        let arr5 = toArray((0, 1, 2, 3, 4))
+        XCTAssertEqual(arr2.count, 2)
+        XCTAssertEqual(arr3.count, 3)
+        XCTAssertEqual(arr4.count, 4)
+        XCTAssertEqual(arr5.count, 5)
+        XCTAssertEqual(arr2[0], 0)
+        XCTAssertEqual(arr3[0], 0)
+        XCTAssertEqual(arr4[0], 0)
+        XCTAssertEqual(arr5[0], 0)
+    }
+    
+    func testArrayConstructor() {
+        let arr2 = Array<Int>((0, 1))
+        let arr3 = Array<Int>((0, 1, 2))
+        let arr4 = Array<Int>((0, 1, 2, 3))
+        let arr5 = Array<Int>((0, 1, 2, 3, 4))
+        XCTAssertEqual(arr2.count, 2)
+        XCTAssertEqual(arr3.count, 3)
+        XCTAssertEqual(arr4.count, 4)
+        XCTAssertEqual(arr5.count, 5)
+        XCTAssertEqual(arr2[0], 0)
+        XCTAssertEqual(arr3[0], 0)
+        XCTAssertEqual(arr4[0], 0)
+        XCTAssertEqual(arr5[0], 0)
+    }
 }

@@ -86,6 +86,17 @@ class HigherOrderTests: XCTestCase {
         XCTAssertTrue(count2 == 1)
     }
     
+    func testOptUnionConcat() {
+        var count = 0
+        let addToCount: (Int) -> Void = {
+            count += $0
+        }
+        var none: ((Int) -> Void)? = nil
+        none <>= addToCount
+        none?(3)
+        XCTAssertEqual(count, 3)
+    }
+    
     func testUnionOperator() throws {
         let argument = "lithobyte"
         var count = 0

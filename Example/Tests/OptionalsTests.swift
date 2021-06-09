@@ -71,6 +71,35 @@ class OptionalsTests: XCTestCase {
         XCTAssertEqual(function(2), "EVEN")
     }
     
+    func testOptionalCompositionMultParams() {
+        let countOfBoth: (String, String) -> Int? = { ($0.count + $1.count) > 0 ? $0.count + $1.count : nil }
+        let isEqualTo10: (Int) -> Bool = { $0 == 10 }
+        let countIsEqualTo10 = countOfBoth >?> isEqualTo10
+        XCTAssertTrue(countIsEqualTo10("Hello", "Hello")!)
+        XCTAssertFalse(countIsEqualTo10("Hello", "ello")!)
+        XCTAssertNil(countIsEqualTo10("", ""))
+    }
+    
+    func testOptionalCompositionOptParams() {
+        let countOfBoth: (String, String) -> Int? = { ($0.count + $1.count) > 0 ? $0.count + $1.count : nil }
+        let descriptionIf10: (Int) -> String? = { $0 == 10 ? "ten" : nil}
+        let countIsEqualTo10 = countOfBoth >?> descriptionIf10
+        XCTAssertNil(countIsEqualTo10("none", "none"))
+        XCTAssertNotNil(countIsEqualTo10("hello", "hello"))
+        XCTAssertEqual(countIsEqualTo10("hello", "hello"), "ten")
+    }
+    
+    func testOptionalCompositionVoidMultParams() {
+        let countOfBoth: (String, String) -> Int? = { ($0.count + $1.count) > 0 ? $0.count + $1.count : nil }
+        var count = 0
+        let addToCount: (Int) -> Void = { count += $0 }
+        let addStringCounts = countOfBoth >?> addToCount
+        addStringCounts("", "")
+        XCTAssertEqual(count, 0)
+        addStringCounts("hello", "hello")
+        XCTAssertEqual(count, 10)
+    }
+    
     func testDoubleOptionalCompositionReturning() throws {
         let allCaps: (String) -> String? = { $0.uppercased() }
         let evenAnnouncer: (Int) -> String? = { $0 % 2 == 0 ? "even" : nil }

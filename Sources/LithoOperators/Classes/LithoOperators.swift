@@ -39,6 +39,24 @@ public func >?><A, B, C>(f: @escaping (A) -> B?, g: @escaping (B) -> C?) -> (A) 
         }
     }
 }
+public func >?><A, B, C, D>(f: @escaping (A, B) -> C?, g: @escaping (C) -> D) -> (A, B) -> D? {
+    return { a, b in
+        if let c = f(a, b) {
+            return g(c)
+        } else {
+            return nil
+        }
+    }
+}
+public func >?><A, B, C, D>(f: @escaping (A, B) -> C?, g: @escaping (C) -> D?) -> (A, B) -> D? {
+    return { a, b in
+        if let c = f(a, b) {
+            return g(c)
+        } else {
+            return nil
+        }
+    }
+}
 public func >?><A, B>(f: @escaping (A) -> B?, g: @escaping (B) -> Void) -> (A) -> Void {
     return { a in
         if let b = f(a) {
@@ -75,6 +93,21 @@ public prefix func ~<A, B, C>(f: @escaping (A, B) -> C) -> ((A, B)) -> C {
         return f(tuple.0, tuple.1)
     }
 }
+public prefix func ~<A, B, C, D>(f: @escaping (A, B, C) -> D) -> ((A, B, C)) -> D {
+    return { (tuple: (A, B, C)) -> D in
+        return f(tuple.0, tuple.1, tuple.2)
+    }
+}
+public prefix func ~<A, B, C>(f: @escaping ((A, B)) -> C) -> (A, B) -> C {
+    return { a, b in
+        f((a, b))
+    }
+}
+public prefix func ~<A, B, C, D>(f: @escaping ((A, B, C)) -> D) -> (A, B, C) -> D {
+    return { a, b, c in
+        f((a, b, c))
+    }
+}
 
 /**
  This is basically an operator version of `union`, see below.
@@ -97,6 +130,12 @@ public func <>=<A>(f: inout ((A) -> Void), g: @escaping (A) -> Void) {
 }
 public func <>=<A, B>(f: inout ((A, B) -> Void), g: @escaping (A, B) -> Void) {
     f = union(f, g)
+}
+public func <>=<A>(f: inout ((A) -> Void)?, g: @escaping (A) -> Void) {
+    f = f == nil ? g : f! <> g
+}
+public func <>=<A, B>(f: inout ((A, B) -> Void)?, g: @escaping (A, B) -> Void) {
+    f = f == nil ? g : union(f!, g)
 }
 
 //allows mutating A, as opposed to <>
@@ -225,13 +264,29 @@ public func shiftRight<A, B, C, D>(_ f: @escaping (A, B, C) -> D) -> (C, A, B) -
  These sets of operators have the same semantics as the previous, only they take two functions. The latter is the function to curry, and the former returns a value to be curried into the latter. This is the technical equivalent of using >>> (see below) to compose f with g >||> (>|||>) if we want the returned value to be curried into the third position. Using operators on operators seems a little unreadable, however, so we overload these functions.
  */
 public func >*><A, B, C>(f: @escaping () -> A, g: @escaping (A, B) -> C) -> (B) -> C {
-    return (f |> execute) >|> g
+    return { b in
+        g(f(), b)
+    }
+}
+public func >*><A, B, C, D>(f: @escaping () -> A, g: @escaping (A, B, C) -> D) -> (B, C) -> D {
+    return { b, c in
+        g(f(), b, c)
+    }
 }
 public func >**><A, B, C>(f: @escaping () -> B, g: @escaping (A, B) -> C) -> (A) -> C {
-    return (f |> execute) >||> g
+    return { a in
+        g(a, f())
+    }
+}
+public func >**><A, B, C, D>(f: @escaping () -> B, g: @escaping (A, B, C) -> D) -> (A, C) -> D {
+    return { a, c in
+        g(a, f(), c)
+    }
 }
 public func >***><A, B, C, D>(f: @escaping () -> C, g: @escaping (A, B, C) -> D) -> (A, B) -> D {
-    return (f |> execute) >|||> g
+    return { a, b in
+        g(a, b, f())
+    }
 }
 
 /**
@@ -478,6 +533,12 @@ public func ifThen<T>(_ condition: @escaping (T) -> Bool, _ f: @escaping () -> V
     }
 }
 
+public func ifThen<T, U>(_ condition: @escaping (T) -> Bool, _ f: @escaping (T) -> U) -> (T) -> (U?) {
+    return { t in
+        condition(t) ? f(t) : nil
+    }
+}
+
 /**
  This function passes itself to the given function if the condition is true. I don't use it much in iOS, but
  it's pretty helpful in Vapor when creating database queries.
@@ -587,13 +648,21 @@ public func compactMap<Element, Value>(_ kp: KeyPath<Element, Value?>) -> ([Elem
     }
 }
 
+public func reverse<T>(array: [T]) -> [T] {
+    return array.reversed()
+}
 public func sortedBy<Element, Property>(keyPath: KeyPath<Element, Property>) -> ([Element]) -> [Element] where Property: Comparable {
     return { $0.sortedBy(keyPath: keyPath) }
 }
-
+public func sortedByDescending<Element, Property>(keyPath: KeyPath<Element, Property>) -> ([Element]) -> [Element] where Property: Comparable {
+    return sortedBy(keyPath: keyPath) >>> reverse
+}
 public func sortedBy<Element, Property>(keyPath: KeyPath<Element, Property?>, defaultValue: Property)
 -> ([Element]) -> [Element] where Property: Comparable {
     return { $0.sortedBy(keyPath: keyPath, defaultValue: defaultValue) }
+}
+public func sortedByDescending<Element, Property>(keyPath: KeyPath<Element, Property?>, defaultValue: Property) -> ([Element]) -> [Element] where Property: Comparable {
+    return sortedBy(keyPath: keyPath, defaultValue: defaultValue) >>> reverse
 }
 
 public extension Array {
@@ -603,6 +672,14 @@ public extension Array {
     mutating func sortBy<T>(keyPath: KeyPath<Element, T?>, defaultValue: T) where T: Comparable {
         self.sort(by: { $0[keyPath: keyPath] ?? defaultValue < $1[keyPath: keyPath] ?? defaultValue })
     }
+}
+
+public func get<T>(index: Int, array: [T]) -> T? {
+    return index < array.count ? array[index] : nil
+}
+
+public func index<T>(array: [T]) -> (Int) -> T? {
+    return array >||> get
 }
 
 // Tuples!
@@ -682,6 +759,36 @@ public func fzip<T, U, V, W, X, Y, Z>(_ f: @escaping (T) -> U, _ g: @escaping (T
     }
 }
 
+/**
+ These functions take in a tuple, of all the same type, and return an array of that many elements. Useful for using the above functions that return a tuple, but you want to do some computation on that tuple (forEach, map, etc.) that takes in an array
+ */
+public func toArray<T>(_ tuple: (T, T)) -> [T] {
+    return [tuple.0, tuple.1]
+}
+public func toArray<T>(_ tuple: (T, T, T)) -> [T] {
+    return [tuple.0, tuple.1, tuple.2]
+}
+public func toArray<T>(_ tuple: (T, T, T, T)) -> [T] {
+    return [tuple.0, tuple.1, tuple.2, tuple.3]
+}
+public func toArray<T>(_ tuple: (T, T, T, T, T)) -> [T] {
+    return [tuple.0, tuple.1, tuple.2, tuple.3, tuple.4]
+}
+
+public extension Array {
+    init(_ tuple: (Element, Element)) {
+        self.init(arrayLiteral: tuple.0, tuple.1)
+    }
+    init(_ tuple: (Element, Element, Element)) {
+        self.init(arrayLiteral: tuple.0, tuple.1, tuple.2)
+    }
+    init(_ tuple: (Element, Element, Element, Element)) {
+        self.init(arrayLiteral: tuple.0, tuple.1, tuple.2, tuple.3)
+    }
+    init(_ tuple: (Element, Element, Element, Element, Element)) {
+        self.init(arrayLiteral: tuple.0, tuple.1, tuple.2, tuple.3, tuple.4)
+    }
+}
 /**
  This is a really nice function that will cast objects for you. When paired with `>?>` the compiler will
  be able to tell what type to cast to without you saying explicitly.
