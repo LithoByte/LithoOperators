@@ -419,6 +419,41 @@ public func ignoreArgs<T, U, V, W, X, Z>(_ f: @escaping () -> Z) -> (T, U, V, W,
 public func ignoreArgs<T, U, V, W, X, Y, Z>(_ f: @escaping () -> Z) -> (T, U, V, W, X, Y) -> Z {
     return { _, _, _, _, _, _ in return f() }
 }
+public func ignoreIrrelevantArgs<T, U, V, X>(f: @escaping (T, U) -> X) -> (T, U, V) -> X {
+    return { t, u, _ in
+        f(t, u)
+    }
+}
+public func ignoreIrrelevantArgs<T, U, V, X>(f: @escaping (U, V) -> X) -> (T, U, V) -> X {
+    return { _, u, v in
+        f(u, v)
+    }
+}
+public func ignoreIrrelevantArgs<T, U, V, X>(f: @escaping (T, V) -> X) -> (T, U, V) -> X {
+    return { t, _, v in
+        f(t, v)
+    }
+}
+public func ignoreIrrelevantArgs<T, U, V, X, Y>(f: @escaping (T, U, V) -> Y) -> (T, U, V, X) -> Y {
+    return { t, u, v, _ in
+        f(t, u, v)
+    }
+}
+public func ignoreIrrelevantArgs<T, U, V, X, Y>(f: @escaping (T, V, X) -> Y) -> (T, U, V, X) -> Y {
+    return { t, _, v, x in
+        f(t, v, x)
+    }
+}
+public func ignoreIrrelevantArgs<T, U, V, X, Y>(f: @escaping (U, V, X) -> Y) -> (T, U, V, X) -> Y {
+    return { _, u, v, x in
+        f(u, v, x)
+    }
+}
+public func ignoreIrrelevantArgs<T, U, V, X, Y>(f: @escaping (T, U, X) -> Y) -> (T, U, V, X) -> Y {
+    return { t, u, _, x in
+        f(t, u, x)
+    }
+}
 
 public func returnValue<T>(_ value: T) -> () -> T {
     return { return value }
