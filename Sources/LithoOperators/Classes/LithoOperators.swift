@@ -30,6 +30,15 @@ public func >?><A, B, C>(f: @escaping (A) -> B?, g: @escaping (B) -> C) -> (A) -
         }
     }
 }
+public func >?><A, B, C>(f: @escaping (A) -> B?, g: ((B) -> C)?) -> (A) -> C? {
+    return { a in
+        if let b = f(a) {
+            return g?(b)
+        } else {
+            return nil
+        }
+    }
+}
 public func >?><A, B, C>(f: @escaping (A) -> B?, g: @escaping (B) -> C?) -> (A) -> C? {
     return { a in
         if let b = f(a) {
