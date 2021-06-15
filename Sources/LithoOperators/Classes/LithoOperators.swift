@@ -549,6 +549,12 @@ public func ifExecute<T, U>(_ t: T?, _ f: (T) -> U) -> U? {
     }
     return nil
 }
+public func ifExecute<T, U>(_ t: T?, _ f: (T) -> U?) -> U? {
+    if let t = t {
+        return f(t)
+    }
+    return nil
+}
 
 // This is just an operator version of `ifExecute`.
 infix operator ?>: MultiplicationPrecedence
