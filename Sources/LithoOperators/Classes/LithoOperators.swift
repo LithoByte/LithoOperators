@@ -73,6 +73,13 @@ public func >?><A, B>(f: @escaping (A) -> B?, g: @escaping (B) -> Void) -> (A) -
         }
     }
 }
+public func >?><A, B>(f: @escaping (A) -> B?, g: ((B) -> Void)?) -> (A) -> Void {
+    return { a in
+        if let b = f(a) {
+            g?(b)
+        }
+    }
+}
 public func >?><A, B, C>(f: @escaping (A, B) -> C?, g: @escaping (C) -> Void) -> (A, B) -> Void {
     return { a, b in
         if let c = f(a, b) {
