@@ -19,6 +19,7 @@
 		607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 607FACD91AFB9204008FA782 /* Main.storyboard */; };
 		607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
 		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
+		645A15D9267A734B00F063AA /* DictTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 645A15D8267A734B00F063AA /* DictTests.swift */; };
 		64A6CEB62656E92C00586211 /* TupleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64A6CEB52656E92C00586211 /* TupleTests.swift */; };
 		980FCB7E25800FEF00C5798E /* ConditionalTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 980FCB7D25800FEF00C5798E /* ConditionalTests.swift */; };
 /* End PBXBuildFile section */
@@ -53,6 +54,7 @@
 		607FACDF1AFB9204008FA782 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		607FACE51AFB9204008FA782 /* LithoOperators_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LithoOperators_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACEA1AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		645A15D8267A734B00F063AA /* DictTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DictTests.swift; sourceTree = "<group>"; };
 		64A6CEB52656E92C00586211 /* TupleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TupleTests.swift; sourceTree = "<group>"; };
 		980FCB7D25800FEF00C5798E /* ConditionalTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConditionalTests.swift; sourceTree = "<group>"; };
 		AB7EAE1E3A677B659E95750C /* LithoOperators.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LithoOperators.podspec; path = ../LithoOperators.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
@@ -146,6 +148,7 @@
 				980FCB7D25800FEF00C5798E /* ConditionalTests.swift */,
 				64A6CEB52656E92C00586211 /* TupleTests.swift */,
 				607FACE91AFB9204008FA782 /* Supporting Files */,
+				645A15D8267A734B00F063AA /* DictTests.swift */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -363,6 +366,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				49B5962324E43C3A00CE1E42 /* LiftTests.swift in Sources */,
+				645A15D9267A734B00F063AA /* DictTests.swift in Sources */,
 				49B5961F24E43B9000CE1E42 /* ArrayTests.swift in Sources */,
 				64A6CEB62656E92C00586211 /* TupleTests.swift in Sources */,
 				980FCB7E25800FEF00C5798E /* ConditionalTests.swift in Sources */,

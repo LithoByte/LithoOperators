@@ -272,6 +272,63 @@ class HigherOrderTests: XCTestCase {
         XCTAssert(wasCalled.allSatisfy({ $0 }))
     }
     
+    func testIgnoreIrrelevantArgs1to3() {
+        let returnOneIfTrue: (Bool) -> Int = { $0 ? 1 : 0 }
+        let secondAndThirdIgnored: (Bool, Int, Int) -> Int = ignoreIrrelevantArgs(f: returnOneIfTrue)
+        let firstAndThirdIgnored: (Int, Bool, Int) -> Int = ignoreIrrelevantArgs(f: returnOneIfTrue)
+        let firstAndSecondIgnored: (Int, Int, Bool) -> Int = ignoreIrrelevantArgs(f: returnOneIfTrue)
+        
+        XCTAssertEqual(secondAndThirdIgnored(true, 1, 1), 1)
+        XCTAssertEqual(secondAndThirdIgnored(false, 1, 1), 0)
+        
+        XCTAssertEqual(firstAndThirdIgnored(1, true, 1), 1)
+        XCTAssertEqual(firstAndThirdIgnored(1, false, 1), 0)
+        
+        XCTAssertEqual(firstAndSecondIgnored(1, 1, true), 1)
+        XCTAssertEqual(firstAndSecondIgnored(1, 1, false), 0)
+    }
+    
+    func testIgnoreIrrelevantArgs2to3() {
+        let addTwoNums: (Int, Int) -> Int = (+)
+        let firstIgnored: (Bool, Int, Int) -> Int = ignoreIrrelevantArgs(f: addTwoNums)
+        let secondIgnored: (Int, Bool, Int) -> Int = ignoreIrrelevantArgs(f: addTwoNums)
+        let thirdIgnored: (Int, Int, Bool) -> Int = ignoreIrrelevantArgs(f: addTwoNums)
+        
+        XCTAssertEqual(firstIgnored(true, 1, 1), 2)
+        XCTAssertEqual(secondIgnored(1, true, 1), 2)
+        XCTAssertEqual(thirdIgnored(1, 1, true), 2)
+    }
+    
+    func testIgnoreIrrelevantArgs2to4() {
+        let addTwoNums: (Int, Int) -> Int = (+)
+        let firstAndSecondIgnored: (Bool, Bool, Int, Int) -> Int = ignoreIrrelevantArgs(f: addTwoNums)
+        let firstAndThirdIgnored: (Bool, Int, Bool, Int) -> Int = ignoreIrrelevantArgs(f: addTwoNums)
+        let firstAndFourthIgnored: (Bool, Int, Int, Bool) -> Int = ignoreIrrelevantArgs(f: addTwoNums)
+        let secondAndThirdIgnored: (Int, Bool, Bool, Int) -> Int = ignoreIrrelevantArgs(f: addTwoNums)
+        let secondAndFourthIgnored: (Int, Bool, Int, Bool) -> Int = ignoreIrrelevantArgs(f: addTwoNums)
+        let thirdAndFourthIgnored: (Int, Int, Bool, Bool) -> Int = ignoreIrrelevantArgs(f: addTwoNums)
+        
+        XCTAssertEqual(firstAndSecondIgnored(true, true, 1, 1), 2)
+        XCTAssertEqual(firstAndThirdIgnored(true, 1, true, 1), 2)
+        XCTAssertEqual(firstAndFourthIgnored(true, 1, 1, true), 2)
+        XCTAssertEqual(secondAndThirdIgnored(1, true, true, 1), 2)
+        XCTAssertEqual(secondAndFourthIgnored(1, true, 1, true), 2)
+        XCTAssertEqual(thirdAndFourthIgnored(1, 1, true, true), 2)
+    }
+    
+    func testIgnoreIrrelevantArgs3to4() {
+        let addThreeNums: (Int, Int, Int) -> Int = { $0 + $1 + $2 }
+        let ignoreFirst: (Bool, Int, Int, Int) -> Int = ignoreIrrelevantArgs(f: addThreeNums)
+        let ignoreSecond: (Int, Bool, Int, Int) -> Int = ignoreIrrelevantArgs(f: addThreeNums)
+        let ignoreThird: (Int, Int, Bool, Int) -> Int = ignoreIrrelevantArgs(f: addThreeNums)
+        let ignoreFourth: (Int, Int, Int, Bool) -> Int = ignoreIrrelevantArgs(f: addThreeNums)
+        
+        XCTAssertEqual(ignoreFirst(true, 1, 1, 1), 3)
+        XCTAssertEqual(ignoreSecond(1, true, 1, 1), 3)
+        XCTAssertEqual(ignoreThird(1, 1, true, 1), 3)
+        XCTAssertEqual(ignoreFourth(1, 1, 1, true), 3)
+    }
+    
     func testReturnValue() {
         let function: () -> String = returnValue("Lithobyte")
         XCTAssert(function() == "Lithobyte")
