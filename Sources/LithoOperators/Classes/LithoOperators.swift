@@ -331,6 +331,18 @@ public prefix func ^ <Root, Value>(_ kp: WritableKeyPath<Root, Value>)
     }
 }
 
+public func tryBlock<T, U>(f: @escaping (T) throws -> U) -> (T) -> U? {
+    return { t in
+        try? f(t)
+    }
+}
+
+public func tryBlock<T, U, V>(f: @escaping (T, U) throws -> V) -> (T, U) -> V? {
+    return { t, u in
+        try? f(t, u)
+    }
+}
+
 //higher order functions
 
 /**
