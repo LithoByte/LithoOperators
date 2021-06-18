@@ -12,7 +12,7 @@ import LithoOperators
 class DictTests: XCTestCase {
     func testGet() {
         let dict: [Int:String] = [1:"Calvin", 2:"Elliot"]
-        let getter = get(dict: dict)
+        let getter = get(dict)
         XCTAssertNotNil(getter(1))
         XCTAssertNil(getter(3))
         XCTAssertEqual(getter(1)!, "Calvin")

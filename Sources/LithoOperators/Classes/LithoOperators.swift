@@ -792,7 +792,7 @@ public func get<T>(index: Int, array: [T]) -> T? {
     return index < array.count ? array[index] : nil
 }
 
-public func get<T, U>(dict: [T:U]) -> (T) -> U? {
+public func get<T, U>(_ dict: [T:U]) -> (T) -> U? {
     return { t in
         dict[t]
     }
