@@ -331,15 +331,49 @@ public prefix func ^ <Root, Value>(_ kp: WritableKeyPath<Root, Value>)
     }
 }
 
-public func tryBlock<T, U>(f: @escaping (T) throws -> U) -> (T) -> U? {
+public func optTry<T, U>(f: @escaping (T) throws -> U) -> (T) -> U? {
     return { t in
         try? f(t)
     }
 }
 
-public func tryBlock<T, U, V>(f: @escaping (T, U) throws -> V) -> (T, U) -> V? {
+public func optTry<T, U, V>(f: @escaping (T, U) throws -> V) -> (T, U) -> V? {
     return { t, u in
         try? f(t, u)
+    }
+}
+
+public func forceTry<T, U>(f: @escaping (T) throws -> U) -> (T) -> U {
+    return { t in
+        try! f(t)
+    }
+}
+
+public func forceTry<T, U, V>(f: @escaping (T, U) throws -> V) -> (T, U) -> V {
+    return { t, u in
+        try! f(t, u)
+    }
+}
+
+public func tryCatch<T, U>(f: @escaping (T) throws -> U, catcher: @escaping () -> Void) -> (T) throws -> U?  {
+    return { t in
+        do {
+            return try f(t)
+        } catch {
+            catcher()
+            return nil
+        }
+    }
+}
+
+public func tryCatch<T, U, V>(f: @escaping (T, U) throws -> V, catcher: @escaping () -> Void) -> (T, U) -> V? {
+    return { t, u in
+        do {
+            return try f(t, u)
+        } catch {
+            catcher()
+            return nil
+        }
     }
 }
 
@@ -788,11 +822,19 @@ public extension Array {
     }
 }
 
+public extension Dictionary {
+    var keyToValue: (Key) -> (Value?) {
+        return { key in
+            self[key]
+        }
+    }
+}
+
 public func get<T>(index: Int, array: [T]) -> T? {
     return index < array.count ? array[index] : nil
 }
 
-public func get<T, U>(_ dict: [T:U]) -> (T) -> U? {
+public func keyToValue<T, U>(for dict: [T:U]) -> (T) -> U? {
     return { t in
         dict[t]
     }
