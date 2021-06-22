@@ -331,6 +331,12 @@ public prefix func ^ <Root, Value>(_ kp: WritableKeyPath<Root, Value>)
     }
 }
 
+public prefix func ^<Key, Value>(_ dict: [Key:Value]) -> (Key) -> Value? {
+    return { key in
+        dict[key]
+    }
+}
+
 public func optTry<T, U>(f: @escaping (T) throws -> U) -> (T) -> U? {
     return { t in
         try? f(t)
