@@ -17,4 +17,11 @@ class DictTests: XCTestCase {
         XCTAssertNil(getter(3))
         XCTAssertEqual(getter(1)!, "Calvin")
     }
+    
+    func testGetOperator() {
+        let dict: [Int:String] = [1:"Calvin", 2: "Elliot"]
+        let getter = ^dict
+        XCTAssertNotNil(getter(1))
+        XCTAssertEqual(getter(1)!, "Calvin")
+    }
 }

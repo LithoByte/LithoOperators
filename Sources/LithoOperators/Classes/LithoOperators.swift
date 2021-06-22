@@ -337,6 +337,12 @@ public prefix func ^<Key, Value>(_ dict: [Key:Value]) -> (Key) -> Value? {
     }
 }
 
+public prefix func ^<Element>(_ array: [Element]) -> (Int) -> Element? {
+    return { i in
+        i < array.count ? array[i] : nil
+    }
+}
+
 public func optTry<T, U>(f: @escaping (T) throws -> U) -> (T) -> U? {
     return { t in
         try? f(t)
