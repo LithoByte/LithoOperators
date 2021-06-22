@@ -46,6 +46,16 @@ class OptionalsTests: XCTestCase {
         XCTAssertNil(ifExecute(nilName, allCaps))
     }
     
+    func testIfExecuteOptionalFunc() throws {
+        let allCaps: (String) -> String? = { $0.uppercased() }
+        let name: String? = "elliot"
+        let nilName: String? = nil
+        
+        XCTAssertNotNil(ifExecute(name, allCaps))
+        XCTAssertEqual(ifExecute(name, allCaps), "ELLIOT")
+        XCTAssertNil(ifExecute(nilName, allCaps))
+    }
+    
     func testIfExecuteVoid() throws {
         var wasCalled = false
         let toCall: (String) -> Void = { _ in wasCalled = true }
@@ -78,6 +88,19 @@ class OptionalsTests: XCTestCase {
         XCTAssertTrue(countIsEqualTo10("Hello", "Hello")!)
         XCTAssertFalse(countIsEqualTo10("Hello", "ello")!)
         XCTAssertNil(countIsEqualTo10("", ""))
+    }
+    
+    func testOptionalCompositionOptFunction() {
+        let count: (String) -> Int? = { $0.count > 0 ? $0.count : nil }
+        var isEqualTo10: ((Int) -> Bool)? = { $0 == 10 }
+        var countIsEqualTo10 = count >?> isEqualTo10
+        XCTAssertNotNil(countIsEqualTo10("Hellohello"))
+        XCTAssertEqual(countIsEqualTo10("Hellohello")!, true)
+        
+        isEqualTo10 = nil
+        countIsEqualTo10 = count >?> isEqualTo10
+        
+        XCTAssertNil(countIsEqualTo10("Hellohello"))
     }
     
     func testOptionalCompositionOptParams() {

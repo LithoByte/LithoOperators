@@ -30,6 +30,15 @@ public func >?><A, B, C>(f: @escaping (A) -> B?, g: @escaping (B) -> C) -> (A) -
         }
     }
 }
+public func >?><A, B, C>(f: @escaping (A) -> B?, g: ((B) -> C)?) -> (A) -> C? {
+    return { a in
+        if let b = f(a) {
+            return g?(b)
+        } else {
+            return nil
+        }
+    }
+}
 public func >?><A, B, C>(f: @escaping (A) -> B?, g: @escaping (B) -> C?) -> (A) -> C? {
     return { a in
         if let b = f(a) {
@@ -61,6 +70,13 @@ public func >?><A, B>(f: @escaping (A) -> B?, g: @escaping (B) -> Void) -> (A) -
     return { a in
         if let b = f(a) {
             g(b)
+        }
+    }
+}
+public func >?><A, B>(f: @escaping (A) -> B?, g: ((B) -> Void)?) -> (A) -> Void {
+    return { a in
+        if let b = f(a) {
+            g?(b)
         }
     }
 }
@@ -315,6 +331,90 @@ public prefix func ^ <Root, Value>(_ kp: WritableKeyPath<Root, Value>)
     }
 }
 
+public prefix func ^<Key, Value>(_ dict: [Key:Value]) -> (Key) -> Value? {
+    return { key in
+        dict[key]
+    }
+}
+
+public prefix func ^<Element>(_ array: [Element]) -> (Int) -> Element? {
+    return { i in
+        i < array.count ? array[i] : nil
+    }
+}
+
+public func optTry<T, U>(f: @escaping (T) throws -> U) -> (T) -> U? {
+    return { t in
+        try? f(t)
+    }
+}
+
+public func optTry<T, U, V>(f: @escaping (T, U) throws -> V) -> (T, U) -> V? {
+    return { t, u in
+        try? f(t, u)
+    }
+}
+
+public func forceTry<T, U>(f: @escaping (T) throws -> U) -> (T) -> U {
+    return { t in
+        try! f(t)
+    }
+}
+
+public func forceTry<T, U, V>(f: @escaping (T, U) throws -> V) -> (T, U) -> V {
+    return { t, u in
+        try! f(t, u)
+    }
+}
+
+public func tryCatch<T, U>(f: @escaping (T) throws -> U, catcher: @escaping () -> Void) -> (T) throws -> U?  {
+    return { t in
+        do {
+            return try f(t)
+        } catch {
+            catcher()
+            return nil
+        }
+    }
+}
+
+public func tryCatch<T, U, V>(f: @escaping (T, U) throws -> V, catcher: @escaping () -> Void) -> (T, U) -> V? {
+    return { t, u in
+        do {
+            return try f(t, u)
+        } catch {
+            catcher()
+            return nil
+        }
+    }
+}
+
+public func tryCatch<T, U, V>(f: @escaping (T) throws -> U, catcher: @escaping (V) -> Void) -> (T) -> U? where V: Error {
+    return { t in
+        do {
+            return try f(t)
+        } catch {
+            if let err = error as? V {
+                catcher(err)
+            }
+            return nil
+        }
+    }
+}
+
+public func tryCatch<T, U, V, X>(f: @escaping (T, U) throws -> V, catcher: @escaping (X) -> Void) -> (T, U) -> V? where X: Error {
+    return { t, u in
+        do {
+            return try f(t, u)
+        } catch {
+            if let err = error as? X {
+                catcher(err)
+            }
+            return nil
+        }
+    }
+}
+
 //higher order functions
 
 /**
@@ -419,6 +519,86 @@ public func ignoreArgs<T, U, V, W, X, Z>(_ f: @escaping () -> Z) -> (T, U, V, W,
 public func ignoreArgs<T, U, V, W, X, Y, Z>(_ f: @escaping () -> Z) -> (T, U, V, W, X, Y) -> Z {
     return { _, _, _, _, _, _ in return f() }
 }
+public func ignoreIrrelevantArgs<T, U, V, X>(f: @escaping (T, U) -> X) -> (T, U, V) -> X {
+    return { t, u, _ in
+        f(t, u)
+    }
+}
+public func ignoreIrrelevantArgs<T, U, V, X>(f: @escaping (U, V) -> X) -> (T, U, V) -> X {
+    return { _, u, v in
+        f(u, v)
+    }
+}
+public func ignoreIrrelevantArgs<T, U, V, X>(f: @escaping (T, V) -> X) -> (T, U, V) -> X {
+    return { t, _, v in
+        f(t, v)
+    }
+}
+public func ignoreIrrelevantArgs<T, U, V, X>(f: @escaping (T) -> X) -> (T, U, V) -> X {
+    return { t, _, _ in
+        f(t)
+    }
+}
+public func ignoreIrrelevantArgs<T, U, V, X>(f: @escaping (V) -> X) -> (T, U, V) -> X {
+    return { _, _, v in
+        f(v)
+    }
+}
+public func ignoreIrrelevantArgs<T, U, V, X>(f: @escaping (U) -> X) -> (T, U, V) -> X {
+    return { _, u, v in
+        f(u)
+    }
+}
+public func ignoreIrrelevantArgs<T, U, V, X, Y>(f: @escaping (T, V) -> Y) -> (T, U, V, X) -> Y {
+    return { t, _, v, _ in
+        f(t, v)
+    }
+}
+public func ignoreIrrelevantArgs<T, U, V, X, Y>(f: @escaping (T, X) -> Y) -> (T, U, V, X) -> Y {
+    return { t, _, _, x in
+        f(t, x)
+    }
+}
+public func ignoreIrrelevantArgs<T, U, V, X, Y>(f: @escaping (V, X) -> Y) -> (T, U, V, X) -> Y {
+    return { _, _, v, x in
+        f(v, x)
+    }
+}
+public func ignoreIrrelevantArgs<T, U, V, X, Y>(f: @escaping (U, V) -> Y) -> (T, U, V, X) -> Y {
+    return { _, u, v, _ in
+        f(u, v)
+    }
+}
+public func ignoreIrrelevantArgs<T, U, V, X, Y>(f: @escaping (U, X) -> Y) -> (T, U, V, X) -> Y {
+    return { _, u, _, x in
+        f(u, x)
+    }
+}
+public func ignoreIrrelevantArgs<T, U, V, X, Y>(f: @escaping (T, U) -> Y) -> (T, U, V, X) -> Y {
+    return { t, u, _, _ in
+        f(t, u)
+    }
+}
+public func ignoreIrrelevantArgs<T, U, V, X, Y>(f: @escaping (T, U, V) -> Y) -> (T, U, V, X) -> Y {
+    return { t, u, v, _ in
+        f(t, u, v)
+    }
+}
+public func ignoreIrrelevantArgs<T, U, V, X, Y>(f: @escaping (T, V, X) -> Y) -> (T, U, V, X) -> Y {
+    return { t, _, v, x in
+        f(t, v, x)
+    }
+}
+public func ignoreIrrelevantArgs<T, U, V, X, Y>(f: @escaping (U, V, X) -> Y) -> (T, U, V, X) -> Y {
+    return { _, u, v, x in
+        f(u, v, x)
+    }
+}
+public func ignoreIrrelevantArgs<T, U, V, X, Y>(f: @escaping (T, U, X) -> Y) -> (T, U, V, X) -> Y {
+    return { t, u, _, x in
+        f(t, u, x)
+    }
+}
 
 public func returnValue<T>(_ value: T) -> () -> T {
     return { return value }
@@ -448,6 +628,12 @@ public func ifExecute<T>(_ t: T?, _ f: (T) -> Void) {
     }
 }
 public func ifExecute<T, U>(_ t: T?, _ f: (T) -> U) -> U? {
+    if let t = t {
+        return f(t)
+    }
+    return nil
+}
+public func ifExecute<T, U>(_ t: T?, _ f: (T) -> U?) -> U? {
     if let t = t {
         return f(t)
     }
@@ -674,8 +860,22 @@ public extension Array {
     }
 }
 
+public extension Dictionary {
+    var keyToValue: (Key) -> (Value?) {
+        return { key in
+            self[key]
+        }
+    }
+}
+
 public func get<T>(index: Int, array: [T]) -> T? {
     return index < array.count ? array[index] : nil
+}
+
+public func keyToValue<T, U>(for dict: [T:U]) -> (T) -> U? {
+    return { t in
+        dict[t]
+    }
 }
 
 public func index<T>(array: [T]) -> (Int) -> T? {

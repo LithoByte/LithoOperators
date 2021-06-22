@@ -230,6 +230,14 @@ class ArrayTests: XCTestCase {
         XCTAssertEqual(get(index: 0, array: arr)!, 0)
     }
     
+    func testGetOperator() {
+        let arr = [0, 1]
+        let getter = ^arr
+        XCTAssertNotNil(getter(0))
+        XCTAssertNil(getter(2))
+        XCTAssertEqual(getter(1)!, 1)
+    }
+    
     func testIndex() {
         let arr = [0, 1]
         let indexer = LithoOperators.index(array: arr)
