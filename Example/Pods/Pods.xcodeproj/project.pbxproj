@@ -13,6 +13,14 @@
 		38F3091CD32A89D139C31DA3E26529E0 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E056098C9AC391880BFEC351EE174803 /* Foundation.framework */; };
 		3F0D98E1DEF68BB7F5D134136F09DE05 /* Prelude-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = C1533110215D2ABFAC67AB31EF585EB2 /* Prelude-dummy.m */; };
 		47FB7BC28989D419EF704F220BCB06D3 /* Application.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBCF89D352C6B89650CE7E3CE4B5E7DD /* Application.swift */; };
+		499E7E9B2683976F00145483 /* Arrays.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499E7E9A2683976F00145483 /* Arrays.swift */; };
+		499E7E9D2683982E00145483 /* Tuples.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499E7E9C2683982E00145483 /* Tuples.swift */; };
+		499E7E9F2683988000145483 /* Comparables.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499E7E9E2683988000145483 /* Comparables.swift */; };
+		499E7EA12683988A00145483 /* Optionals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499E7EA02683988A00145483 /* Optionals.swift */; };
+		499E7EA326839A8400145483 /* Dictionaries.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499E7EA226839A8400145483 /* Dictionaries.swift */; };
+		499E7EA526839ADC00145483 /* Try.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499E7EA426839ADC00145483 /* Try.swift */; };
+		499E7EA726839B6E00145483 /* KeyPaths.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499E7EA626839B6E00145483 /* KeyPaths.swift */; };
+		499E7EA926839C4700145483 /* ArgumentManipulation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499E7EA826839C4700145483 /* ArgumentManipulation.swift */; };
 		567933902B3E1726C28EDFE3B5FF094C /* Fix.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5169D5FA842077F7FFECFCEF2481E15 /* Fix.swift */; };
 		574A1074D8AFDA4A7DDF4B06F51DF828 /* Pods-LithoOperators_Example-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CB190F2366AF43E0B016DE2790A9C29 /* Pods-LithoOperators_Example-dummy.m */; };
 		5D2D70FE976E9D2E682CC1762159F683 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E056098C9AC391880BFEC351EE174803 /* Foundation.framework */; };
@@ -67,19 +75,27 @@
 		07B0983524EB023E5D22164776C40F94 /* LithoOperators-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "LithoOperators-umbrella.h"; sourceTree = "<group>"; };
 		08FB775DA87B9ED1C94E142439043A63 /* LithoOperators.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = LithoOperators.release.xcconfig; sourceTree = "<group>"; };
 		0E09FF2687068D04BF03AFDB279803AB /* Pods-LithoOperators_Example-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-LithoOperators_Example-acknowledgements.plist"; sourceTree = "<group>"; };
-		0FC679A41D0D34FD873B7D9F9E6BE8BB /* Prelude.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Prelude.framework; path = Prelude.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		0FC679A41D0D34FD873B7D9F9E6BE8BB /* Prelude.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Prelude.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		195E6773157C412BDBEAA93210189851 /* Pods-LithoOperators_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-LithoOperators_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		22F559539D5EDFB5CC1C9872AA97AE6C /* Compose.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Compose.swift; path = Prelude/Compose.swift; sourceTree = "<group>"; };
 		259E2A8B0B90CF86EFDAFF81FB3CDE17 /* Prelude-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Prelude-Info.plist"; sourceTree = "<group>"; };
 		2B99706E7878BC25B330E6C4CBF1810C /* Prelude-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Prelude-umbrella.h"; sourceTree = "<group>"; };
 		2E92399B29864F527FFAA5FB5172657C /* LithoOperators-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "LithoOperators-prefix.pch"; sourceTree = "<group>"; };
 		4425E5381C7ACEA1570A5BCCE4071973 /* Prelude.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Prelude.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		499E7E9A2683976F00145483 /* Arrays.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Arrays.swift; sourceTree = "<group>"; };
+		499E7E9C2683982E00145483 /* Tuples.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tuples.swift; sourceTree = "<group>"; };
+		499E7E9E2683988000145483 /* Comparables.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Comparables.swift; sourceTree = "<group>"; };
+		499E7EA02683988A00145483 /* Optionals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Optionals.swift; sourceTree = "<group>"; };
+		499E7EA226839A8400145483 /* Dictionaries.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dictionaries.swift; sourceTree = "<group>"; };
+		499E7EA426839ADC00145483 /* Try.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Try.swift; sourceTree = "<group>"; };
+		499E7EA626839B6E00145483 /* KeyPaths.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyPaths.swift; sourceTree = "<group>"; };
+		499E7EA826839C4700145483 /* ArgumentManipulation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArgumentManipulation.swift; sourceTree = "<group>"; };
 		4AA5050EBD857863F0A3CAEC1180C558 /* LithoOperators.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = LithoOperators.debug.xcconfig; sourceTree = "<group>"; };
 		4C50118D68357ECE51B16314CA143175 /* Pods-LithoOperators_Example-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-LithoOperators_Example-acknowledgements.markdown"; sourceTree = "<group>"; };
 		4CB190F2366AF43E0B016DE2790A9C29 /* Pods-LithoOperators_Example-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-LithoOperators_Example-dummy.m"; sourceTree = "<group>"; };
 		4E0251DC48966BFD4BC89E192D52EA10 /* Pods-LithoOperators_Tests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-LithoOperators_Tests-acknowledgements.plist"; sourceTree = "<group>"; };
 		5FC15DB692B38289AC46227CDD71334D /* Prelude.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Prelude.release.xcconfig; sourceTree = "<group>"; };
-		6F4C3AE514FA485F13CA38F1FFE30E7E /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; path = README.md; sourceTree = "<group>"; };
+		6F4C3AE514FA485F13CA38F1FFE30E7E /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		70340C8460B9AB0C0F104B947B0EDAEC /* Pods-LithoOperators_Tests-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-LithoOperators_Tests-Info.plist"; sourceTree = "<group>"; };
 		7227CBF26CBF23F5A816C97FACAF8A37 /* Pods-LithoOperators_Tests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-LithoOperators_Tests-acknowledgements.markdown"; sourceTree = "<group>"; };
 		76A27B116679455EC60D08C27AC3D708 /* Pods-LithoOperators_Tests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-LithoOperators_Tests.modulemap"; sourceTree = "<group>"; };
@@ -91,24 +107,24 @@
 		8B1ACD34E2249CE636A67D207B878E39 /* Pods-LithoOperators_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-LithoOperators_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		8CA98E40D2B88A0C4AAF5FA0C387B1F8 /* Prelude-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Prelude-prefix.pch"; sourceTree = "<group>"; };
 		989FBE82A5143109483D0D79AEF57AB3 /* Pods-LithoOperators_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-LithoOperators_Example.debug.xcconfig"; sourceTree = "<group>"; };
-		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		A5169D5FA842077F7FFECFCEF2481E15 /* Fix.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Fix.swift; path = Prelude/Fix.swift; sourceTree = "<group>"; };
 		AA2C52C9F5DEF20CF7C93CD2FF4C2470 /* Curry.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Curry.swift; path = Prelude/Curry.swift; sourceTree = "<group>"; };
-		B4954753A7A9B05BA26964E11FB33074 /* Pods_LithoOperators_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_LithoOperators_Tests.framework; path = "Pods-LithoOperators_Tests.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B4954753A7A9B05BA26964E11FB33074 /* Pods_LithoOperators_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LithoOperators_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B4BFEF826FBB5655F4CF340B99F8DC5C /* LithoOperators.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = LithoOperators.swift; path = Sources/LithoOperators/Classes/LithoOperators.swift; sourceTree = "<group>"; };
 		BDFB221225EE481CF8D16F62B8DAA8A1 /* Optional.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Optional.swift; path = Prelude/Optional.swift; sourceTree = "<group>"; };
 		C1533110215D2ABFAC67AB31EF585EB2 /* Prelude-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Prelude-dummy.m"; sourceTree = "<group>"; };
 		C1D9EFB0E06757882401FF3CDAB03D4E /* Prelude.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Prelude.debug.xcconfig; sourceTree = "<group>"; };
-		C827F82CDD94736FF5123BB62D606C53 /* Pods_LithoOperators_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_LithoOperators_Example.framework; path = "Pods-LithoOperators_Example.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C827F82CDD94736FF5123BB62D606C53 /* Pods_LithoOperators_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LithoOperators_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CBCF89D352C6B89650CE7E3CE4B5E7DD /* Application.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Application.swift; path = Prelude/Application.swift; sourceTree = "<group>"; };
-		CF6455C9E89E4693B08C56B89AA764F1 /* LithoOperators.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; path = LithoOperators.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		CF6455C9E89E4693B08C56B89AA764F1 /* LithoOperators.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; path = LithoOperators.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		D329E051B7989F967F91E5FD66110C23 /* Pods-LithoOperators_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-LithoOperators_Example.release.xcconfig"; sourceTree = "<group>"; };
 		D3735A44379282CDF03FC4009AE45105 /* Pods-LithoOperators_Tests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-LithoOperators_Tests-dummy.m"; sourceTree = "<group>"; };
 		E056098C9AC391880BFEC351EE174803 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS14.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		E0D57A6D83B7B14B8BBF6E90BBA847B2 /* LithoOperators-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "LithoOperators-Info.plist"; sourceTree = "<group>"; };
 		E7A3DA23727CA6C02D925F8AC9F0FF88 /* Prelude.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Prelude.swift; path = Prelude/Prelude.swift; sourceTree = "<group>"; };
-		F02BB82B3FFD1B4A5BE1C7443584444C /* LithoOperators.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = LithoOperators.framework; path = LithoOperators.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		F1ECCF29DAFF407274990B925E170B93 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; path = LICENSE; sourceTree = "<group>"; };
+		F02BB82B3FFD1B4A5BE1C7443584444C /* LithoOperators.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = LithoOperators.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F1ECCF29DAFF407274990B925E170B93 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		F304AC5272D584DD9155EA70CA14008C /* Tuple.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Tuple.swift; path = Prelude/Tuple.swift; sourceTree = "<group>"; };
 		F47FAC0F898D55DBC1696283FFB7C54D /* Pods-LithoOperators_Example-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-LithoOperators_Example-frameworks.sh"; sourceTree = "<group>"; };
 		F7FBA12E410125643DAC890A1DB408C6 /* Pods-LithoOperators_Example.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-LithoOperators_Example.modulemap"; sourceTree = "<group>"; };
@@ -181,6 +197,14 @@
 				B4BFEF826FBB5655F4CF340B99F8DC5C /* LithoOperators.swift */,
 				A85B9370EEF87BCA299C2AF0507D7593 /* Pod */,
 				67D2318E3439F9688CA4DB80FEFBCDB7 /* Support Files */,
+				499E7E9A2683976F00145483 /* Arrays.swift */,
+				499E7E9C2683982E00145483 /* Tuples.swift */,
+				499E7E9E2683988000145483 /* Comparables.swift */,
+				499E7EA02683988A00145483 /* Optionals.swift */,
+				499E7EA226839A8400145483 /* Dictionaries.swift */,
+				499E7EA426839ADC00145483 /* Try.swift */,
+				499E7EA626839B6E00145483 /* KeyPaths.swift */,
+				499E7EA826839C4700145483 /* ArgumentManipulation.swift */,
 			);
 			name = LithoOperators;
 			path = ../..;
@@ -248,7 +272,6 @@
 				F304AC5272D584DD9155EA70CA14008C /* Tuple.swift */,
 				5E85100491D06B22BDFE084E89E30655 /* Support Files */,
 			);
-			name = Prelude;
 			path = Prelude;
 			sourceTree = "<group>";
 		};
@@ -514,8 +537,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				499E7E9D2683982E00145483 /* Tuples.swift in Sources */,
+				499E7EA726839B6E00145483 /* KeyPaths.swift in Sources */,
 				953DA2F8B36E07C4FDE9451CA1AE3874 /* LithoOperators-dummy.m in Sources */,
+				499E7EA926839C4700145483 /* ArgumentManipulation.swift in Sources */,
+				499E7E9F2683988000145483 /* Comparables.swift in Sources */,
+				499E7EA526839ADC00145483 /* Try.swift in Sources */,
+				499E7EA12683988A00145483 /* Optionals.swift in Sources */,
+				499E7E9B2683976F00145483 /* Arrays.swift in Sources */,
 				FAB9A879ABCC18F3736326BA9069B018 /* LithoOperators.swift in Sources */,
+				499E7EA326839A8400145483 /* Dictionaries.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -683,8 +714,7 @@
 				MTL_FAST_MATH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRIP_INSTALLED_PRODUCT = NO;
-				SWIFT_COMPILATION_MODE = wholemodule;
-				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				SWIFT_VERSION = 5.0;
 				SYMROOT = "${SRCROOT}/../build";
 			};

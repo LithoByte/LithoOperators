@@ -15,7 +15,7 @@ class HigherOrderTests: XCTestCase {
         let namer: () -> String = { "Elliot" }
         let caps: (String) -> String = { $0.uppercased() }
         
-        XCTAssertEqual((namer >>> caps)(), "ELLIOT")
+        XCTAssertEqual((namer >*> caps)(), "ELLIOT")
     }
     
     func testTupleUnwrap() {
