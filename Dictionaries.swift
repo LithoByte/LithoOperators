@@ -32,5 +32,5 @@ public func keyToValue<T, U>(for dict: [T:U]) -> (T) -> U? {
 }
 
 public func index<T>(array: [T]) -> (Int) -> T? {
-    return array ||> get
+    return array -*> get
 }

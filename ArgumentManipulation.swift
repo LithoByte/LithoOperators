@@ -13,14 +13,17 @@ import Prelude
  from `(A, B) -> C` and returns a function that just accepts a value for `B`. In Prelude this would
  be ` a |> curry(f)`.
  */
-public func *><A, B, C>(a: A, f: @escaping (A, B) -> C) -> (B) -> C {
+infix operator *->: AdditionPrecedence
+public func *-><A, B, C>(a: A, f: @escaping (A, B) -> C) -> (B) -> C {
     return { b in f(a, b) }
 }
 // TESTED
-public func *><A, B, C, D>(tuple: (A, B), f: @escaping (A, B, C) -> D) -> (C) -> D {
+infix operator **->: AdditionPrecedence
+public func **-><A, B, C, D>(tuple: (A, B), f: @escaping (A, B, C) -> D) -> (C) -> D {
     return { c in f(tuple.0, tuple.1, c) }
 }
-public func *><A, B, C, D>(a: A, f: @escaping (A, B, C) -> D) -> (B, C) -> D {
+infix operator *-->: AdditionPrecedence
+public func *--><A, B, C, D>(a: A, f: @escaping (A, B, C) -> D) -> (B, C) -> D {
     return { b, c in f(a, b, c) }
 }
 
@@ -33,67 +36,72 @@ public func *><A, B, C, D>(a: A, f: @escaping (A, B, C) -> D) -> (B, C) -> D {
  a function `f` from `Int -> String` and wanted to use it to change an array of `Int`s to `String`s,
  you could do so by saying: `f ||> map` which would return a function from `[Int] -> [String]`
  */
-infix operator ||>: AdditionPrecedence
-public func ||><A, B, C>(b: B, f: @escaping (A, B) -> C) -> (A) -> C {
+infix operator -*>: AdditionPrecedence
+public func -*><A, B, C>(b: B, f: @escaping (A, B) -> C) -> (A) -> C {
     return { a in f(a, b) }
 }
-public func ||><A, B, C, D>(tuple: (B, C), f: @escaping (A, B, C) -> D) -> (A) -> D {
+infix operator -**>: AdditionPrecedence
+public func -**><A, B, C, D>(tuple: (B, C), f: @escaping (A, B, C) -> D) -> (A) -> D {
     return { a in f(a, tuple.0, tuple.1) }
 }
-public func ||><A, B, C, D, E>(tuple: (B, C, D), f: @escaping (A, B, C, D) -> E) -> (A) -> E {
+infix operator -***>: AdditionPrecedence
+public func -***><A, B, C, D, E>(tuple: (B, C, D), f: @escaping (A, B, C, D) -> E) -> (A) -> E {
     return { a in f(a, tuple.0, tuple.1, tuple.2) }
 }
 
 //Similar to the above two, but with more arguments...
 // TESTED
-infix operator |||>: AdditionPrecedence
-public func |||><A, B, C, D>(c: C, f: @escaping (A, B, C) -> D) -> (A, B) -> D {
+infix operator --*>: AdditionPrecedence
+public func --*><A, B, C, D>(c: C, f: @escaping (A, B, C) -> D) -> (A, B) -> D {
     return { a, b in f(a, b, c) }
 }
-public func |||><A, B, C, D, E>(tuple: (C, D), f: @escaping (A, B, C, D) -> E) -> (A, B) -> E {
+infix operator --**>: AdditionPrecedence
+public func --**><A, B, C, D, E>(tuple: (C, D), f: @escaping (A, B, C, D) -> E) -> (A, B) -> E {
     return { a, b in f(a, b, tuple.0, tuple.1) }
 }
 
 //...and so on.
 // TESTED
-infix operator ||||>: AdditionPrecedence
-public func ||||><A, B, C, D, E>(d: D, f: @escaping (A, B, C, D) -> E) -> (A, B, C) -> E {
+infix operator ---*>: AdditionPrecedence
+public func ---*><A, B, C, D, E>(d: D, f: @escaping (A, B, C, D) -> E) -> (A, B, C) -> E {
     return { a, b, c in f(a, b, c, d) }
 }
 
 //...and so on...
 // TESTED
-infix operator |||||>: AdditionPrecedence
-public func |||||><A, B, C, D, E, F>(e: E, f: @escaping (A, B, C, D, E) -> F) -> (A, B, C, D) -> F {
+infix operator ----*>: AdditionPrecedence
+public func ----*><A, B, C, D, E, F>(e: E, f: @escaping (A, B, C, D, E) -> F) -> (A, B, C, D) -> F {
     return { a, b, c, d in f(a, b, c, d, e) }
 }
 
 //...and so on.
 // TESTED
-infix operator ||||||>: AdditionPrecedence
-public func ||||||><A, B, C, D, E, F, G>(eff: F, f: @escaping (A, B, C, D, E, F) -> G) -> (A, B, C, D, E) -> G {
+infix operator -----*>: AdditionPrecedence
+public func -----*><A, B, C, D, E, F, G>(eff: F, f: @escaping (A, B, C, D, E, F) -> G) -> (A, B, C, D, E) -> G {
     return { a, b, c, d, e in f(a, b, c, d, e, eff) }
 }
 
 /**
  These operators can also have a subsitition effect on functions, instead of a currying effect. This allows you to take a function, say g: (Int, Int) -> Int, and use another function f: (String) -> Int, and substitute f into g to make g': (String, Int) -> Int. Note that the one parameter case is achieved by the >>> operator.
  */
-infix operator >*>: AdditionPrecedence
-public func >*><A, B, C, D>(f: @escaping (A) -> B, g: @escaping (B, C) -> D) -> (A, C) -> D {
+infix operator >*->: AdditionPrecedence
+public func >*-><A, B, C, D>(f: @escaping (A) -> B, g: @escaping (B, C) -> D) -> (A, C) -> D {
     return uncurry(f >>> curry(g))
 }
-public func >*><A, B, C, D, E>(f: @escaping (A) -> B, g: @escaping (B, C, D) -> E) -> (A, C, D) -> E {
+infix operator >*-->: AdditionPrecedence
+public func >*--><A, B, C, D, E>(f: @escaping (A) -> B, g: @escaping (B, C, D) -> E) -> (A, C, D) -> E {
     return uncurry(f >>> curry(g))
 }
-infix operator >**>: AdditionPrecedence
-public func >**><A, B, C, D>(f: @escaping (A) -> C, g: @escaping (B, C) -> D) -> (B, A) -> D {
+infix operator >-*>: AdditionPrecedence
+public func >-*><A, B, C, D>(f: @escaping (A) -> C, g: @escaping (B, C) -> D) -> (B, A) -> D {
     return flip(uncurry(f >>> curry(flip(g))))
 }
-public func >**><A, B, C, D, E>(f: @escaping (A) -> C, g: @escaping (B, C, D) -> E) -> (B, A, D) -> E {
+infix operator >-*->: AdditionPrecedence
+public func >-*-><A, B, C, D, E>(f: @escaping (A) -> C, g: @escaping (B, C, D) -> E) -> (B, A, D) -> E {
     return shiftRight(uncurry(f >>> curry(shiftLeft(g))))
 }
-infix operator >***>: AdditionPrecedence
-public func >***><A, B, C, D, E>(f: @escaping (A) -> D, g: @escaping (B, C, D) -> E) -> (B, C, A) -> E {
+infix operator >--*>: AdditionPrecedence
+public func >--*><A, B, C, D, E>(f: @escaping (A) -> D, g: @escaping (B, C, D) -> E) -> (B, C, A) -> E {
     return flip(uncurry(f >>> curry(flip(g))))
 }
 
@@ -116,33 +124,34 @@ public func shiftRight<A, B, C, D>(_ f: @escaping (A, B, C) -> D) -> (C, A, B) -
 /**
  These sets of operators have the same semantics as the previous, only they take two functions. The latter is the function to curry, and the former returns a value to be curried into the latter. This is the technical equivalent of using >>> (see below) to compose f with g >||> (>|||>) if we want the returned value to be curried into the third position. Using operators on operators seems a little unreadable, however, so we overload these functions.
  */
+infix operator >*>: AdditionPrecedence
 public func >*><A, C>(f: @escaping () -> A, g: @escaping (A) -> C) -> () -> C {
     return { g(f()) }
 }
 public func >*><S, T, U>(f: @escaping (S) -> T, g: @escaping (T) -> U) -> (S) -> U {
     return { g(f($0)) }
 }
-public func >*><A, B, C>(f: @escaping () -> A, g: @escaping (A, B) -> C) -> (B) -> C {
+public func >*-><A, B, C>(f: @escaping () -> A, g: @escaping (A, B) -> C) -> (B) -> C {
     return { b in
         g(f(), b)
     }
 }
-public func >*><A, B, C, D>(f: @escaping () -> A, g: @escaping (A, B, C) -> D) -> (B, C) -> D {
+public func >*--><A, B, C, D>(f: @escaping () -> A, g: @escaping (A, B, C) -> D) -> (B, C) -> D {
     return { b, c in
         g(f(), b, c)
     }
 }
-public func >**><A, B, C>(f: @escaping () -> B, g: @escaping (A, B) -> C) -> (A) -> C {
+public func >-*><A, B, C>(f: @escaping () -> B, g: @escaping (A, B) -> C) -> (A) -> C {
     return { a in
         g(a, f())
     }
 }
-public func >**><A, B, C, D>(f: @escaping () -> B, g: @escaping (A, B, C) -> D) -> (A, C) -> D {
+public func >-*-><A, B, C, D>(f: @escaping () -> B, g: @escaping (A, B, C) -> D) -> (A, C) -> D {
     return { a, c in
         g(a, f(), c)
     }
 }
-public func >***><A, B, C, D>(f: @escaping () -> C, g: @escaping (A, B, C) -> D) -> (A, B) -> D {
+public func >--*><A, B, C, D>(f: @escaping () -> C, g: @escaping (A, B, C) -> D) -> (A, B) -> D {
     return { a, b in
         g(a, b, f())
     }
