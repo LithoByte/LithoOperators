@@ -7,24 +7,57 @@
 
 import Prelude
 
-//TESTED
 /**
  This is basically an operator for currying. It puts the value `a` into the first postion of a function `f`
  from `(A, B) -> C` and returns a function that just accepts a value for `B`. In Prelude this would
  be ` a |> curry(f)`.
  */
 infix operator *->: AdditionPrecedence
+/**
+ Substitutes the value on the left into the first argument of the function on the right.
+ */
 public func *-><A, B, C>(a: A, f: @escaping (A, B) -> C) -> (B) -> C {
     return { b in f(a, b) }
 }
-// TESTED
+
 infix operator **->: AdditionPrecedence
+/**
+ Substitutes the tuple on the left into the first two arguments of the function on the right.
+ */
 public func **-><A, B, C, D>(tuple: (A, B), f: @escaping (A, B, C) -> D) -> (C) -> D {
     return { c in f(tuple.0, tuple.1, c) }
 }
+
 infix operator *-->: AdditionPrecedence
+/**
+ Substitutes the value on the left into the first argument of the function on the right.
+ */
 public func *--><A, B, C, D>(a: A, f: @escaping (A, B, C) -> D) -> (B, C) -> D {
     return { b, c in f(a, b, c) }
+}
+
+infix operator *--->: AdditionPrecedence
+/**
+ Substitutes the value on the left into the first argument of the function on the right.
+ */
+public func *---><A, B, C, D, E>(a: A, f: @escaping (A, B, C, D) -> E) -> (B, C, D) -> E {
+    return { b, c, d in f(a, b, c, d) }
+}
+
+infix operator *---->: AdditionPrecedence
+/**
+ Substitutes the value on the left into the first argument of the function on the right.
+ */
+public func *----><A, B, C, D, E, F>(a: A, f: @escaping (A, B, C, D, E) -> F) -> (B, C, D, E) -> F {
+    return { b, c, d, e in f(a, b, c, d, e) }
+}
+
+infix operator *----->: AdditionPrecedence
+/**
+ Substitutes the value on the left into the first argument of the function on the right.
+ */
+public func *-----><A, B, C, D, E, F, G>(a: A, f: @escaping (A, B, C, D, E, F) -> G) -> (B, C, D, E, F) -> G {
+    return { b, c, d, e, eff in f(a, b, c, d, e, eff) }
 }
 
 //TESTED
@@ -37,52 +70,71 @@ public func *--><A, B, C, D>(a: A, f: @escaping (A, B, C) -> D) -> (B, C) -> D {
  you could do so by saying: `f ||> map` which would return a function from `[Int] -> [String]`
  */
 infix operator -*>: AdditionPrecedence
+/**
+ Substitutes the value on the left into the second argument of the function on the right.
+ */
 public func -*><A, B, C>(b: B, f: @escaping (A, B) -> C) -> (A) -> C {
     return { a in f(a, b) }
 }
+
 infix operator -**>: AdditionPrecedence
+/**
+ Substitutes the value on the left into the last two arguments of the function on the right.
+ */
 public func -**><A, B, C, D>(tuple: (B, C), f: @escaping (A, B, C) -> D) -> (A) -> D {
     return { a in f(a, tuple.0, tuple.1) }
 }
+
 infix operator -***>: AdditionPrecedence
+/**
+ Substitutes the value on the left into the last three arguments of the function on the right.
+ */
 public func -***><A, B, C, D, E>(tuple: (B, C, D), f: @escaping (A, B, C, D) -> E) -> (A) -> E {
     return { a in f(a, tuple.0, tuple.1, tuple.2) }
 }
 
-//Similar to the above two, but with more arguments...
-// TESTED
 infix operator --*>: AdditionPrecedence
+/**
+ Substitutes the value on the left into the last argument of the function on the right.
+ */
 public func --*><A, B, C, D>(c: C, f: @escaping (A, B, C) -> D) -> (A, B) -> D {
     return { a, b in f(a, b, c) }
 }
+
 infix operator --**>: AdditionPrecedence
+/**
+ Substitutes the value on the left into the last two arguments of the function on the right.
+ */
 public func --**><A, B, C, D, E>(tuple: (C, D), f: @escaping (A, B, C, D) -> E) -> (A, B) -> E {
     return { a, b in f(a, b, tuple.0, tuple.1) }
 }
 
-//...and so on.
-// TESTED
 infix operator ---*>: AdditionPrecedence
+/**
+ Substitutes the value on the left into the last argument of the function on the right.
+ */
 public func ---*><A, B, C, D, E>(d: D, f: @escaping (A, B, C, D) -> E) -> (A, B, C) -> E {
     return { a, b, c in f(a, b, c, d) }
 }
 
-//...and so on...
-// TESTED
 infix operator ----*>: AdditionPrecedence
+/**
+ Substitutes the value on the left into the last argument of the function on the right.
+ */
 public func ----*><A, B, C, D, E, F>(e: E, f: @escaping (A, B, C, D, E) -> F) -> (A, B, C, D) -> F {
     return { a, b, c, d in f(a, b, c, d, e) }
 }
 
-//...and so on.
-// TESTED
 infix operator -----*>: AdditionPrecedence
+/**
+ Substitutes the value on the left into the last argument of the function on the right.
+ */
 public func -----*><A, B, C, D, E, F, G>(eff: F, f: @escaping (A, B, C, D, E, F) -> G) -> (A, B, C, D, E) -> G {
     return { a, b, c, d, e in f(a, b, c, d, e, eff) }
 }
 
 /**
- These operators can also have a subsitition effect on functions, instead of a currying effect. This allows you to take a function, say g: (Int, Int) -> Int, and use another function f: (String) -> Int, and substitute f into g to make g': (String, Int) -> Int. Note that the one parameter case is achieved by the >>> operator.
+ These operators \have a subsitition effect on functions, instead of a currying effect. This allows you to take a function, say g: (Int, Int) -> Int, and use another function f: (String) -> Int, and substitute f into g to make g': (String, Int) -> Int. Note that the one parameter case is achieved by the >>> operator.
  */
 infix operator >*->: AdditionPrecedence
 public func >*-><A, B, C, D>(f: @escaping (A) -> B, g: @escaping (B, C) -> D) -> (A, C) -> D {

@@ -29,17 +29,41 @@ class CurryTests: XCTestCase {
     func testIntoFirst() {
         let concat: (String, String) -> String = { $0 + $1 }
         
-        let function = ", Co." -*> concat
+        let function = "LithoByte" *-> concat
         
-        XCTAssertEqual(function("LithoByte"), "LithoByte, Co.")
+        XCTAssertEqual(function(", Co."), "LithoByte, Co.")
+    }
+    
+    func testIntoFirstOfThree() {
+        let concat: (String, String, String) -> String = { $0 + $1 + $2 }
+        
+        let function = "LithoByte" *--> concat
+        
+        XCTAssertEqual(function(",", " Co."), "LithoByte, Co.")
+    }
+    
+    func testIntoFirstOfFour() {
+        let concat: (String, String, String, String) -> String = { $0 + $1 + $2 + $3 }
+        
+        let function = "LithoByte" *---> concat
+        
+        XCTAssertEqual(function(",", " ", "Co."), "LithoByte, Co.")
+    }
+    
+    func testIntoFirstOfFive() {
+        let concat: (String, String, String, String, String) -> String = { $0 + $1 + $2 + $3 + $4 }
+        
+        let function = "LithoByte" *----> concat
+        
+        XCTAssertEqual(function(",", " ", "C", "o."), "LithoByte, Co.")
     }
     
     func testIntoSecond() {
         let concat: (String, String) -> String = { $0 + $1 }
         
-        let function = "LithoByte" *-> concat
+        let function = ", Co." -*> concat
         
-        XCTAssertEqual(function(", Co."), "LithoByte, Co.")
+        XCTAssertEqual(function("LithoByte"), "LithoByte, Co.")
     }
     
     func testTupleCurry() {
