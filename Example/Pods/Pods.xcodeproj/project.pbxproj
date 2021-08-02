@@ -82,14 +82,14 @@
 		2B99706E7878BC25B330E6C4CBF1810C /* Prelude-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Prelude-umbrella.h"; sourceTree = "<group>"; };
 		2E92399B29864F527FFAA5FB5172657C /* LithoOperators-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "LithoOperators-prefix.pch"; sourceTree = "<group>"; };
 		4425E5381C7ACEA1570A5BCCE4071973 /* Prelude.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Prelude.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		499E7E9A2683976F00145483 /* Arrays.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Arrays.swift; sourceTree = "<group>"; };
-		499E7E9C2683982E00145483 /* Tuples.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tuples.swift; sourceTree = "<group>"; };
-		499E7E9E2683988000145483 /* Comparables.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Comparables.swift; sourceTree = "<group>"; };
-		499E7EA02683988A00145483 /* Optionals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Optionals.swift; sourceTree = "<group>"; };
-		499E7EA226839A8400145483 /* Dictionaries.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dictionaries.swift; sourceTree = "<group>"; };
-		499E7EA426839ADC00145483 /* Try.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Try.swift; sourceTree = "<group>"; };
-		499E7EA626839B6E00145483 /* KeyPaths.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyPaths.swift; sourceTree = "<group>"; };
-		499E7EA826839C4700145483 /* ArgumentManipulation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArgumentManipulation.swift; sourceTree = "<group>"; };
+		499E7E9A2683976F00145483 /* Arrays.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Arrays.swift; path = Sources/LithoOperators/Classes/Arrays.swift; sourceTree = "<group>"; };
+		499E7E9C2683982E00145483 /* Tuples.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Tuples.swift; path = Sources/LithoOperators/Classes/Tuples.swift; sourceTree = "<group>"; };
+		499E7E9E2683988000145483 /* Comparables.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Comparables.swift; path = Sources/LithoOperators/Classes/Comparables.swift; sourceTree = "<group>"; };
+		499E7EA02683988A00145483 /* Optionals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Optionals.swift; path = Sources/LithoOperators/Classes/Optionals.swift; sourceTree = "<group>"; };
+		499E7EA226839A8400145483 /* Dictionaries.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Dictionaries.swift; path = Sources/LithoOperators/Classes/Dictionaries.swift; sourceTree = "<group>"; };
+		499E7EA426839ADC00145483 /* Try.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Try.swift; path = Sources/LithoOperators/Classes/Try.swift; sourceTree = "<group>"; };
+		499E7EA626839B6E00145483 /* KeyPaths.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = KeyPaths.swift; path = Sources/LithoOperators/Classes/KeyPaths.swift; sourceTree = "<group>"; };
+		499E7EA826839C4700145483 /* ArgumentManipulation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ArgumentManipulation.swift; path = Sources/LithoOperators/Classes/ArgumentManipulation.swift; sourceTree = "<group>"; };
 		4AA5050EBD857863F0A3CAEC1180C558 /* LithoOperators.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = LithoOperators.debug.xcconfig; sourceTree = "<group>"; };
 		4C50118D68357ECE51B16314CA143175 /* Pods-LithoOperators_Example-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-LithoOperators_Example-acknowledgements.markdown"; sourceTree = "<group>"; };
 		4CB190F2366AF43E0B016DE2790A9C29 /* Pods-LithoOperators_Example-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-LithoOperators_Example-dummy.m"; sourceTree = "<group>"; };
@@ -195,16 +195,16 @@
 			isa = PBXGroup;
 			children = (
 				B4BFEF826FBB5655F4CF340B99F8DC5C /* LithoOperators.swift */,
+				499E7EA826839C4700145483 /* ArgumentManipulation.swift */,
+				499E7E9A2683976F00145483 /* Arrays.swift */,
+				499E7E9E2683988000145483 /* Comparables.swift */,
+				499E7EA226839A8400145483 /* Dictionaries.swift */,
+				499E7EA626839B6E00145483 /* KeyPaths.swift */,
+				499E7EA02683988A00145483 /* Optionals.swift */,
+				499E7EA426839ADC00145483 /* Try.swift */,
+				499E7E9C2683982E00145483 /* Tuples.swift */,
 				A85B9370EEF87BCA299C2AF0507D7593 /* Pod */,
 				67D2318E3439F9688CA4DB80FEFBCDB7 /* Support Files */,
-				499E7E9A2683976F00145483 /* Arrays.swift */,
-				499E7E9C2683982E00145483 /* Tuples.swift */,
-				499E7E9E2683988000145483 /* Comparables.swift */,
-				499E7EA02683988A00145483 /* Optionals.swift */,
-				499E7EA226839A8400145483 /* Dictionaries.swift */,
-				499E7EA426839ADC00145483 /* Try.swift */,
-				499E7EA626839B6E00145483 /* KeyPaths.swift */,
-				499E7EA826839C4700145483 /* ArgumentManipulation.swift */,
 			);
 			name = LithoOperators;
 			path = ../..;
