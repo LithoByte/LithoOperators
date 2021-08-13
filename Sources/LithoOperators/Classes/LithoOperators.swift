@@ -8,7 +8,7 @@
 import Prelude
 
 /**
- This operator is from the excellent PointFree videos, allowing you to compose a function `(A) -> B` with another function `(B) -> C` to create a new function `(A) -> C`. This is simply an overload of the operator to allow functions that do not take parameters to be the composed function.
+ This operator is from the excellent PointFree videos, allowing you to compose a function `(A) -> B` with another function `(B) -> C` to create a new function `(A) -> C`. This is simply an overload of the operator to allow functions that do not take parameters to be the composed function, as well as functions that take multiple parameters to be the composing function.
  */
 
 public func >>> <U, V> (f: @escaping () -> U, g: @escaping (U) -> V) -> () -> V {
