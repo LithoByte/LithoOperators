@@ -350,16 +350,3 @@ public func ignoreIrrelevantArgs<T, U, V, X, Y>(f: @escaping (T, U, X) -> Y) -> 
         f(t, u, x)
     }
 }
-public func firstArg<T, U, V>(_ f: @escaping (T, U) -> V, _ g: @escaping (T) -> Void) -> (T, U) -> V {
-    return { t, u in
-        g(t)
-        return f(t, u)
-    }
-}
-
-public func secondArg<T, U, V>(_ f: @escaping (T, U) -> V, _ g: @escaping (U) -> Void) -> (T, U) -> V {
-    return { t, u in
-        g(u)
-        return f(t, u)
-    }
-}
