@@ -35,7 +35,6 @@ public func index<T>(array: [T]) -> (Int) -> T? {
     return array -*> get
 }
 
-infix operator <<: AdditionPrecedence
 public func << <Key, Value>(_ lhs: [Key: Value], _ rhs: [Key: Value]) -> [Key: Value] {
     var result = lhs
     for key in rhs.keys {
@@ -43,6 +42,7 @@ public func << <Key, Value>(_ lhs: [Key: Value], _ rhs: [Key: Value]) -> [Key: V
     }
     return result
 }
+
 public func < <Key, Value>(_ lhs: [Key: Value], _ rhs: [Key: Value]) -> [Key: Value] {
     var result = lhs
     for key in rhs.keys {
