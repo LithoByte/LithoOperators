@@ -64,4 +64,17 @@ class LiftTests: XCTestCase {
         XCTAssert(newUser.name == "Calvin!")
         
     }
+    
+    func testToggle() {
+        class BoolWrapper {
+            var value: Bool = false
+        }
+        
+        let wrapper = BoolWrapper()
+        let toggler = toggle(\BoolWrapper.value)
+        toggler(wrapper)
+        XCTAssertTrue(wrapper.value)
+        toggler(wrapper)
+        XCTAssertFalse(wrapper.value)
+    }
 }

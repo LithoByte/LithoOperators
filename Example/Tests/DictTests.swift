@@ -24,4 +24,19 @@ class DictTests: XCTestCase {
         XCTAssertNotNil(getter(1))
         XCTAssertEqual(getter(1)!, "Calvin")
     }
+    
+    func testMergeOperator() {
+        let dict1: [Int:String] = [1:"Calvin", 2:"Elliot"]
+        let dict2: [Int:String] = [1: "Collins"]
+        let result: [Int: String] = dict1 << dict2
+        XCTAssertEqual(result[1], "Collins")
+    }
+    
+    func testOptMergeOperatorConflict() {
+        let dict1: [Int:String] = [1:"Calvin", 2:"Elliot"]
+        let dict2: [Int:String] = [1: "Collins", 3: "Schrock"]
+        let result: [Int: String] = dict1 < dict2
+        XCTAssertEqual(result[1], "Calvin")
+        XCTAssertEqual(result[3], "Schrock")
+    }
 }
