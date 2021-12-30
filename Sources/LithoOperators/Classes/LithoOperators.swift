@@ -148,7 +148,7 @@ public func <><A>(f: @escaping (A) -> Void, g: @escaping (A) -> Void) -> (A) -> 
 /**
  Operator version of `union`, although it tacks on the second function onto the first (similar to +=)
  */
-infix operator <>=: AdditionPrecedence
+infix operator <>=: AssignmentPrecedence
 public func <>=<A>(f: inout ((A) -> Void), g: @escaping (A) -> Void) {
     f = f <> g
 }
