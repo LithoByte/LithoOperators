@@ -92,9 +92,25 @@ class HigherOrderTests: XCTestCase {
             count += $0
         }
         var none: ((Int) -> Void)? = nil
+        
         none <>= addToCount
         none?(3)
+        
         XCTAssertEqual(count, 3)
+    }
+    
+    func testOptOptUnionConcat() {
+        var count = 0
+        var addToCount: (Int) -> Void = {
+            count += $0
+        }
+        let none: ((Int) -> Void)? = nil
+        
+        addToCount <>= none
+        addToCount <>= addToCount
+        
+        addToCount(3)
+        XCTAssertEqual(count, 6)
     }
     
     func testUnionOperator() throws {
@@ -117,7 +133,7 @@ class HigherOrderTests: XCTestCase {
             alsoCallOrder = count
         }
         
-        let function = toCall<>toAlsoCall
+        let function = toCall <> toAlsoCall
         
         function(argument)
         
