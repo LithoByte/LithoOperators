@@ -17,6 +17,8 @@
 		36ADA1966A964F82DBC92DF5D7944533 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73010CC983E3809BECEE5348DA1BB8C6 /* Foundation.framework */; };
 		4130A617A20F9C6137BBD3E47F9142CC /* Try.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0901A3722F84304B3EC0DE045E895E9C /* Try.swift */; };
 		438A55FE1BCB6AF5DC1B6667DEE806AF /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73010CC983E3809BECEE5348DA1BB8C6 /* Foundation.framework */; };
+		49A75AC1278747FA003A5213 /* Equatables.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49A75AC0278747FA003A5213 /* Equatables.swift */; };
+		49A75AC327874884003A5213 /* HigherOrderFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49A75AC227874884003A5213 /* HigherOrderFunctions.swift */; };
 		63C72731EE81577E117BF80C22D641B2 /* Optionals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183D7751F053CA8BBB95713517D018F0 /* Optionals.swift */; };
 		795E0772ABBF641429CA3868E4358931 /* Prelude.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7A3DA23727CA6C02D925F8AC9F0FF88 /* Prelude.swift */; };
 		7CB1E132099AD8B2C8D29815E92D509A /* Compose.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22F559539D5EDFB5CC1C9872AA97AE6C /* Compose.swift */; };
@@ -85,8 +87,10 @@
 		2B99706E7878BC25B330E6C4CBF1810C /* Prelude-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Prelude-umbrella.h"; sourceTree = "<group>"; };
 		2CC820093B9E838488DD0569CBCDAEE3 /* ArgumentManipulation.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ArgumentManipulation.swift; path = Sources/LithoOperators/Classes/ArgumentManipulation.swift; sourceTree = "<group>"; };
 		30DE5CC6490A6671206CCD85B569BF49 /* LithoOperators-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "LithoOperators-prefix.pch"; sourceTree = "<group>"; };
-		37110DDEDC8C1369609EC833BEF597A2 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; path = LICENSE; sourceTree = "<group>"; };
+		37110DDEDC8C1369609EC833BEF597A2 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		43B88FC0E7FCB2FBD01BB0622AA22F9C /* KeyPaths.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = KeyPaths.swift; path = Sources/LithoOperators/Classes/KeyPaths.swift; sourceTree = "<group>"; };
+		49A75AC0278747FA003A5213 /* Equatables.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Equatables.swift; path = Sources/LithoOperators/Classes/Equatables.swift; sourceTree = "<group>"; };
+		49A75AC227874884003A5213 /* HigherOrderFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = HigherOrderFunctions.swift; path = Sources/LithoOperators/Classes/HigherOrderFunctions.swift; sourceTree = "<group>"; };
 		4C50118D68357ECE51B16314CA143175 /* Pods-LithoOperators_Example-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-LithoOperators_Example-acknowledgements.markdown"; sourceTree = "<group>"; };
 		4CB190F2366AF43E0B016DE2790A9C29 /* Pods-LithoOperators_Example-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-LithoOperators_Example-dummy.m"; sourceTree = "<group>"; };
 		4E0251DC48966BFD4BC89E192D52EA10 /* Pods-LithoOperators_Tests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-LithoOperators_Tests-acknowledgements.plist"; sourceTree = "<group>"; };
@@ -103,12 +107,12 @@
 		8B1ACD34E2249CE636A67D207B878E39 /* Pods-LithoOperators_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-LithoOperators_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		8CA98E40D2B88A0C4AAF5FA0C387B1F8 /* Prelude-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Prelude-prefix.pch"; sourceTree = "<group>"; };
 		989FBE82A5143109483D0D79AEF57AB3 /* Pods-LithoOperators_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-LithoOperators_Example.debug.xcconfig"; sourceTree = "<group>"; };
-		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
-		9DA1FD3EA43D16F27F123417D258C6E5 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; path = README.md; sourceTree = "<group>"; };
+		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		9DA1FD3EA43D16F27F123417D258C6E5 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		A5169D5FA842077F7FFECFCEF2481E15 /* Fix.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Fix.swift; path = Prelude/Fix.swift; sourceTree = "<group>"; };
 		AA2C52C9F5DEF20CF7C93CD2FF4C2470 /* Curry.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Curry.swift; path = Prelude/Curry.swift; sourceTree = "<group>"; };
 		B4954753A7A9B05BA26964E11FB33074 /* Pods-LithoOperators_Tests */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = "Pods-LithoOperators_Tests"; path = Pods_LithoOperators_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		B9169BEF4411D40FF4A6B802BABE74FC /* LithoOperators.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; path = LithoOperators.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		B9169BEF4411D40FF4A6B802BABE74FC /* LithoOperators.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; path = LithoOperators.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		BDFB221225EE481CF8D16F62B8DAA8A1 /* Optional.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Optional.swift; path = Prelude/Optional.swift; sourceTree = "<group>"; };
 		C1533110215D2ABFAC67AB31EF585EB2 /* Prelude-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Prelude-dummy.m"; sourceTree = "<group>"; };
 		C1D9EFB0E06757882401FF3CDAB03D4E /* Prelude.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Prelude.debug.xcconfig; sourceTree = "<group>"; };
@@ -195,6 +199,8 @@
 				D857D8C1E2DE6BE0948E717DEB660DE2 /* Arrays.swift */,
 				2591B7B82C4B1C85173E0AF4695A042C /* Comparables.swift */,
 				09EA9CCEB342D11E99020F038E9C8452 /* Dictionaries.swift */,
+				49A75AC0278747FA003A5213 /* Equatables.swift */,
+				49A75AC227874884003A5213 /* HigherOrderFunctions.swift */,
 				43B88FC0E7FCB2FBD01BB0622AA22F9C /* KeyPaths.swift */,
 				879FC837C8F8CCF87FD644A590962A31 /* LithoOperators.swift */,
 				183D7751F053CA8BBB95713517D018F0 /* Optionals.swift */,
@@ -279,7 +285,6 @@
 				F304AC5272D584DD9155EA70CA14008C /* Tuple.swift */,
 				5E85100491D06B22BDFE084E89E30655 /* Support Files */,
 			);
-			name = Prelude;
 			path = Prelude;
 			sourceTree = "<group>";
 		};
@@ -535,6 +540,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D7E8C0D85D35B760FF0E6A5CF5F3C72F /* ArgumentManipulation.swift in Sources */,
+				49A75AC1278747FA003A5213 /* Equatables.swift in Sources */,
 				89B68730DB9827D1171C4E195383D7E4 /* Arrays.swift in Sources */,
 				D6FB186ACD129C6EA3FBDF9A501FA0C7 /* Comparables.swift in Sources */,
 				F57FE6AD7FC8729A175C672BF2E81B2E /* Dictionaries.swift in Sources */,
@@ -542,6 +548,7 @@
 				C137C44EDEDB4BB1D573DDA2BD68A5DF /* LithoOperators.swift in Sources */,
 				235E64E9D912234C2EC4671F5B784450 /* LithoOperators-dummy.m in Sources */,
 				63C72731EE81577E117BF80C22D641B2 /* Optionals.swift in Sources */,
+				49A75AC327874884003A5213 /* HigherOrderFunctions.swift in Sources */,
 				4130A617A20F9C6137BBD3E47F9142CC /* Try.swift in Sources */,
 				CFC0143D0DA92EABF2E05C359F589CAB /* Tuples.swift in Sources */,
 			);
@@ -741,8 +748,7 @@
 				MTL_FAST_MATH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRIP_INSTALLED_PRODUCT = NO;
-				SWIFT_COMPILATION_MODE = wholemodule;
-				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				SWIFT_VERSION = 5.0;
 				SYMROOT = "${SRCROOT}/../build";
 			};
