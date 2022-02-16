@@ -8,6 +8,7 @@
 
 import XCTest
 import LithoOperators
+import Prelude
 
 struct Company {
     var name: String?
@@ -244,5 +245,19 @@ class ArrayTests: XCTestCase {
         XCTAssertNotNil(indexer(0))
         XCTAssertNil(indexer(2))
         XCTAssertEqual(indexer(0)!, 0)
+    }
+    
+    func testSomeSatisfy() {
+        let arr1 = [0, 3]
+        XCTAssertTrue(arr1 |> someSatisfy(f: isEqualTo(3)))
+        let arr2 = [0, 1]
+        XCTAssertFalse(arr2 |> someSatisfy(f: isEqualTo(3)))
+    }
+    
+    func testAllSatisfy() {
+        let arr1 = [3, 3]
+        XCTAssertTrue(arr1 |> allSatisfy(f: isEqualTo(3)))
+        let arr2 = [0, 3]
+        XCTAssertFalse(arr2 |> allSatisfy(f: isEqualTo(3)))
     }
 }

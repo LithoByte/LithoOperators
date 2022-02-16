@@ -181,4 +181,25 @@ class OptionalsTests: XCTestCase {
         (~>call)(anyArray)
         XCTAssert(wasCalled)
     }
+    
+    func testIsNotNil() {
+        let nothing: Int? = nil
+        XCTAssertFalse(isNotNil(nothing))
+        let something: Int? = 4
+        XCTAssertTrue(isNotNil(something))
+    }
+    
+    func testAllNotNil() {
+        let arr1: [Int?] = [1, nil, 2]
+        XCTAssertFalse(allNotNil(arr1))
+        let arr2: [Int?] = [1, 2, 3]
+        XCTAssertTrue(allNotNil(arr2))
+    }
+    
+    func testSomeNotNil() {
+        let arr1: [Int?] = [1, nil, nil]
+        XCTAssertTrue(someNotNil(arr1))
+        let arr2: [Int?] = [nil, nil, nil]
+        XCTAssertFalse(someNotNil(arr2))
+    }
 }

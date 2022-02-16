@@ -6,6 +6,8 @@
 //
 
 import Foundation
+import Prelude
+
 /**
  This function executes `f` if the value passed in is non-`nil`. Convenient when you have
  a function that accepts only non-optional values, but you have an unwrapped variable. Basically,
@@ -64,4 +66,16 @@ public prefix func ~><T, U, V>(f: @escaping (U) -> V) -> (T) -> V? {
 }
 public prefix func ~><T, U>(f: @escaping (U) -> Void) -> (T) -> Void {
     return optionalCast >?> f
+}
+
+public func isNotNil<T>(_ value: T?) -> Bool {
+    return value != nil
+}
+
+public func allNotNil<T>(_ list: [T?]) -> Bool {
+    return list |> allSatisfy(f: isNotNil(_:))
+}
+
+public func someNotNil<T>(_ list: [T?]) -> Bool {
+    return list |> someSatisfy(f: isNotNil)
 }
