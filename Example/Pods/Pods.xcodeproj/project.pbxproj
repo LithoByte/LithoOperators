@@ -38,6 +38,37 @@
 		F0DFD799F63A8CB67B1ACFDCBD2F74F1 /* Pods-LithoOperators_Tests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 0239CE5D53139E417D669BE16C6791A2 /* Pods-LithoOperators_Tests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F57FE6AD7FC8729A175C672BF2E81B2E /* Dictionaries.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09EA9CCEB342D11E99020F038E9C8452 /* Dictionaries.swift */; };
 		FC14F0106445346E2CC9475F18DFF82A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73010CC983E3809BECEE5348DA1BB8C6 /* Foundation.framework */; };
+		01CF462C254FD6A4AE16D0DC5A48CF55 /* Compose.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22F559539D5EDFB5CC1C9872AA97AE6C /* Compose.swift */; };
+		1377964F2A5A053D9FEC629B21201357 /* Optional.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDFB221225EE481CF8D16F62B8DAA8A1 /* Optional.swift */; };
+		2302F10D27BFDE3000B00D31 /* Weak.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2302F10C27BFDE3000B00D31 /* Weak.swift */; };
+		24EF13C282403C8DBD366976CCDCC5A9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E056098C9AC391880BFEC351EE174803 /* Foundation.framework */; };
+		38F3091CD32A89D139C31DA3E26529E0 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E056098C9AC391880BFEC351EE174803 /* Foundation.framework */; };
+		3F0D98E1DEF68BB7F5D134136F09DE05 /* Prelude-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = C1533110215D2ABFAC67AB31EF585EB2 /* Prelude-dummy.m */; };
+		47FB7BC28989D419EF704F220BCB06D3 /* Application.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBCF89D352C6B89650CE7E3CE4B5E7DD /* Application.swift */; };
+		499E7E9B2683976F00145483 /* Arrays.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499E7E9A2683976F00145483 /* Arrays.swift */; };
+		499E7E9D2683982E00145483 /* Tuples.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499E7E9C2683982E00145483 /* Tuples.swift */; };
+		499E7E9F2683988000145483 /* Comparables.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499E7E9E2683988000145483 /* Comparables.swift */; };
+		499E7EA12683988A00145483 /* Optionals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499E7EA02683988A00145483 /* Optionals.swift */; };
+		499E7EA326839A8400145483 /* Dictionaries.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499E7EA226839A8400145483 /* Dictionaries.swift */; };
+		499E7EA526839ADC00145483 /* Try.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499E7EA426839ADC00145483 /* Try.swift */; };
+		499E7EA726839B6E00145483 /* KeyPaths.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499E7EA626839B6E00145483 /* KeyPaths.swift */; };
+		499E7EA926839C4700145483 /* ArgumentManipulation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499E7EA826839C4700145483 /* ArgumentManipulation.swift */; };
+		567933902B3E1726C28EDFE3B5FF094C /* Fix.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5169D5FA842077F7FFECFCEF2481E15 /* Fix.swift */; };
+		574A1074D8AFDA4A7DDF4B06F51DF828 /* Pods-LithoOperators_Example-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CB190F2366AF43E0B016DE2790A9C29 /* Pods-LithoOperators_Example-dummy.m */; };
+		5D2D70FE976E9D2E682CC1762159F683 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E056098C9AC391880BFEC351EE174803 /* Foundation.framework */; };
+		5E4A4D0966EE165F4647F695D962AFEF /* Tuple.swift in Sources */ = {isa = PBXBuildFile; fileRef = F304AC5272D584DD9155EA70CA14008C /* Tuple.swift */; };
+		6645EFCFA733DAC9817404F6F03B510E /* Prelude-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 2B99706E7878BC25B330E6C4CBF1810C /* Prelude-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		953DA2F8B36E07C4FDE9451CA1AE3874 /* LithoOperators-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D9539625F7A03C86355BD526E589827 /* LithoOperators-dummy.m */; };
+		95807A6F8EA5CD9CC207B5B7DD2A794E /* LithoOperators-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 07B0983524EB023E5D22164776C40F94 /* LithoOperators-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BC715F0EC7F048A1875B4B461FAE1D03 /* Prelude.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7A3DA23727CA6C02D925F8AC9F0FF88 /* Prelude.swift */; };
+		CE61B7349117FF0563C21240457B2124 /* Pods-LithoOperators_Tests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 0239CE5D53139E417D669BE16C6791A2 /* Pods-LithoOperators_Tests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		E173EB6083BDB464B31507F9B4323E9C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E056098C9AC391880BFEC351EE174803 /* Foundation.framework */; };
+		ECDD6A321C80766C08154DF893994C04 /* Prelude.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4425E5381C7ACEA1570A5BCCE4071973 /* Prelude.framework */; };
+		F0E67AC83294874BBB43472C60C06E77 /* Curry.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA2C52C9F5DEF20CF7C93CD2FF4C2470 /* Curry.swift */; };
+		F1CF46F1CDD140FB189E8B23F0D60D37 /* Pods-LithoOperators_Tests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = D3735A44379282CDF03FC4009AE45105 /* Pods-LithoOperators_Tests-dummy.m */; };
+		F3D4B7AF858447CB37B0BF53F4978CA6 /* Flip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BB354E75B3210C27F90856794ED0867 /* Flip.swift */; };
+		FAB9A879ABCC18F3736326BA9069B018 /* LithoOperators.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4BFEF826FBB5655F4CF340B99F8DC5C /* LithoOperators.swift */; };
+		FE8855E8F28C3E9F316C25D5BC4680A8 /* Pods-LithoOperators_Example-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 8222E19CC80835B7DF630BC0BD191A22 /* Pods-LithoOperators_Example-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -81,6 +112,7 @@
 		195E6773157C412BDBEAA93210189851 /* Pods-LithoOperators_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-LithoOperators_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		22F559539D5EDFB5CC1C9872AA97AE6C /* Compose.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Compose.swift; path = Prelude/Compose.swift; sourceTree = "<group>"; };
 		2591B7B82C4B1C85173E0AF4695A042C /* Comparables.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Comparables.swift; path = Sources/LithoOperators/Classes/Comparables.swift; sourceTree = "<group>"; };
+		2302F10C27BFDE3000B00D31 /* Weak.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Weak.swift; path = Sources/LithoOperators/Classes/Weak.swift; sourceTree = "<group>"; };
 		259E2A8B0B90CF86EFDAFF81FB3CDE17 /* Prelude-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Prelude-Info.plist"; sourceTree = "<group>"; };
 		2657A316643D8E980F530E21AE7F9CBF /* LithoOperators-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "LithoOperators-dummy.m"; sourceTree = "<group>"; };
 		278744DF86D9BF531BE76C4F8DF33F6E /* LithoOperators.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = LithoOperators.debug.xcconfig; sourceTree = "<group>"; };
@@ -206,6 +238,7 @@
 				183D7751F053CA8BBB95713517D018F0 /* Optionals.swift */,
 				0901A3722F84304B3EC0DE045E895E9C /* Try.swift */,
 				838C32F96DB206E781401C0DF4C92CBB /* Tuples.swift */,
+                2302F10C27BFDE3000B00D31 /* Weak.swift */,
 				E42A24036504EA176302FFDF3C60C4FC /* Pod */,
 				17B8507C2C9817DAB29E6E4AE4B11E43 /* Support Files */,
 			);
@@ -543,6 +576,7 @@
 				49A75AC1278747FA003A5213 /* Equatables.swift in Sources */,
 				89B68730DB9827D1171C4E195383D7E4 /* Arrays.swift in Sources */,
 				D6FB186ACD129C6EA3FBDF9A501FA0C7 /* Comparables.swift in Sources */,
+                2302F10D27BFDE3000B00D31 /* Weak.swift in Sources */,
 				F57FE6AD7FC8729A175C672BF2E81B2E /* Dictionaries.swift in Sources */,
 				A25E58A6F210010A0069A8AE44F4744F /* KeyPaths.swift in Sources */,
 				C137C44EDEDB4BB1D573DDA2BD68A5DF /* LithoOperators.swift in Sources */,
