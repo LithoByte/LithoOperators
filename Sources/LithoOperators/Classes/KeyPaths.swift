@@ -47,6 +47,13 @@ public func toggle<Root>(_ kp: WritableKeyPath<Root, Bool>) -> (Root) -> Void {
     }
 }
 
+infix operator ^>
+public func ^><Root, Value>(root: Root, keyPath: WritableKeyPath<Root, Value>) -> (Value) -> Void where Root: NSObject {
+    return { [weak root] value in
+        root ?> set(keyPath, value)
+    }
+}
+
 /**
  The following are from the excellent PointFree videos, and are used here and there above to
  implement some of functions.
