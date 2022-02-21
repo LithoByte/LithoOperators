@@ -50,6 +50,12 @@ public func ?><T, U>(t: T?, f: (T) -> U?) -> U? {
     }
     return nil
 }
+public func ?><T, U>(t: T?, f: ((T) -> U)?) -> U? {
+    if let t = t {
+        return f?(t)
+    }
+    return nil
+}
 
 /**
  This operator allows you to chain functions where optionality is an issue. For instance,
