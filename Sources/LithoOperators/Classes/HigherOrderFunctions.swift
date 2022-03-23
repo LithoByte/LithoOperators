@@ -125,6 +125,16 @@ public func ifThen<T>(_ condition: @escaping (T) -> Bool, _ f: @escaping () -> V
     }
 }
 
+public func ifThen<T>(_ condition: @escaping (T) -> Bool, _ f: @escaping (T) -> Void, else g: ((T) -> Void)? = nil) -> (T) -> Void {
+    return { t in
+        if condition(t) {
+            f(t)
+        } else {
+            g?(t)
+        }
+    }
+}
+
 public func ifThen<T, U>(_ condition: @escaping (T) -> Bool, _ f: @escaping (T) -> U) -> (T) -> (U?) {
     return { t in
         condition(t) ? f(t) : nil
