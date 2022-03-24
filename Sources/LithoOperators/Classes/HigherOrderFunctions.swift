@@ -85,6 +85,12 @@ public func ifThen(_ condition: @escaping () -> Bool, _ f: @escaping () -> Void,
     }
 }
 
+public func ifThen(then: @escaping (() -> Void), not: (() -> Void)? = nil) -> (Bool) -> Void {
+    return { condition in
+        condition ? then() : not?()
+    }
+}
+
 public func ifThen<T>(_ condition: @escaping () -> Bool, _ f: @escaping (T) -> Void, else g: (() -> Void)? = nil) -> (T) -> Void {
     return { t in
         if condition() {
