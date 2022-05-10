@@ -85,9 +85,9 @@ public func ifThen(_ condition: @escaping () -> Bool, _ f: @escaping () -> Void,
     }
 }
 
-public func ifThen(then: @escaping (() -> Void), not: (() -> Void)? = nil) -> (Bool) -> Void {
+public func ifThen(then f: @escaping (() -> Void), else g: (() -> Void)? = nil) -> (Bool) -> Void {
     return { condition in
-        condition ? then() : not?()
+        condition ? f() : g?()
     }
 }
 
