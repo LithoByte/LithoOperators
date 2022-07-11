@@ -38,21 +38,21 @@ This is basically an operator for currying. It puts the value `a` into the first
 from `(A, B) -> C` and returns a function that just accepts a value for `B`. In Prelude this would
 be `a |> curry(f)`.
 
-### `infix operator ||>`
-Similar to `>|>`, but with the second value. So consider `f: (A, B) -> C`. Then `b ||> f`
+### `infix operator -*>`
+Similar to `*>`, but with the second value. So consider `f: (A, B) -> C`. Then `b -*> f`
 will put `b` into the second argument of `f` and return a function from `A -> C`. I find this more
 ergonmic than using `curry` in this case, since I don't need to swap the arguments around or anything.
 The use case for this is mostly with the free `map` function defined below, so for instance, if you had
 a function `f` from `Int -> String` and wanted to use it to change an array of `Int`s to `String`s,
-you could do so by saying: `f ||> map` which would return a function from `[Int] -> [String]`
+you could do so by saying: `f -*> map` which would return a function from `[Int] -> [String]`
 
-### `infix operator |||>`
+### `infix operator --*>`
 See above, convenient currying, but with more arguments.
-### `infix operator ||||>`
+### `infix operator ---*>`
 See above, convenient currying, but with more arguments.
-### `infix operator |||||>`
+### `infix operator ----*>`
 See above, convenient currying, but with more arguments.
-### `infix operator ||||||>`
+### `infix operator -----*>`
 See above, convenient currying, but with more arguments.
 
 ### `func voidCurry<T, U>(_ t: T, _ f: @escaping (T) -> U) -> () -> U`
