@@ -33,26 +33,35 @@ in; then you could do `optionalCast >?> f` and the compiler would return a funct
 This is a really nice function that will cast objects for you. When paired with `>?>` the compiler will
 be able to tell what type to cast to without you saying explicitly.
 
+### `prefix operator ~>`
+This is an operator such that `~>f` is the same as `optionalCast >?> f`. Basically, it casts the input as 
+the type that `f` accepts, and if that cast succeeds, executes `f` with that value.
+
 ### `infix operator *>`
 This is basically an operator for currying. It puts the value `a` into the first postion of a function `f`
 from `(A, B) -> C` and returns a function that just accepts a value for `B`. In Prelude this would
 be `a |> curry(f)`.
 
-### `infix operator ||>`
-Similar to `>|>`, but with the second value. So consider `f: (A, B) -> C`. Then `b ||> f`
+### `infix operator *->` 
+This is basically an operator for currying. For `f: (A, B) -> C` it puts the value `a` into the first 
+postion of `f` and returns a function that just accepts a value for `B`. In Prelude this would be 
+`a |> curry(f)`.
+
+### `infix operator -*>`
+Similar to `*->`, but with the second value. So consider `f: (A, B) -> C`. Then `b -*> f`
 will put `b` into the second argument of `f` and return a function from `A -> C`. I find this more
 ergonmic than using `curry` in this case, since I don't need to swap the arguments around or anything.
 The use case for this is mostly with the free `map` function defined below, so for instance, if you had
 a function `f` from `Int -> String` and wanted to use it to change an array of `Int`s to `String`s,
-you could do so by saying: `f ||> map` which would return a function from `[Int] -> [String]`
+you could do so by saying: `f -*> map` which would return a function from `[Int] -> [String]`
 
-### `infix operator |||>`
+### `infix operator --*>`
 See above, convenient currying, but with more arguments.
-### `infix operator ||||>`
+### `infix operator ---*>`
 See above, convenient currying, but with more arguments.
-### `infix operator |||||>`
+### `infix operator ----*>`
 See above, convenient currying, but with more arguments.
-### `infix operator ||||||>`
+### `infix operator -----*>`
 See above, convenient currying, but with more arguments.
 
 ### `func voidCurry<T, U>(_ t: T, _ f: @escaping (T) -> U) -> () -> U`
@@ -61,13 +70,14 @@ prepopulated. I often use this when a reusable component shouldn't know the pass
 to pass it to other code when an action occurs.
 
 ### `infix operator *>`
-Operator version of `voidCurry`
+Operator version of `voidCurry`.
 
 ### `prefix operator ^`
 An operator to create a function that, given a keypath for a type, will a function that will accept
 an object of that type and return the object's property's value. So for instance,
-`^\UIViewController.view` will return a function `(UIViewController) -> UIView`. This comes from
-the excellent [PointFree](https://pointfree.co) videos.
+`^\UIViewController.view` will return a function `(UIViewController) -> UIView`. This comes from the 
+excellent [PointFree](https://pointfree.co) videos. Now that Swift treats `KeyPath`s as functions in many
+cases, this operator is largely obsolete.
 
 ### `func union(_ functions: (() -> Void)...) -> () -> Void`
 Here, `union` will take a bunch of functions and return a function that, when called, will
@@ -86,11 +96,6 @@ this function unwraps optionals for you.
 
 ### `infix operator ?>`
 This is just an operator version of `ifExecute`.
-
-### `func ifApply(_ condition: Bool, _ function: (Self) -> Self) -> Self`
-This is an extension function for a protocol named `ConditionalApply`.  This function passes 
-itself to the given function if the condition is true. I don't use it much in iOS, but
-it's pretty helpful in Vapor when creating database queries.
 
 ### `func firstElement<T>(_ array: [T]) -> T?`
 This returns the first element of an array, if that element exists

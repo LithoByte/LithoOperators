@@ -10,7 +10,7 @@ import Prelude
 /**
  This is basically an operator for currying. It puts the value `a` into the first postion of a function `f`
  from `(A, B) -> C` and returns a function that just accepts a value for `B`. In Prelude this would
- be ` a |> curry(f)`.
+ be `a |> curry(f)`.
  */
 infix operator *->: AdditionPrecedence
 /**
@@ -62,12 +62,13 @@ public func *-----><A, B, C, D, E, F, G>(a: A, f: @escaping (A, B, C, D, E, F) -
 
 //TESTED
 /**
- Similar to `*>`, but with the second value. So consider `f: (A, B) -> C`. Then `b >||> f`
+ Similar to `*>`, but with the second value. So consider `f: (A, B) -> C`. Then `b -*> f`
  will put `b` into the second argument of `f` and return a function from `A -> C`. I find this more
  ergonmic than using `curry` in this case, since I don't need to swap the arguments around or anything.
  The use case for this is mostly with the free `map` function defined below, so for instance, if you had
  a function `f` from `Int -> String` and wanted to use it to change an array of `Int`s to `String`s,
- you could do so by saying: `f ||> map` which would return a function from `[Int] -> [String]`
+ you could do so by saying: `f -*> map` which would return a function from `[Int] -> [String]`. In
+ Prelude this would be `a |> curry(flip(f))`.
  */
 infix operator -*>: AdditionPrecedence
 /**
@@ -134,7 +135,7 @@ public func -----*><A, B, C, D, E, F, G>(eff: F, f: @escaping (A, B, C, D, E, F)
 }
 
 /**
- These operators \have a subsitition effect on functions, instead of a currying effect. This allows you to take a function, say g: (Int, Int) -> Int, and use another function f: (String) -> Int, and substitute f into g to make g': (String, Int) -> Int. Note that the one parameter case is achieved by the >>> operator.
+ These operators have a subsitition effect on functions, instead of a currying effect. This allows you to take a function, say g: (Int, Int) -> Int, and use another function f: (String) -> Int, and substitute the result of f into an argument of g to make g': (String, Int) -> Int. Note that the one parameter case is achieved by the >>> operator.
  */
 infix operator >*->: AdditionPrecedence
 public func >*-><A, B, C, D>(f: @escaping (A) -> B, g: @escaping (B, C) -> D) -> (A, C) -> D {
@@ -156,26 +157,6 @@ infix operator >--*>: AdditionPrecedence
 public func >--*><A, B, C, D, E>(f: @escaping (A) -> D, g: @escaping (B, C, D) -> E) -> (B, C, A) -> E {
     return flip(uncurry(f >>> curry(flip(g))))
 }
-
-/**
- Mainly a helper function for these operators, but also useful if there's some currying operation you want to accomplish that isn't encompassed with the overloads we provide.
- */
-public func shiftLeft<A, B, C, D>(_ f: @escaping (A, B, C) -> D) -> (B, C, A) -> D {
-    return { b, c, a in
-        f(a, b, c)
-    }
-}
-
-public func shiftRight<A, B, C, D>(_ f: @escaping (A, B, C) -> D) -> (C, A, B) -> D {
-    return { c, a, b in
-        f(a, b, c)
-    }
-}
-
-
-/**
- These sets of operators have the same semantics as the previous, only they take two functions. The latter is the function to curry, and the former returns a value to be curried into the latter. This is the technical equivalent of using >>> (see below) to compose f with g >||> (>|||>) if we want the returned value to be curried into the third position. Using operators on operators seems a little unreadable, however, so we overload these functions.
- */
 infix operator >*>: AdditionPrecedence
 public func >*><A, C>(f: @escaping () -> A, g: @escaping (A) -> C) -> () -> C {
     return { g(f()) }
@@ -214,16 +195,29 @@ public func >--*><A, B, C, D>(f: @escaping () -> C, g: @escaping (A, B, C) -> D)
  prepopulated. I often use this when a reusable component shouldn't know the passed in type, but needs
  to pass it to other code when an action occurs.
  */
-//TESTED
 public func voidCurry<T, U>(_ t: T, _ f: @escaping (T) -> U) -> () -> U {
     return { f(t) }
 }
 
 // Operator version of `voidCurry`
-//TESTED
 infix operator *>: MultiplicationPrecedence
 public func *><T, U>(t: T, f: @escaping (T) -> U) -> () -> U {
     return { return f(t) }
+}
+
+/**
+ Mainly a helper function for these operators, but also useful if there's some currying operation you want to accomplish that isn't encompassed with the overloads we provide.
+ */
+public func shiftLeft<A, B, C, D>(_ f: @escaping (A, B, C) -> D) -> (B, C, A) -> D {
+    return { b, c, a in
+        f(a, b, c)
+    }
+}
+
+public func shiftRight<A, B, C, D>(_ f: @escaping (A, B, C) -> D) -> (C, A, B) -> D {
+    return { c, a, b in
+        f(a, b, c)
+    }
 }
 
 /**
