@@ -40,6 +40,13 @@ public func setter<Root, Value>(_ kp: WritableKeyPath<Root, Value>) -> (Root, Va
     }
 }
 
+public func set<Root, Value>(_ kp: WritableKeyPath<Root, Value>, on root: Root) -> (Value) -> Void {
+    return { val in
+        var copy = root
+        copy[keyPath: kp] = val
+    }
+}
+
 public func toggle<Root>(_ kp: WritableKeyPath<Root, Bool>) -> (Root) -> Void {
     return { root in
         var copy = root
